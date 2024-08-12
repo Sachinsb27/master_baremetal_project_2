@@ -1,0 +1,2653 @@
+
+bin/BareMetal_ADC.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00001134  00000000  00000000  00001000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  20000000  20000000  00002134  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000058  20000000  00001134  00003000  2**2
+                  ALLOC
+  3 Heap          00002da8  20000058  00001134  00003058  2**0
+                  ALLOC
+  4 Stack         00000200  20002e00  00001134  00002e00  2**0
+                  ALLOC
+  5 .debug_info   00004243  00000000  00000000  00002134  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  6 .debug_abbrev 00000ad9  00000000  00000000  00006377  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  7 .debug_aranges 00000290  00000000  00000000  00006e50  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  8 .debug_rnglists 000001bd  00000000  00000000  000070e0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  9 .debug_line   000015e7  00000000  00000000  0000729d  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_str    00001d6b  00000000  00000000  00008884  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .comment      00000044  00000000  00000000  0000a5ef  2**0
+                  CONTENTS, READONLY
+ 12 .ARM.attributes 0000002c  00000000  00000000  0000a633  2**0
+                  CONTENTS, READONLY
+ 13 .debug_frame  000007b4  00000000  00000000  0000a660  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+00000000 <vector>:
+    return 0;
+}
+
+/*Delay with simple for loops*/
+void Delay(int32_t delayNumber)
+{
+       0:	00 40 00 20 19 0f 00 00 b1 0f 00 00 b9 0f 00 00     .@. ............
+	...
+    for(int32_t i=0; i<delayNumber; i++);
+    for(int32_t i=0; i<delayNumber; i++);
+      2c:	b1 0f 00 00 00 00 00 00 00 00 00 00 b1 0f 00 00     ................
+    for(int32_t i=0; i<delayNumber; i++);
+      3c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+    for(int32_t i=0; i<delayNumber; i++);
+      4c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+}
+      5c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+
+        /* Apply TC trim */
+        SRSSLT_CLK_IMO_TRIM3 = SFLASH_IMO_TCTRIM_LT(locFreq);
+
+        /* Convert the SFLASH.IMO_TRIM register index into the frequency bitfield value */
+        locFreq >>= 2UL;
+      6c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+
+        for(int i=0; i<50000; i++); //short delay
+      7c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+
+        if (0UL != locFreq)
+        {
+                /* Select nearby intermediate frequency */
+                CY_REG32_CLR_SET(SRSSLT_CLK_IMO_SELECT, SRSSLT_CLK_IMO_SELECT_FREQ, locFreq - 1UL);
+      8c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+      9c:	b1 0f 00 00 b1 0f 00 00 b1 0f 00 00 b1 0f 00 00     ................
+                for(int i=0; i<50000; i++); //short delay
+      ac:	b1 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+                CY_REG32_CLR_SET(SRSSLT_CLK_IMO_SELECT, SRSSLT_CLK_IMO_SELECT_FREQ, locFreq);
+      bc:	00 00 00 00                                         ....
+
+000000c0 <main>:
+{  
+      c0:	b580      	push	{r7, lr}
+      c2:	af00      	add	r7, sp, #0
+    Cy_SysClk_ClkHfSetDivider(0u); //0 - No Divider, 1 - DIV by 2, 2 = DIV by 4, 3 = DIV by 8
+      c4:	2000      	movs	r0, #0
+      c6:	f000 fd63 	bl	b90 <Cy_SysClk_ClkHfSetDivider>
+    init_peri_Clock_Config();
+      ca:	f000 f88b 	bl	1e4 <init_peri_Clock_Config>
+    GPIO_Pin_Init((GPIO_PRT_Type *)CYREG_GPIO_PRT2_DR, 1u, &ADC_P2_1_config, HSIOM_SEL_GPIO); //ADC Init /*GPIO pin init ADC*/
+      ce:	4a36      	ldr	r2, [pc, #216]	@ (1a8 <main+0xe8>)
+      d0:	4836      	ldr	r0, [pc, #216]	@ (1ac <main+0xec>)
+      d2:	2300      	movs	r3, #0
+      d4:	2101      	movs	r1, #1
+      d6:	f000 f913 	bl	300 <GPIO_Pin_Init>
+    GPIO_Pin_Init((GPIO_PRT_Type *)CYREG_GPIO_PRT3_DR, 4u, &USERLED_P3_4_config, HSIOM_SEL_GPIO);//user led
+      da:	4a35      	ldr	r2, [pc, #212]	@ (1b0 <main+0xf0>)
+      dc:	4835      	ldr	r0, [pc, #212]	@ (1b4 <main+0xf4>)
+      de:	2300      	movs	r3, #0
+      e0:	2104      	movs	r1, #4
+      e2:	f000 f90d 	bl	300 <GPIO_Pin_Init>
+    NVIC_SetPriority(3u, 1u);
+      e6:	2101      	movs	r1, #1
+      e8:	2003      	movs	r0, #3
+      ea:	f000 feb5 	bl	e58 <NVIC_SetPriority>
+    NVIC_ClearPendingIRQ(3u);
+      ee:	2003      	movs	r0, #3
+      f0:	f000 fee0 	bl	eb4 <NVIC_ClearPendingIRQ>
+    NVIC_EnableIRQ(3u);
+      f4:	2003      	movs	r0, #3
+      f6:	f000 fef3 	bl	ee0 <NVIC_EnableIRQ>
+    init_peri_Clock_Config();
+      fa:	f000 f873 	bl	1e4 <init_peri_Clock_Config>
+    NVIC_SetPriority(19, 1u); //timer 2 IRQn = 19, priority 1
+      fe:	2101      	movs	r1, #1
+     100:	2013      	movs	r0, #19
+     102:	f000 fea9 	bl	e58 <NVIC_SetPriority>
+    NVIC_ClearPendingIRQ(19u);
+     106:	2013      	movs	r0, #19
+     108:	f000 fed4 	bl	eb4 <NVIC_ClearPendingIRQ>
+    NVIC_EnableIRQ(19u);
+     10c:	2013      	movs	r0, #19
+     10e:	f000 fee7 	bl	ee0 <NVIC_EnableIRQ>
+    GPIO_Pin_Init((GPIO_PRT_Type *)CYREG_GPIO_PRT7_DR, 0u, &UART_RX_P7_0_config, HSIOM_SEL_UART);
+     112:	4a29      	ldr	r2, [pc, #164]	@ (1b8 <main+0xf8>)
+     114:	4829      	ldr	r0, [pc, #164]	@ (1bc <main+0xfc>)
+     116:	2309      	movs	r3, #9
+     118:	2100      	movs	r1, #0
+     11a:	f000 f8f1 	bl	300 <GPIO_Pin_Init>
+    GPIO_Pin_Init((GPIO_PRT_Type *)CYREG_GPIO_PRT7_DR, 1u, &UART_TX_P7_1_config, HSIOM_SEL_UART);/*Insert all Peripheral Initilization code of UART*/
+     11e:	4a28      	ldr	r2, [pc, #160]	@ (1c0 <main+0x100>)
+     120:	4826      	ldr	r0, [pc, #152]	@ (1bc <main+0xfc>)
+     122:	2309      	movs	r3, #9
+     124:	2101      	movs	r1, #1
+     126:	f000 f8eb 	bl	300 <GPIO_Pin_Init>
+    Cy_SAR_Init(SAR0, &pass_0_sar_0_config);
+     12a:	4b26      	ldr	r3, [pc, #152]	@ (1c4 <main+0x104>)
+     12c:	4a26      	ldr	r2, [pc, #152]	@ (1c8 <main+0x108>)
+     12e:	0019      	movs	r1, r3
+     130:	0010      	movs	r0, r2
+     132:	f000 f9d5 	bl	4e0 <Cy_SAR_Init>
+    init_cycfg_peripherals();
+     136:	f000 fbdf 	bl	8f8 <init_cycfg_peripherals>
+    Cy_SAR_Enable(SAR0);
+     13a:	4b23      	ldr	r3, [pc, #140]	@ (1c8 <main+0x108>)
+     13c:	0018      	movs	r0, r3
+     13e:	f000 fbbf 	bl	8c0 <Cy_SAR_Enable>
+    Cy_SCB_UART_Init(SCB3, &SCB_UART_config, &SCB_UART_context);  //driver (uart_init)
+     142:	4a22      	ldr	r2, [pc, #136]	@ (1cc <main+0x10c>)
+     144:	4b22      	ldr	r3, [pc, #136]	@ (1d0 <main+0x110>)
+     146:	4823      	ldr	r0, [pc, #140]	@ (1d4 <main+0x114>)
+     148:	0019      	movs	r1, r3
+     14a:	f000 fd3b 	bl	bc4 <Cy_SCB_UART_Init>
+    Cy_SCB_UART_Enable(SCB3);
+     14e:	4b21      	ldr	r3, [pc, #132]	@ (1d4 <main+0x114>)
+     150:	0018      	movs	r0, r3
+     152:	f000 fe01 	bl	d58 <Cy_SCB_UART_Enable>
+    enable_irq();
+     156:	f000 fe79 	bl	e4c <enable_irq>
+        Cy_SAR_StartConvert(SAR0, 1u);
+     15a:	4b1b      	ldr	r3, [pc, #108]	@ (1c8 <main+0x108>)
+     15c:	2101      	movs	r1, #1
+     15e:	0018      	movs	r0, r3
+     160:	f000 fbf4 	bl	94c <Cy_SAR_StartConvert>
+        chanresult =  Cy_SAR_GetResult16(SAR0, 0u);
+     164:	4b18      	ldr	r3, [pc, #96]	@ (1c8 <main+0x108>)
+     166:	2100      	movs	r1, #0
+     168:	0018      	movs	r0, r3
+     16a:	f000 fc0d 	bl	988 <Cy_SAR_GetResult16>
+     16e:	0003      	movs	r3, r0
+     170:	b29a      	uxth	r2, r3
+     172:	4b19      	ldr	r3, [pc, #100]	@ (1d8 <main+0x118>)
+     174:	801a      	strh	r2, [r3, #0]
+         if(chanresult > ADC_THRESHOLD){
+     176:	4b18      	ldr	r3, [pc, #96]	@ (1d8 <main+0x118>)
+     178:	881b      	ldrh	r3, [r3, #0]
+     17a:	4a18      	ldr	r2, [pc, #96]	@ (1dc <main+0x11c>)
+     17c:	4293      	cmp	r3, r2
+     17e:	d90c      	bls.n	19a <main+0xda>
+                Cy_SCB_UART_PutString(SCB3, ">> VALUE GREATER THAN 1.5V OBSERVED \r\n\n");
+     180:	4b17      	ldr	r3, [pc, #92]	@ (1e0 <main+0x120>)
+     182:	4a14      	ldr	r2, [pc, #80]	@ (1d4 <main+0x114>)
+     184:	0019      	movs	r1, r3
+     186:	0010      	movs	r0, r2
+     188:	f000 fdf5 	bl	d76 <Cy_SCB_UART_PutString>
+            GPIO_write((GPIO_PRT_Type *)CYREG_GPIO_PRT3_DR, 4u, 1u);
+     18c:	4b09      	ldr	r3, [pc, #36]	@ (1b4 <main+0xf4>)
+     18e:	2201      	movs	r2, #1
+     190:	2104      	movs	r1, #4
+     192:	0018      	movs	r0, r3
+     194:	f000 f89c 	bl	2d0 <GPIO_write>
+     198:	e7df      	b.n	15a <main+0x9a>
+                GPIO_write((GPIO_PRT_Type *)CYREG_GPIO_PRT3_DR, 4u, 0u);
+     19a:	4b06      	ldr	r3, [pc, #24]	@ (1b4 <main+0xf4>)
+     19c:	2200      	movs	r2, #0
+     19e:	2104      	movs	r1, #4
+     1a0:	0018      	movs	r0, r3
+     1a2:	f000 f895 	bl	2d0 <GPIO_write>
+        Cy_SAR_StartConvert(SAR0, 1u);
+     1a6:	e7d8      	b.n	15a <main+0x9a>
+     1a8:	0000106c 	.word	0x0000106c
+     1ac:	40040200 	.word	0x40040200
+     1b0:	00001058 	.word	0x00001058
+     1b4:	40040300 	.word	0x40040300
+     1b8:	00001030 	.word	0x00001030
+     1bc:	40040700 	.word	0x40040700
+     1c0:	00001044 	.word	0x00001044
+     1c4:	000010b8 	.word	0x000010b8
+     1c8:	403a0000 	.word	0x403a0000
+     1cc:	20000004 	.word	0x20000004
+     1d0:	00001080 	.word	0x00001080
+     1d4:	40270000 	.word	0x40270000
+     1d8:	20000000 	.word	0x20000000
+     1dc:	000004cd 	.word	0x000004cd
+     1e0:	00001008 	.word	0x00001008
+
+000001e4 <init_peri_Clock_Config>:
+
+
+/*Peripheral clock initilizations*/
+void init_peri_Clock_Config()
+{
+     1e4:	b580      	push	{r7, lr}
+     1e6:	af00      	add	r7, sp, #0
+    //SCB3 - CLOCK - UART
+    SysClk_PeriphDisableDivider(CY_SYSCLK_DIV_16_BIT, 0U);
+     1e8:	2100      	movs	r1, #0
+     1ea:	2001      	movs	r0, #1
+     1ec:	f000 fc4e 	bl	a8c <SysClk_PeriphDisableDivider>
+    SysClk_PeriphSetDivider(CY_SYSCLK_DIV_16_BIT, 0U, 26 - 1);
+     1f0:	2219      	movs	r2, #25
+     1f2:	2100      	movs	r1, #0
+     1f4:	2001      	movs	r0, #1
+     1f6:	f000 fc65 	bl	ac4 <SysClk_PeriphSetDivider>
+    SysClk_PeriphEnableDivider(CY_SYSCLK_DIV_16_BIT, 0U);
+     1fa:	2100      	movs	r1, #0
+     1fc:	2001      	movs	r0, #1
+     1fe:	f000 fc89 	bl	b14 <SysClk_PeriphEnableDivider>
+    SysClk_PeriphAssignDivider(PCLK_SCB3_CLOCK, CY_SYSCLK_DIV_16_BIT, 0U);
+     202:	2200      	movs	r2, #0
+     204:	2101      	movs	r1, #1
+     206:	2003      	movs	r0, #3
+     208:	f000 fca2 	bl	b50 <SysClk_PeriphAssignDivider>
+
+    //TIMER 0 for Code profiling
+    SysClk_PeriphDisableDivider(CY_SYSCLK_DIV_16_BIT, 1U);
+     20c:	2101      	movs	r1, #1
+     20e:	2001      	movs	r0, #1
+     210:	f000 fc3c 	bl	a8c <SysClk_PeriphDisableDivider>
+    SysClk_PeriphSetDivider(CY_SYSCLK_DIV_16_BIT, 1U, 24 - 1);
+     214:	2217      	movs	r2, #23
+     216:	2101      	movs	r1, #1
+     218:	2001      	movs	r0, #1
+     21a:	f000 fc53 	bl	ac4 <SysClk_PeriphSetDivider>
+    SysClk_PeriphEnableDivider(CY_SYSCLK_DIV_16_BIT, 1U);
+     21e:	2101      	movs	r1, #1
+     220:	2001      	movs	r0, #1
+     222:	f000 fc77 	bl	b14 <SysClk_PeriphEnableDivider>
+    SysClk_PeriphAssignDivider(PCLK_TCPWM_CLOCKS0, CY_SYSCLK_DIV_16_BIT, 1U);
+     226:	2201      	movs	r2, #1
+     228:	2101      	movs	r1, #1
+     22a:	2006      	movs	r0, #6
+     22c:	f000 fc90 	bl	b50 <SysClk_PeriphAssignDivider>
+
+    //TIMER 1 TIMER- CLOCK
+    SysClk_PeriphDisableDivider(CY_SYSCLK_DIV_16_BIT, 2U);
+     230:	2102      	movs	r1, #2
+     232:	2001      	movs	r0, #1
+     234:	f000 fc2a 	bl	a8c <SysClk_PeriphDisableDivider>
+    SysClk_PeriphSetDivider(CY_SYSCLK_DIV_16_BIT, 2U, 24000 - 1);
+     238:	4b24      	ldr	r3, [pc, #144]	@ (2cc <__HEAP_SIZE+0xcc>)
+     23a:	001a      	movs	r2, r3
+     23c:	2102      	movs	r1, #2
+     23e:	2001      	movs	r0, #1
+     240:	f000 fc40 	bl	ac4 <SysClk_PeriphSetDivider>
+    SysClk_PeriphEnableDivider(CY_SYSCLK_DIV_16_BIT, 2U);
+     244:	2102      	movs	r1, #2
+     246:	2001      	movs	r0, #1
+     248:	f000 fc64 	bl	b14 <SysClk_PeriphEnableDivider>
+    SysClk_PeriphAssignDivider(PCLK_TCPWM_CLOCKS1, CY_SYSCLK_DIV_16_BIT, 2U);
+     24c:	2202      	movs	r2, #2
+     24e:	2101      	movs	r1, #1
+     250:	2007      	movs	r0, #7
+     252:	f000 fc7d 	bl	b50 <SysClk_PeriphAssignDivider>
+
+    //TIMER 2 TIMER- CLOCK
+    SysClk_PeriphDisableDivider(CY_SYSCLK_DIV_16_BIT, 3U);
+     256:	2103      	movs	r1, #3
+     258:	2001      	movs	r0, #1
+     25a:	f000 fc17 	bl	a8c <SysClk_PeriphDisableDivider>
+    SysClk_PeriphSetDivider(CY_SYSCLK_DIV_16_BIT, 3U, 24000 - 1);
+     25e:	4b1b      	ldr	r3, [pc, #108]	@ (2cc <__HEAP_SIZE+0xcc>)
+     260:	001a      	movs	r2, r3
+     262:	2103      	movs	r1, #3
+     264:	2001      	movs	r0, #1
+     266:	f000 fc2d 	bl	ac4 <SysClk_PeriphSetDivider>
+    SysClk_PeriphEnableDivider(CY_SYSCLK_DIV_16_BIT, 3U);
+     26a:	2103      	movs	r1, #3
+     26c:	2001      	movs	r0, #1
+     26e:	f000 fc51 	bl	b14 <SysClk_PeriphEnableDivider>
+    SysClk_PeriphAssignDivider(PCLK_TCPWM_CLOCKS2, CY_SYSCLK_DIV_16_BIT, 3U);
+     272:	2203      	movs	r2, #3
+     274:	2101      	movs	r1, #1
+     276:	2008      	movs	r0, #8
+     278:	f000 fc6a 	bl	b50 <SysClk_PeriphAssignDivider>
+    
+    //TIMER 3 PWM- CLOCK
+    SysClk_PeriphDisableDivider(CY_SYSCLK_DIV_16_BIT, 4U);
+     27c:	2104      	movs	r1, #4
+     27e:	2001      	movs	r0, #1
+     280:	f000 fc04 	bl	a8c <SysClk_PeriphDisableDivider>
+    SysClk_PeriphSetDivider(CY_SYSCLK_DIV_16_BIT, 4U, 240U - 1);
+     284:	22ef      	movs	r2, #239	@ 0xef
+     286:	2104      	movs	r1, #4
+     288:	2001      	movs	r0, #1
+     28a:	f000 fc1b 	bl	ac4 <SysClk_PeriphSetDivider>
+    SysClk_PeriphEnableDivider(CY_SYSCLK_DIV_16_BIT, 4U);
+     28e:	2104      	movs	r1, #4
+     290:	2001      	movs	r0, #1
+     292:	f000 fc3f 	bl	b14 <SysClk_PeriphEnableDivider>
+    SysClk_PeriphAssignDivider(PCLK_TCPWM_CLOCKS3, CY_SYSCLK_DIV_16_BIT, 4U);
+     296:	2204      	movs	r2, #4
+     298:	2101      	movs	r1, #1
+     29a:	2009      	movs	r0, #9
+     29c:	f000 fc58 	bl	b50 <SysClk_PeriphAssignDivider>
+
+    //ADC - CLOCK
+    SysClk_PeriphDisableDivider(CY_SYSCLK_DIV_16_BIT, 5U);
+     2a0:	2105      	movs	r1, #5
+     2a2:	2001      	movs	r0, #1
+     2a4:	f000 fbf2 	bl	a8c <SysClk_PeriphDisableDivider>
+    SysClk_PeriphSetDivider(CY_SYSCLK_DIV_16_BIT, 5U, 24U - 1);
+     2a8:	2217      	movs	r2, #23
+     2aa:	2105      	movs	r1, #5
+     2ac:	2001      	movs	r0, #1
+     2ae:	f000 fc09 	bl	ac4 <SysClk_PeriphSetDivider>
+    SysClk_PeriphEnableDivider(CY_SYSCLK_DIV_16_BIT, 5U);
+     2b2:	2105      	movs	r1, #5
+     2b4:	2001      	movs	r0, #1
+     2b6:	f000 fc2d 	bl	b14 <SysClk_PeriphEnableDivider>
+    SysClk_PeriphAssignDivider(PCLK_PASS0_CLOCK_SAR ,CY_SYSCLK_DIV_16_BIT , 5U);
+     2ba:	2205      	movs	r2, #5
+     2bc:	2101      	movs	r1, #1
+     2be:	2012      	movs	r0, #18
+     2c0:	f000 fc46 	bl	b50 <SysClk_PeriphAssignDivider>
+     2c4:	46c0      	nop			@ (mov r8, r8)
+     2c6:	46bd      	mov	sp, r7
+     2c8:	bd80      	pop	{r7, pc}
+     2ca:	46c0      	nop			@ (mov r8, r8)
+     2cc:	00005dbf 	.word	0x00005dbf
+
+000002d0 <GPIO_write>:
+#include <stdint.h>
+#include "gpio.h"
+
+void GPIO_write(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)
+{
+     2d0:	b580      	push	{r7, lr}
+     2d2:	b084      	sub	sp, #16
+     2d4:	af00      	add	r7, sp, #0
+     2d6:	60f8      	str	r0, [r7, #12]
+     2d8:	60b9      	str	r1, [r7, #8]
+     2da:	607a      	str	r2, [r7, #4]
+    /* Thread-safe: Directly access the pin registers instead of base->OUT */
+    if(0UL == value)
+     2dc:	687b      	ldr	r3, [r7, #4]
+     2de:	2b00      	cmp	r3, #0
+     2e0:	d105      	bne.n	2ee <GPIO_write+0x1e>
+    {
+        GPIO_PRT_OUT_CLR(base) = CY_GPIO_DR_MASK << pinNum;
+     2e2:	2201      	movs	r2, #1
+     2e4:	68bb      	ldr	r3, [r7, #8]
+     2e6:	409a      	lsls	r2, r3
+     2e8:	68fb      	ldr	r3, [r7, #12]
+     2ea:	645a      	str	r2, [r3, #68]	@ 0x44
+    }
+    else
+    {
+        GPIO_PRT_OUT_SET(base) = CY_GPIO_DR_MASK << pinNum;
+    }
+}
+     2ec:	e004      	b.n	2f8 <GPIO_write+0x28>
+        GPIO_PRT_OUT_SET(base) = CY_GPIO_DR_MASK << pinNum;
+     2ee:	2201      	movs	r2, #1
+     2f0:	68bb      	ldr	r3, [r7, #8]
+     2f2:	409a      	lsls	r2, r3
+     2f4:	68fb      	ldr	r3, [r7, #12]
+     2f6:	641a      	str	r2, [r3, #64]	@ 0x40
+}
+     2f8:	46c0      	nop			@ (mov r8, r8)
+     2fa:	46bd      	mov	sp, r7
+     2fc:	b004      	add	sp, #16
+     2fe:	bd80      	pop	{r7, pc}
+
+00000300 <GPIO_Pin_Init>:
+        (((GPIO_PRT_Type*)(base))->PC2)             = config->pc2;
+        (((HSIOM_PRT_Type *)(baseHSIOM))->PORT_SEL)  = config->selActive;
+}
+
+void GPIO_Pin_Init(GPIO_PRT_Type *base, uint32_t pinNum, const cy_stc_gpio_pin_config_t *config, uint8_t hsiom)
+{
+     300:	b580      	push	{r7, lr}
+     302:	b084      	sub	sp, #16
+     304:	af00      	add	r7, sp, #0
+     306:	60f8      	str	r0, [r7, #12]
+     308:	60b9      	str	r1, [r7, #8]
+     30a:	607a      	str	r2, [r7, #4]
+     30c:	001a      	movs	r2, r3
+     30e:	1cfb      	adds	r3, r7, #3
+     310:	701a      	strb	r2, [r3, #0]
+        GPIO_write(base, pinNum, config->outVal);
+     312:	687b      	ldr	r3, [r7, #4]
+     314:	681a      	ldr	r2, [r3, #0]
+     316:	68b9      	ldr	r1, [r7, #8]
+     318:	68fb      	ldr	r3, [r7, #12]
+     31a:	0018      	movs	r0, r3
+     31c:	f7ff ffd8 	bl	2d0 <GPIO_write>
+        GPIO_SetDrivemode(base, pinNum, config->driveMode);
+     320:	687b      	ldr	r3, [r7, #4]
+     322:	685a      	ldr	r2, [r3, #4]
+     324:	68b9      	ldr	r1, [r7, #8]
+     326:	68fb      	ldr	r3, [r7, #12]
+     328:	0018      	movs	r0, r3
+     32a:	f000 f851 	bl	3d0 <GPIO_SetDrivemode>
+        GPIO_SetHSIOM(base, pinNum, hsiom);
+     32e:	1cfb      	adds	r3, r7, #3
+     330:	781a      	ldrb	r2, [r3, #0]
+     332:	68b9      	ldr	r1, [r7, #8]
+     334:	68fb      	ldr	r3, [r7, #12]
+     336:	0018      	movs	r0, r3
+     338:	f000 f81a 	bl	370 <GPIO_SetHSIOM>
+
+        GPIO_SetInterruptEdge(base, pinNum, config->intEdge);
+     33c:	687b      	ldr	r3, [r7, #4]
+     33e:	689a      	ldr	r2, [r3, #8]
+     340:	68b9      	ldr	r1, [r7, #8]
+     342:	68fb      	ldr	r3, [r7, #12]
+     344:	0018      	movs	r0, r3
+     346:	f000 f877 	bl	438 <GPIO_SetInterruptEdge>
+        GPIO_SetVtrip(base, config->vtrip);
+     34a:	687b      	ldr	r3, [r7, #4]
+     34c:	68da      	ldr	r2, [r3, #12]
+     34e:	68fb      	ldr	r3, [r7, #12]
+     350:	0011      	movs	r1, r2
+     352:	0018      	movs	r0, r3
+     354:	f000 f890 	bl	478 <GPIO_SetVtrip>
+        GPIO_SetSlewRate(base, config->slewRate);
+     358:	687b      	ldr	r3, [r7, #4]
+     35a:	691a      	ldr	r2, [r3, #16]
+     35c:	68fb      	ldr	r3, [r7, #12]
+     35e:	0011      	movs	r1, r2
+     360:	0018      	movs	r0, r3
+     362:	f000 f8a3 	bl	4ac <GPIO_SetSlewRate>
+}
+     366:	46c0      	nop			@ (mov r8, r8)
+     368:	46bd      	mov	sp, r7
+     36a:	b004      	add	sp, #16
+     36c:	bd80      	pop	{r7, pc}
+	...
+
+00000370 <GPIO_SetHSIOM>:
+
+void GPIO_SetHSIOM(const GPIO_PRT_Type* base, uint32_t pinNum, uint8_t value)
+{
+     370:	b580      	push	{r7, lr}
+     372:	b088      	sub	sp, #32
+     374:	af00      	add	r7, sp, #0
+     376:	60f8      	str	r0, [r7, #12]
+     378:	60b9      	str	r1, [r7, #8]
+     37a:	1dfb      	adds	r3, r7, #7
+     37c:	701a      	strb	r2, [r3, #0]
+    uint32_t portNum;
+    uint32_t tempReg;
+    HSIOM_PRT_Type* portAddrHSIOM;
+
+    portNum = ((uint32_t)(base) - 0x40040000UL) / 0x00000100UL;
+     37e:	68fb      	ldr	r3, [r7, #12]
+     380:	4a11      	ldr	r2, [pc, #68]	@ (3c8 <GPIO_SetHSIOM+0x58>)
+     382:	4694      	mov	ip, r2
+     384:	4463      	add	r3, ip
+     386:	0a1b      	lsrs	r3, r3, #8
+     388:	61fb      	str	r3, [r7, #28]
+    portAddrHSIOM = (HSIOM_PRT_Type*)(0x40020000UL + (0x00000100UL * portNum));
+     38a:	69fb      	ldr	r3, [r7, #28]
+     38c:	4a0f      	ldr	r2, [pc, #60]	@ (3cc <GPIO_SetHSIOM+0x5c>)
+     38e:	4694      	mov	ip, r2
+     390:	4463      	add	r3, ip
+     392:	021b      	lsls	r3, r3, #8
+     394:	61bb      	str	r3, [r7, #24]
+
+    tempReg = (((HSIOM_PRT_Type *)(portAddrHSIOM))->PORT_SEL) & ~(CY_GPIO_HSIOM_MASK << (pinNum << CY_GPIO_HSIOM_OFFSET));
+     396:	69bb      	ldr	r3, [r7, #24]
+     398:	681b      	ldr	r3, [r3, #0]
+     39a:	68ba      	ldr	r2, [r7, #8]
+     39c:	0092      	lsls	r2, r2, #2
+     39e:	210f      	movs	r1, #15
+     3a0:	4091      	lsls	r1, r2
+     3a2:	000a      	movs	r2, r1
+     3a4:	43d2      	mvns	r2, r2
+     3a6:	4013      	ands	r3, r2
+     3a8:	617b      	str	r3, [r7, #20]
+    (((HSIOM_PRT_Type *)(portAddrHSIOM))->PORT_SEL) = tempReg | (( (uint32_t) value & CY_GPIO_HSIOM_MASK) << (pinNum << CY_GPIO_HSIOM_OFFSET));
+     3aa:	1dfb      	adds	r3, r7, #7
+     3ac:	781b      	ldrb	r3, [r3, #0]
+     3ae:	220f      	movs	r2, #15
+     3b0:	401a      	ands	r2, r3
+     3b2:	68bb      	ldr	r3, [r7, #8]
+     3b4:	009b      	lsls	r3, r3, #2
+     3b6:	409a      	lsls	r2, r3
+     3b8:	697b      	ldr	r3, [r7, #20]
+     3ba:	431a      	orrs	r2, r3
+     3bc:	69bb      	ldr	r3, [r7, #24]
+     3be:	601a      	str	r2, [r3, #0]
+}
+     3c0:	46c0      	nop			@ (mov r8, r8)
+     3c2:	46bd      	mov	sp, r7
+     3c4:	b008      	add	sp, #32
+     3c6:	bd80      	pop	{r7, pc}
+     3c8:	bffc0000 	.word	0xbffc0000
+     3cc:	00400200 	.word	0x00400200
+
+000003d0 <GPIO_SetDrivemode>:
+
+void GPIO_SetDrivemode(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)
+{
+     3d0:	b580      	push	{r7, lr}
+     3d2:	b086      	sub	sp, #24
+     3d4:	af00      	add	r7, sp, #0
+     3d6:	60f8      	str	r0, [r7, #12]
+     3d8:	60b9      	str	r1, [r7, #8]
+     3da:	607a      	str	r2, [r7, #4]
+    uint32_t tempReg;
+    uint32_t pinLoc;
+
+    pinLoc = pinNum * CY_GPIO_DRIVE_MODE_OFFSET;
+     3dc:	68ba      	ldr	r2, [r7, #8]
+     3de:	0013      	movs	r3, r2
+     3e0:	005b      	lsls	r3, r3, #1
+     3e2:	189b      	adds	r3, r3, r2
+     3e4:	617b      	str	r3, [r7, #20]
+    tempReg = ((((GPIO_PRT_Type*)(base))->PC) & ~(CY_GPIO_PC_DM_MASK << pinLoc));
+     3e6:	68fb      	ldr	r3, [r7, #12]
+     3e8:	689b      	ldr	r3, [r3, #8]
+     3ea:	2107      	movs	r1, #7
+     3ec:	697a      	ldr	r2, [r7, #20]
+     3ee:	4091      	lsls	r1, r2
+     3f0:	000a      	movs	r2, r1
+     3f2:	43d2      	mvns	r2, r2
+     3f4:	4013      	ands	r3, r2
+     3f6:	613b      	str	r3, [r7, #16]
+    (((GPIO_PRT_Type*)(base))->PC) = tempReg | ((value & CY_GPIO_PC_DM_MASK) << pinLoc);
+     3f8:	687b      	ldr	r3, [r7, #4]
+     3fa:	2207      	movs	r2, #7
+     3fc:	401a      	ands	r2, r3
+     3fe:	697b      	ldr	r3, [r7, #20]
+     400:	409a      	lsls	r2, r3
+     402:	693b      	ldr	r3, [r7, #16]
+     404:	431a      	orrs	r2, r3
+     406:	68fb      	ldr	r3, [r7, #12]
+     408:	609a      	str	r2, [r3, #8]
+
+    tempReg = ((((GPIO_PRT_Type*)(base))->PC2) & ~(CY_GPIO_PC_DM_IBUF_MASK << pinNum));
+     40a:	68fb      	ldr	r3, [r7, #12]
+     40c:	699b      	ldr	r3, [r3, #24]
+     40e:	2101      	movs	r1, #1
+     410:	68ba      	ldr	r2, [r7, #8]
+     412:	4091      	lsls	r1, r2
+     414:	000a      	movs	r2, r1
+     416:	43d2      	mvns	r2, r2
+     418:	4013      	ands	r3, r2
+     41a:	613b      	str	r3, [r7, #16]
+    (((GPIO_PRT_Type*)(base))->PC2) = tempReg | (((value & CY_GPIO_DM_VAL_IBUF_DISABLE_MASK) >> CY_GPIO_DRIVE_MODE_OFFSET) << pinNum);
+     41c:	687b      	ldr	r3, [r7, #4]
+     41e:	08db      	lsrs	r3, r3, #3
+     420:	2201      	movs	r2, #1
+     422:	401a      	ands	r2, r3
+     424:	68bb      	ldr	r3, [r7, #8]
+     426:	409a      	lsls	r2, r3
+     428:	693b      	ldr	r3, [r7, #16]
+     42a:	431a      	orrs	r2, r3
+     42c:	68fb      	ldr	r3, [r7, #12]
+     42e:	619a      	str	r2, [r3, #24]
+}
+     430:	46c0      	nop			@ (mov r8, r8)
+     432:	46bd      	mov	sp, r7
+     434:	b006      	add	sp, #24
+     436:	bd80      	pop	{r7, pc}
+
+00000438 <GPIO_SetInterruptEdge>:
+
+void GPIO_SetInterruptEdge(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)
+{
+     438:	b580      	push	{r7, lr}
+     43a:	b086      	sub	sp, #24
+     43c:	af00      	add	r7, sp, #0
+     43e:	60f8      	str	r0, [r7, #12]
+     440:	60b9      	str	r1, [r7, #8]
+     442:	607a      	str	r2, [r7, #4]
+    uint32_t tempReg;
+    uint32_t pinLoc;
+
+    pinLoc = pinNum << 0x1u;
+     444:	68bb      	ldr	r3, [r7, #8]
+     446:	005b      	lsls	r3, r3, #1
+     448:	617b      	str	r3, [r7, #20]
+    tempReg = (((GPIO_PRT_Type*)(base))->INTR_CFG) & ~(0x3u << pinLoc);
+     44a:	68fb      	ldr	r3, [r7, #12]
+     44c:	68db      	ldr	r3, [r3, #12]
+     44e:	2103      	movs	r1, #3
+     450:	697a      	ldr	r2, [r7, #20]
+     452:	4091      	lsls	r1, r2
+     454:	000a      	movs	r2, r1
+     456:	43d2      	mvns	r2, r2
+     458:	4013      	ands	r3, r2
+     45a:	613b      	str	r3, [r7, #16]
+    (((GPIO_PRT_Type*)(base))->INTR_CFG) = tempReg | ((value & 0x3u) << pinLoc);
+     45c:	687b      	ldr	r3, [r7, #4]
+     45e:	2203      	movs	r2, #3
+     460:	401a      	ands	r2, r3
+     462:	697b      	ldr	r3, [r7, #20]
+     464:	409a      	lsls	r2, r3
+     466:	693b      	ldr	r3, [r7, #16]
+     468:	431a      	orrs	r2, r3
+     46a:	68fb      	ldr	r3, [r7, #12]
+     46c:	60da      	str	r2, [r3, #12]
+}
+     46e:	46c0      	nop			@ (mov r8, r8)
+     470:	46bd      	mov	sp, r7
+     472:	b006      	add	sp, #24
+     474:	bd80      	pop	{r7, pc}
+	...
+
+00000478 <GPIO_SetVtrip>:
+
+void GPIO_SetVtrip(GPIO_PRT_Type* base, uint32_t value)
+{
+     478:	b580      	push	{r7, lr}
+     47a:	b084      	sub	sp, #16
+     47c:	af00      	add	r7, sp, #0
+     47e:	6078      	str	r0, [r7, #4]
+     480:	6039      	str	r1, [r7, #0]
+    uint32_t tempReg;
+
+    tempReg = (((GPIO_PRT_Type*)(base))->PC) & ~(0x1u << 24u);
+     482:	687b      	ldr	r3, [r7, #4]
+     484:	689b      	ldr	r3, [r3, #8]
+     486:	4a08      	ldr	r2, [pc, #32]	@ (4a8 <GPIO_SetVtrip+0x30>)
+     488:	4013      	ands	r3, r2
+     48a:	60fb      	str	r3, [r7, #12]
+    (((GPIO_PRT_Type*)(base))->PC) = tempReg | ((value & 0x1u) << 24);
+     48c:	683b      	ldr	r3, [r7, #0]
+     48e:	061a      	lsls	r2, r3, #24
+     490:	2380      	movs	r3, #128	@ 0x80
+     492:	045b      	lsls	r3, r3, #17
+     494:	401a      	ands	r2, r3
+     496:	68fb      	ldr	r3, [r7, #12]
+     498:	431a      	orrs	r2, r3
+     49a:	687b      	ldr	r3, [r7, #4]
+     49c:	609a      	str	r2, [r3, #8]
+
+}
+     49e:	46c0      	nop			@ (mov r8, r8)
+     4a0:	46bd      	mov	sp, r7
+     4a2:	b004      	add	sp, #16
+     4a4:	bd80      	pop	{r7, pc}
+     4a6:	46c0      	nop			@ (mov r8, r8)
+     4a8:	feffffff 	.word	0xfeffffff
+
+000004ac <GPIO_SetSlewRate>:
+
+void GPIO_SetSlewRate(GPIO_PRT_Type* base, uint32_t value)
+{
+     4ac:	b580      	push	{r7, lr}
+     4ae:	b084      	sub	sp, #16
+     4b0:	af00      	add	r7, sp, #0
+     4b2:	6078      	str	r0, [r7, #4]
+     4b4:	6039      	str	r1, [r7, #0]
+    uint32_t tempReg;
+
+    tempReg = (((GPIO_PRT_Type*)(base))->PC) & ~(0x1u << 25u);
+     4b6:	687b      	ldr	r3, [r7, #4]
+     4b8:	689b      	ldr	r3, [r3, #8]
+     4ba:	4a08      	ldr	r2, [pc, #32]	@ (4dc <GPIO_SetSlewRate+0x30>)
+     4bc:	4013      	ands	r3, r2
+     4be:	60fb      	str	r3, [r7, #12]
+    (((GPIO_PRT_Type*)(base))->PC) = tempReg | ((value & 0x1u) << 25);
+     4c0:	683b      	ldr	r3, [r7, #0]
+     4c2:	065a      	lsls	r2, r3, #25
+     4c4:	2380      	movs	r3, #128	@ 0x80
+     4c6:	049b      	lsls	r3, r3, #18
+     4c8:	401a      	ands	r2, r3
+     4ca:	68fb      	ldr	r3, [r7, #12]
+     4cc:	431a      	orrs	r2, r3
+     4ce:	687b      	ldr	r3, [r7, #4]
+     4d0:	609a      	str	r2, [r3, #8]
+
+}
+     4d2:	46c0      	nop			@ (mov r8, r8)
+     4d4:	46bd      	mov	sp, r7
+     4d6:	b004      	add	sp, #16
+     4d8:	bd80      	pop	{r7, pc}
+     4da:	46c0      	nop			@ (mov r8, r8)
+     4dc:	fdffffff 	.word	0xfdffffff
+
+000004e0 <Cy_SAR_Init>:
+#include <stdint.h>
+#include "ADC.h"
+static int16_t Cy_SAR_offset[CY_SAR_NUM_CHANNELS][1];
+
+void Cy_SAR_Init(SAR_Type * base, const cy_stc_sar_config_t * config)
+{
+     4e0:	b580      	push	{r7, lr}
+     4e2:	b088      	sub	sp, #32
+     4e4:	af00      	add	r7, sp, #0
+     4e6:	6078      	str	r0, [r7, #4]
+     4e8:	6039      	str	r1, [r7, #0]
+    uint8_t chan;
+    uint32_t satIntrMsk = 0UL;   /* Saturation interrupt mask */
+     4ea:	2300      	movs	r3, #0
+     4ec:	61bb      	str	r3, [r7, #24]
+    uint32_t rangeIntrMsk = 0UL; /* Range interrupt mask */
+     4ee:	2300      	movs	r3, #0
+     4f0:	617b      	str	r3, [r7, #20]
+
+    SAR_CTRL(base) &= SAR_CTRL_DSI_SYNC_CONFIG_Msk | SAR_CTRL_DSI_MODE_Msk; /* preserve the DSI_SYNC_CONFIG and DSI_MODE fields (and BTW disable the block)  */
+     4f2:	687b      	ldr	r3, [r7, #4]
+     4f4:	681a      	ldr	r2, [r3, #0]
+     4f6:	23c0      	movs	r3, #192	@ 0xc0
+     4f8:	059b      	lsls	r3, r3, #22
+     4fa:	401a      	ands	r2, r3
+     4fc:	687b      	ldr	r3, [r7, #4]
+     4fe:	601a      	str	r2, [r3, #0]
+    SAR_CTRL(base) |= _VAL2FLD(SAR_CTRL_VREF_SEL, config->vrefSel) |
+     500:	687b      	ldr	r3, [r7, #4]
+     502:	681a      	ldr	r2, [r3, #0]
+     504:	683b      	ldr	r3, [r7, #0]
+     506:	781b      	ldrb	r3, [r3, #0]
+     508:	011b      	lsls	r3, r3, #4
+     50a:	2170      	movs	r1, #112	@ 0x70
+     50c:	4019      	ands	r1, r3
+                        _BOOL2FLD(SAR_CTRL_VREF_BYP_CAP_EN, config->vrefBypCapEn) |
+     50e:	683b      	ldr	r3, [r7, #0]
+     510:	785b      	ldrb	r3, [r3, #1]
+     512:	2b00      	cmp	r3, #0
+     514:	d001      	beq.n	51a <Cy_SAR_Init+0x3a>
+     516:	2380      	movs	r3, #128	@ 0x80
+     518:	e000      	b.n	51c <Cy_SAR_Init+0x3c>
+     51a:	2300      	movs	r3, #0
+    SAR_CTRL(base) |= _VAL2FLD(SAR_CTRL_VREF_SEL, config->vrefSel) |
+     51c:	4319      	orrs	r1, r3
+                        _VAL2FLD(SAR_CTRL_NEG_SEL, config->negSel) |
+     51e:	683b      	ldr	r3, [r7, #0]
+     520:	789b      	ldrb	r3, [r3, #2]
+     522:	0258      	lsls	r0, r3, #9
+     524:	23e0      	movs	r3, #224	@ 0xe0
+     526:	011b      	lsls	r3, r3, #4
+     528:	4003      	ands	r3, r0
+                        _BOOL2FLD(SAR_CTRL_VREF_BYP_CAP_EN, config->vrefBypCapEn) |
+     52a:	4319      	orrs	r1, r3
+                        _VAL2FLD(SAR_CTRL_SAR_HW_CTRL_NEGVREF, config->negVref) |
+     52c:	683b      	ldr	r3, [r7, #0]
+     52e:	78db      	ldrb	r3, [r3, #3]
+     530:	0358      	lsls	r0, r3, #13
+     532:	2380      	movs	r3, #128	@ 0x80
+     534:	019b      	lsls	r3, r3, #6
+     536:	4003      	ands	r3, r0
+                        _VAL2FLD(SAR_CTRL_NEG_SEL, config->negSel) |
+     538:	4319      	orrs	r1, r3
+                        _BOOL2FLD(SAR_CTRL_BOOSTPUMP_EN, config->boostPump) |
+     53a:	683b      	ldr	r3, [r7, #0]
+     53c:	791b      	ldrb	r3, [r3, #4]
+     53e:	2b00      	cmp	r3, #0
+     540:	d002      	beq.n	548 <Cy_SAR_Init+0x68>
+     542:	2380      	movs	r3, #128	@ 0x80
+     544:	035b      	lsls	r3, r3, #13
+     546:	e000      	b.n	54a <Cy_SAR_Init+0x6a>
+     548:	2300      	movs	r3, #0
+                        _VAL2FLD(SAR_CTRL_SAR_HW_CTRL_NEGVREF, config->negVref) |
+     54a:	4319      	orrs	r1, r3
+                        _VAL2FLD(SAR_CTRL_ICONT_LV, config->power) |
+     54c:	683b      	ldr	r3, [r7, #0]
+     54e:	795b      	ldrb	r3, [r3, #5]
+     550:	0618      	lsls	r0, r3, #24
+     552:	23c0      	movs	r3, #192	@ 0xc0
+     554:	049b      	lsls	r3, r3, #18
+     556:	4003      	ands	r3, r0
+                        _BOOL2FLD(SAR_CTRL_BOOSTPUMP_EN, config->boostPump) |
+     558:	4319      	orrs	r1, r3
+                        _BOOL2FLD(SAR_CTRL_DEEPSLEEP_ON, config->sarMuxDsEn) |
+     55a:	683b      	ldr	r3, [r7, #0]
+     55c:	799b      	ldrb	r3, [r3, #6]
+     55e:	2b00      	cmp	r3, #0
+     560:	d002      	beq.n	568 <Cy_SAR_Init+0x88>
+     562:	2380      	movs	r3, #128	@ 0x80
+     564:	051b      	lsls	r3, r3, #20
+     566:	e000      	b.n	56a <Cy_SAR_Init+0x8a>
+     568:	2300      	movs	r3, #0
+                        _VAL2FLD(SAR_CTRL_ICONT_LV, config->power) |
+     56a:	4319      	orrs	r1, r3
+                        _BOOL2FLD(SAR_CTRL_SWITCH_DISABLE, config->switchDisable);
+     56c:	683b      	ldr	r3, [r7, #0]
+     56e:	79db      	ldrb	r3, [r3, #7]
+     570:	2b00      	cmp	r3, #0
+     572:	d002      	beq.n	57a <Cy_SAR_Init+0x9a>
+     574:	2380      	movs	r3, #128	@ 0x80
+     576:	05db      	lsls	r3, r3, #23
+     578:	e000      	b.n	57c <Cy_SAR_Init+0x9c>
+     57a:	2300      	movs	r3, #0
+                        _BOOL2FLD(SAR_CTRL_DEEPSLEEP_ON, config->sarMuxDsEn) |
+     57c:	430b      	orrs	r3, r1
+    SAR_CTRL(base) |= _VAL2FLD(SAR_CTRL_VREF_SEL, config->vrefSel) |
+     57e:	431a      	orrs	r2, r3
+     580:	687b      	ldr	r3, [r7, #4]
+     582:	601a      	str	r2, [r3, #0]
+
+    SAR_SAMPLE_CTRL(base) &= SAR_SAMPLE_CTRL_DSI_SYNC_TRIGGER_Msk; /* preserve the DSI_SYNC_TRIGGER field  */
+     584:	687b      	ldr	r3, [r7, #4]
+     586:	685a      	ldr	r2, [r3, #4]
+     588:	2380      	movs	r3, #128	@ 0x80
+     58a:	031b      	lsls	r3, r3, #12
+     58c:	401a      	ands	r2, r3
+     58e:	687b      	ldr	r3, [r7, #4]
+     590:	605a      	str	r2, [r3, #4]
+    SAR_SAMPLE_CTRL(base) |= _VAL2FLD(SAR_SAMPLE_CTRL_SUB_RESOLUTION, config->subResolution) |
+     592:	687b      	ldr	r3, [r7, #4]
+     594:	685a      	ldr	r2, [r3, #4]
+     596:	683b      	ldr	r3, [r7, #0]
+     598:	7a1b      	ldrb	r3, [r3, #8]
+     59a:	0019      	movs	r1, r3
+     59c:	2301      	movs	r3, #1
+     59e:	4019      	ands	r1, r3
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_LEFT_ALIGN, config->leftAlign) |
+     5a0:	683b      	ldr	r3, [r7, #0]
+     5a2:	7a5b      	ldrb	r3, [r3, #9]
+     5a4:	2b00      	cmp	r3, #0
+     5a6:	d001      	beq.n	5ac <Cy_SAR_Init+0xcc>
+     5a8:	2302      	movs	r3, #2
+     5aa:	e000      	b.n	5ae <Cy_SAR_Init+0xce>
+     5ac:	2300      	movs	r3, #0
+    SAR_SAMPLE_CTRL(base) |= _VAL2FLD(SAR_SAMPLE_CTRL_SUB_RESOLUTION, config->subResolution) |
+     5ae:	4319      	orrs	r1, r3
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_SINGLE_ENDED_SIGNED, config->singleEndedSigned) |
+     5b0:	683b      	ldr	r3, [r7, #0]
+     5b2:	7a9b      	ldrb	r3, [r3, #10]
+     5b4:	2b00      	cmp	r3, #0
+     5b6:	d001      	beq.n	5bc <Cy_SAR_Init+0xdc>
+     5b8:	2304      	movs	r3, #4
+     5ba:	e000      	b.n	5be <Cy_SAR_Init+0xde>
+     5bc:	2300      	movs	r3, #0
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_LEFT_ALIGN, config->leftAlign) |
+     5be:	4319      	orrs	r1, r3
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_DIFFERENTIAL_SIGNED, config->differentialSigned) |
+     5c0:	683b      	ldr	r3, [r7, #0]
+     5c2:	7adb      	ldrb	r3, [r3, #11]
+     5c4:	2b00      	cmp	r3, #0
+     5c6:	d001      	beq.n	5cc <Cy_SAR_Init+0xec>
+     5c8:	2308      	movs	r3, #8
+     5ca:	e000      	b.n	5ce <Cy_SAR_Init+0xee>
+     5cc:	2300      	movs	r3, #0
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_SINGLE_ENDED_SIGNED, config->singleEndedSigned) |
+     5ce:	4319      	orrs	r1, r3
+                                _VAL2FLD(SAR_SAMPLE_CTRL_AVG_CNT, config->avgCnt) |
+     5d0:	683b      	ldr	r3, [r7, #0]
+     5d2:	7b1b      	ldrb	r3, [r3, #12]
+     5d4:	011b      	lsls	r3, r3, #4
+     5d6:	2070      	movs	r0, #112	@ 0x70
+     5d8:	4003      	ands	r3, r0
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_DIFFERENTIAL_SIGNED, config->differentialSigned) |
+     5da:	4319      	orrs	r1, r3
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_AVG_SHIFT, config->avgShift) |
+     5dc:	683b      	ldr	r3, [r7, #0]
+     5de:	7b5b      	ldrb	r3, [r3, #13]
+     5e0:	2b00      	cmp	r3, #0
+     5e2:	d001      	beq.n	5e8 <Cy_SAR_Init+0x108>
+     5e4:	2380      	movs	r3, #128	@ 0x80
+     5e6:	e000      	b.n	5ea <Cy_SAR_Init+0x10a>
+     5e8:	2300      	movs	r3, #0
+                                _VAL2FLD(SAR_SAMPLE_CTRL_AVG_CNT, config->avgCnt) |
+     5ea:	4319      	orrs	r1, r3
+                                _VAL2FLD(SAR_SAMPLE_CTRL_DSI_TRIGGER_EN, config->trigMode) | //SAR_SAMPLE_CTRL_DSI_TRIGGER_MODE
+     5ec:	683b      	ldr	r3, [r7, #0]
+     5ee:	7b9b      	ldrb	r3, [r3, #14]
+     5f0:	0458      	lsls	r0, r3, #17
+     5f2:	2380      	movs	r3, #128	@ 0x80
+     5f4:	029b      	lsls	r3, r3, #10
+     5f6:	4003      	ands	r3, r0
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_AVG_SHIFT, config->avgShift) |
+     5f8:	4319      	orrs	r1, r3
+                            _BOOL2FLD(SAR_SAMPLE_CTRL_EOS_DSI_OUT_EN, config->eosEn);
+     5fa:	683b      	ldr	r3, [r7, #0]
+     5fc:	7bdb      	ldrb	r3, [r3, #15]
+     5fe:	2b00      	cmp	r3, #0
+     600:	d002      	beq.n	608 <Cy_SAR_Init+0x128>
+     602:	2380      	movs	r3, #128	@ 0x80
+     604:	061b      	lsls	r3, r3, #24
+     606:	e000      	b.n	60a <Cy_SAR_Init+0x12a>
+     608:	2300      	movs	r3, #0
+                                _VAL2FLD(SAR_SAMPLE_CTRL_DSI_TRIGGER_EN, config->trigMode) | //SAR_SAMPLE_CTRL_DSI_TRIGGER_MODE
+     60a:	430b      	orrs	r3, r1
+    SAR_SAMPLE_CTRL(base) |= _VAL2FLD(SAR_SAMPLE_CTRL_SUB_RESOLUTION, config->subResolution) |
+     60c:	431a      	orrs	r2, r3
+     60e:	687b      	ldr	r3, [r7, #4]
+     610:	605a      	str	r2, [r3, #4]
+
+    SAR_SAMPLE_TIME01(base) = _VAL2FLD(SAR_SAMPLE_TIME01_SAMPLE_TIME0, config->sampleTime0) |
+     612:	683b      	ldr	r3, [r7, #0]
+     614:	691b      	ldr	r3, [r3, #16]
+     616:	059b      	lsls	r3, r3, #22
+     618:	0d9a      	lsrs	r2, r3, #22
+                                _VAL2FLD(SAR_SAMPLE_TIME01_SAMPLE_TIME1, config->sampleTime1);
+     61a:	683b      	ldr	r3, [r7, #0]
+     61c:	695b      	ldr	r3, [r3, #20]
+     61e:	041b      	lsls	r3, r3, #16
+     620:	499a      	ldr	r1, [pc, #616]	@ (88c <Cy_SAR_Init+0x3ac>)
+     622:	400b      	ands	r3, r1
+    SAR_SAMPLE_TIME01(base) = _VAL2FLD(SAR_SAMPLE_TIME01_SAMPLE_TIME0, config->sampleTime0) |
+     624:	431a      	orrs	r2, r3
+     626:	687b      	ldr	r3, [r7, #4]
+     628:	611a      	str	r2, [r3, #16]
+    SAR_SAMPLE_TIME23(base) = _VAL2FLD(SAR_SAMPLE_TIME23_SAMPLE_TIME2, config->sampleTime2) |
+     62a:	683b      	ldr	r3, [r7, #0]
+     62c:	699b      	ldr	r3, [r3, #24]
+     62e:	059b      	lsls	r3, r3, #22
+     630:	0d9a      	lsrs	r2, r3, #22
+                                _VAL2FLD(SAR_SAMPLE_TIME23_SAMPLE_TIME3, config->sampleTime3);
+     632:	683b      	ldr	r3, [r7, #0]
+     634:	69db      	ldr	r3, [r3, #28]
+     636:	041b      	lsls	r3, r3, #16
+     638:	4994      	ldr	r1, [pc, #592]	@ (88c <Cy_SAR_Init+0x3ac>)
+     63a:	400b      	ands	r3, r1
+    SAR_SAMPLE_TIME23(base) = _VAL2FLD(SAR_SAMPLE_TIME23_SAMPLE_TIME2, config->sampleTime2) |
+     63c:	431a      	orrs	r2, r3
+     63e:	687b      	ldr	r3, [r7, #4]
+     640:	615a      	str	r2, [r3, #20]
+    SAR_RANGE_THRES(base) = _VAL2FLD(SAR_RANGE_THRES_RANGE_LOW, config->rangeThresLow) |
+     642:	683b      	ldr	r3, [r7, #0]
+     644:	6a1b      	ldr	r3, [r3, #32]
+     646:	041b      	lsls	r3, r3, #16
+     648:	0c1a      	lsrs	r2, r3, #16
+                            _VAL2FLD(SAR_RANGE_THRES_RANGE_HIGH, config->rangeThresHigh);
+     64a:	683b      	ldr	r3, [r7, #0]
+     64c:	6a5b      	ldr	r3, [r3, #36]	@ 0x24
+     64e:	041b      	lsls	r3, r3, #16
+    SAR_RANGE_THRES(base) = _VAL2FLD(SAR_RANGE_THRES_RANGE_LOW, config->rangeThresLow) |
+     650:	431a      	orrs	r2, r3
+     652:	687b      	ldr	r3, [r7, #4]
+     654:	619a      	str	r2, [r3, #24]
+    SAR_RANGE_COND(base) = _VAL2FLD(SAR_RANGE_COND_RANGE_COND, config->rangeCond);
+     656:	683b      	ldr	r3, [r7, #0]
+     658:	2228      	movs	r2, #40	@ 0x28
+     65a:	5c9b      	ldrb	r3, [r3, r2]
+     65c:	079a      	lsls	r2, r3, #30
+     65e:	687b      	ldr	r3, [r7, #4]
+     660:	61da      	str	r2, [r3, #28]
+
+    SAR_CHAN_EN(base) = _VAL2FLD(SAR_CHAN_EN_CHAN_EN, config->chanEn);
+     662:	683b      	ldr	r3, [r7, #0]
+     664:	6adb      	ldr	r3, [r3, #44]	@ 0x2c
+     666:	041b      	lsls	r3, r3, #16
+     668:	0c1a      	lsrs	r2, r3, #16
+     66a:	687b      	ldr	r3, [r7, #4]
+     66c:	621a      	str	r2, [r3, #32]
+
+    for (chan = 0u; chan < CY_SAR_NUM_CHANNELS; chan++)
+     66e:	231f      	movs	r3, #31
+     670:	18fb      	adds	r3, r7, r3
+     672:	2200      	movs	r2, #0
+     674:	701a      	strb	r2, [r3, #0]
+     676:	e0c5      	b.n	804 <Cy_SAR_Init+0x324>
+    {
+        const cy_stc_sar_channel_config_t * locChanCfg = config->channelConfig[chan];
+     678:	211f      	movs	r1, #31
+     67a:	187b      	adds	r3, r7, r1
+     67c:	781a      	ldrb	r2, [r3, #0]
+     67e:	683b      	ldr	r3, [r7, #0]
+     680:	320c      	adds	r2, #12
+     682:	0092      	lsls	r2, r2, #2
+     684:	58d3      	ldr	r3, [r2, r3]
+     686:	613b      	str	r3, [r7, #16]
+
+        if (0 != locChanCfg)
+     688:	693b      	ldr	r3, [r7, #16]
+     68a:	2b00      	cmp	r3, #0
+     68c:	d100      	bne.n	690 <Cy_SAR_Init+0x1b0>
+     68e:	e0b3      	b.n	7f8 <Cy_SAR_Init+0x318>
+        {
+            if (chan <  8u ) //CY_SAR_INJ_CHANNEL
+     690:	187b      	adds	r3, r7, r1
+     692:	781b      	ldrb	r3, [r3, #0]
+     694:	2b07      	cmp	r3, #7
+     696:	d82c      	bhi.n	6f2 <Cy_SAR_Init+0x212>
+            {
+                SAR_CHAN_CONFIG(base, chan) = _VAL2FLD(SAR_CHAN_CONFIG_ADDR, locChanCfg->addr) | //SAR_CHAN_CONFIG_ADDR
+     698:	693b      	ldr	r3, [r7, #16]
+     69a:	681b      	ldr	r3, [r3, #0]
+     69c:	2277      	movs	r2, #119	@ 0x77
+     69e:	401a      	ands	r2, r3
+                                                _BOOL2FLD(SAR_CHAN_CONFIG_DIFFERENTIAL_EN, locChanCfg->differential) |
+     6a0:	693b      	ldr	r3, [r7, #16]
+     6a2:	791b      	ldrb	r3, [r3, #4]
+     6a4:	2b00      	cmp	r3, #0
+     6a6:	d002      	beq.n	6ae <Cy_SAR_Init+0x1ce>
+     6a8:	2380      	movs	r3, #128	@ 0x80
+     6aa:	005b      	lsls	r3, r3, #1
+     6ac:	e000      	b.n	6b0 <Cy_SAR_Init+0x1d0>
+     6ae:	2300      	movs	r3, #0
+                SAR_CHAN_CONFIG(base, chan) = _VAL2FLD(SAR_CHAN_CONFIG_ADDR, locChanCfg->addr) | //SAR_CHAN_CONFIG_ADDR
+     6b0:	431a      	orrs	r2, r3
+                                                _VAL2FLD(SAR_CHAN_CONFIG_RESOLUTION, locChanCfg->resolution) |
+     6b2:	693b      	ldr	r3, [r7, #16]
+     6b4:	795b      	ldrb	r3, [r3, #5]
+     6b6:	0259      	lsls	r1, r3, #9
+     6b8:	2380      	movs	r3, #128	@ 0x80
+     6ba:	009b      	lsls	r3, r3, #2
+     6bc:	400b      	ands	r3, r1
+                                                _BOOL2FLD(SAR_CHAN_CONFIG_DIFFERENTIAL_EN, locChanCfg->differential) |
+     6be:	431a      	orrs	r2, r3
+                                                _BOOL2FLD(SAR_CHAN_CONFIG_AVG_EN, locChanCfg->avgEn) |
+     6c0:	693b      	ldr	r3, [r7, #16]
+     6c2:	799b      	ldrb	r3, [r3, #6]
+     6c4:	2b00      	cmp	r3, #0
+     6c6:	d002      	beq.n	6ce <Cy_SAR_Init+0x1ee>
+     6c8:	2380      	movs	r3, #128	@ 0x80
+     6ca:	00db      	lsls	r3, r3, #3
+     6cc:	e000      	b.n	6d0 <Cy_SAR_Init+0x1f0>
+     6ce:	2300      	movs	r3, #0
+                                                _VAL2FLD(SAR_CHAN_CONFIG_RESOLUTION, locChanCfg->resolution) |
+     6d0:	4313      	orrs	r3, r2
+     6d2:	0019      	movs	r1, r3
+                                                _VAL2FLD(SAR_CHAN_CONFIG_SAMPLE_TIME_SEL, locChanCfg->sampleTimeSel);
+     6d4:	693b      	ldr	r3, [r7, #16]
+     6d6:	79db      	ldrb	r3, [r3, #7]
+     6d8:	031a      	lsls	r2, r3, #12
+     6da:	23c0      	movs	r3, #192	@ 0xc0
+     6dc:	019b      	lsls	r3, r3, #6
+     6de:	4013      	ands	r3, r2
+                SAR_CHAN_CONFIG(base, chan) = _VAL2FLD(SAR_CHAN_CONFIG_ADDR, locChanCfg->addr) | //SAR_CHAN_CONFIG_ADDR
+     6e0:	221f      	movs	r2, #31
+     6e2:	18ba      	adds	r2, r7, r2
+     6e4:	7812      	ldrb	r2, [r2, #0]
+                                                _BOOL2FLD(SAR_CHAN_CONFIG_AVG_EN, locChanCfg->avgEn) |
+     6e6:	4319      	orrs	r1, r3
+                SAR_CHAN_CONFIG(base, chan) = _VAL2FLD(SAR_CHAN_CONFIG_ADDR, locChanCfg->addr) | //SAR_CHAN_CONFIG_ADDR
+     6e8:	687b      	ldr	r3, [r7, #4]
+     6ea:	3220      	adds	r2, #32
+     6ec:	0092      	lsls	r2, r2, #2
+     6ee:	50d1      	str	r1, [r2, r3]
+     6f0:	e028      	b.n	744 <Cy_SAR_Init+0x264>
+            }
+            else
+            {
+                SAR_INJ_CHAN_CONFIG(base) = _VAL2FLD(SAR_CHAN_CONFIG_PIN_ADDR, locChanCfg->addr) |  //SAR_CHAN_CONFIG_ADDR
+     6f2:	693b      	ldr	r3, [r7, #16]
+     6f4:	681b      	ldr	r3, [r3, #0]
+     6f6:	2207      	movs	r2, #7
+     6f8:	401a      	ands	r2, r3
+                                            _BOOL2FLD(SAR_INJ_CHAN_CONFIG_INJ_DIFFERENTIAL_EN, locChanCfg->differential) |
+     6fa:	693b      	ldr	r3, [r7, #16]
+     6fc:	791b      	ldrb	r3, [r3, #4]
+     6fe:	2b00      	cmp	r3, #0
+     700:	d002      	beq.n	708 <Cy_SAR_Init+0x228>
+     702:	2380      	movs	r3, #128	@ 0x80
+     704:	005b      	lsls	r3, r3, #1
+     706:	e000      	b.n	70a <Cy_SAR_Init+0x22a>
+     708:	2300      	movs	r3, #0
+                SAR_INJ_CHAN_CONFIG(base) = _VAL2FLD(SAR_CHAN_CONFIG_PIN_ADDR, locChanCfg->addr) |  //SAR_CHAN_CONFIG_ADDR
+     70a:	431a      	orrs	r2, r3
+                                            _VAL2FLD(SAR_INJ_CHAN_CONFIG_INJ_RESOLUTION, locChanCfg->resolution) |
+     70c:	693b      	ldr	r3, [r7, #16]
+     70e:	795b      	ldrb	r3, [r3, #5]
+     710:	0259      	lsls	r1, r3, #9
+     712:	2380      	movs	r3, #128	@ 0x80
+     714:	009b      	lsls	r3, r3, #2
+     716:	400b      	ands	r3, r1
+                                            _BOOL2FLD(SAR_INJ_CHAN_CONFIG_INJ_DIFFERENTIAL_EN, locChanCfg->differential) |
+     718:	431a      	orrs	r2, r3
+                                            _BOOL2FLD(SAR_INJ_CHAN_CONFIG_INJ_AVG_EN, locChanCfg->avgEn) |
+     71a:	693b      	ldr	r3, [r7, #16]
+     71c:	799b      	ldrb	r3, [r3, #6]
+     71e:	2b00      	cmp	r3, #0
+     720:	d002      	beq.n	728 <Cy_SAR_Init+0x248>
+     722:	2380      	movs	r3, #128	@ 0x80
+     724:	00db      	lsls	r3, r3, #3
+     726:	e000      	b.n	72a <Cy_SAR_Init+0x24a>
+     728:	2300      	movs	r3, #0
+                                            _VAL2FLD(SAR_INJ_CHAN_CONFIG_INJ_RESOLUTION, locChanCfg->resolution) |
+     72a:	431a      	orrs	r2, r3
+                                            _VAL2FLD(SAR_INJ_CHAN_CONFIG_INJ_SAMPLE_TIME_SEL, locChanCfg->sampleTimeSel);
+     72c:	693b      	ldr	r3, [r7, #16]
+     72e:	79db      	ldrb	r3, [r3, #7]
+     730:	0319      	lsls	r1, r3, #12
+     732:	23c0      	movs	r3, #192	@ 0xc0
+     734:	019b      	lsls	r3, r3, #6
+     736:	400b      	ands	r3, r1
+                                            _BOOL2FLD(SAR_INJ_CHAN_CONFIG_INJ_AVG_EN, locChanCfg->avgEn) |
+     738:	431a      	orrs	r2, r3
+     73a:	0011      	movs	r1, r2
+                SAR_INJ_CHAN_CONFIG(base) = _VAL2FLD(SAR_CHAN_CONFIG_PIN_ADDR, locChanCfg->addr) |  //SAR_CHAN_CONFIG_ADDR
+     73c:	687a      	ldr	r2, [r7, #4]
+     73e:	23a0      	movs	r3, #160	@ 0xa0
+     740:	009b      	lsls	r3, r3, #2
+     742:	50d1      	str	r1, [r2, r3]
+            }
+
+            /* For signed single ended channels with NEG_SEL set to VREF,
+                * set the offset to minus half scale to convert results to unsigned format
+                */
+            if (!(locChanCfg->differential) && (7UL == config->negSel) && (config->singleEndedSigned)) //CY_SAR_NEG_SEL_VREF
+     744:	693b      	ldr	r3, [r7, #16]
+     746:	791b      	ldrb	r3, [r3, #4]
+     748:	2201      	movs	r2, #1
+     74a:	4053      	eors	r3, r2
+     74c:	b2db      	uxtb	r3, r3
+     74e:	2b00      	cmp	r3, #0
+     750:	d00f      	beq.n	772 <Cy_SAR_Init+0x292>
+     752:	683b      	ldr	r3, [r7, #0]
+     754:	789b      	ldrb	r3, [r3, #2]
+     756:	2b07      	cmp	r3, #7
+     758:	d10b      	bne.n	772 <Cy_SAR_Init+0x292>
+     75a:	683b      	ldr	r3, [r7, #0]
+     75c:	7a9b      	ldrb	r3, [r3, #10]
+     75e:	2b00      	cmp	r3, #0
+     760:	d007      	beq.n	772 <Cy_SAR_Init+0x292>
+            {
+                Cy_SAR_offset[chan][0] = (int16_t)0x00001000UL / -2; //CY_SAR_WRK_MAX_12BIT
+     762:	231f      	movs	r3, #31
+     764:	18fb      	adds	r3, r7, r3
+     766:	781a      	ldrb	r2, [r3, #0]
+     768:	4b49      	ldr	r3, [pc, #292]	@ (890 <Cy_SAR_Init+0x3b0>)
+     76a:	0052      	lsls	r2, r2, #1
+     76c:	4949      	ldr	r1, [pc, #292]	@ (894 <Cy_SAR_Init+0x3b4>)
+     76e:	52d1      	strh	r1, [r2, r3]
+     770:	e007      	b.n	782 <Cy_SAR_Init+0x2a2>
+            }
+            else
+            {
+                Cy_SAR_offset[chan][1] = 0;
+     772:	231f      	movs	r3, #31
+     774:	18fb      	adds	r3, r7, r3
+     776:	781a      	ldrb	r2, [r3, #0]
+     778:	4b45      	ldr	r3, [pc, #276]	@ (890 <Cy_SAR_Init+0x3b0>)
+     77a:	3201      	adds	r2, #1
+     77c:	0052      	lsls	r2, r2, #1
+     77e:	2100      	movs	r1, #0
+     780:	52d1      	strh	r1, [r2, r3]
+            }
+
+            if (chan < CY_SAR_NUM_CHANNELS) /* All except the injection channel */
+     782:	221f      	movs	r2, #31
+     784:	18bb      	adds	r3, r7, r2
+     786:	781b      	ldrb	r3, [r3, #0]
+     788:	2b10      	cmp	r3, #16
+     78a:	d819      	bhi.n	7c0 <Cy_SAR_Init+0x2e0>
+            {
+                if (locChanCfg->rangeIntrEn)
+     78c:	693b      	ldr	r3, [r7, #16]
+     78e:	7a1b      	ldrb	r3, [r3, #8]
+     790:	2b00      	cmp	r3, #0
+     792:	d007      	beq.n	7a4 <Cy_SAR_Init+0x2c4>
+                {
+                    rangeIntrMsk |= 1UL << chan;
+     794:	18bb      	adds	r3, r7, r2
+     796:	781b      	ldrb	r3, [r3, #0]
+     798:	2201      	movs	r2, #1
+     79a:	409a      	lsls	r2, r3
+     79c:	0013      	movs	r3, r2
+     79e:	697a      	ldr	r2, [r7, #20]
+     7a0:	4313      	orrs	r3, r2
+     7a2:	617b      	str	r3, [r7, #20]
+                }
+
+                if (locChanCfg->satIntrEn)
+     7a4:	693b      	ldr	r3, [r7, #16]
+     7a6:	7a5b      	ldrb	r3, [r3, #9]
+     7a8:	2b00      	cmp	r3, #0
+     7aa:	d025      	beq.n	7f8 <Cy_SAR_Init+0x318>
+                {
+                    satIntrMsk |= 1UL << chan;
+     7ac:	231f      	movs	r3, #31
+     7ae:	18fb      	adds	r3, r7, r3
+     7b0:	781b      	ldrb	r3, [r3, #0]
+     7b2:	2201      	movs	r2, #1
+     7b4:	409a      	lsls	r2, r3
+     7b6:	0013      	movs	r3, r2
+     7b8:	69ba      	ldr	r2, [r7, #24]
+     7ba:	4313      	orrs	r3, r2
+     7bc:	61bb      	str	r3, [r7, #24]
+     7be:	e01b      	b.n	7f8 <Cy_SAR_Init+0x318>
+                }
+            }
+            else
+            {
+                uint32_t intrMsk = (locChanCfg->rangeIntrEn ? SAR_INTR_INJ_RANGE_INTR_Msk : 0UL) |
+     7c0:	693b      	ldr	r3, [r7, #16]
+     7c2:	7a1b      	ldrb	r3, [r3, #8]
+     7c4:	2b00      	cmp	r3, #0
+     7c6:	d001      	beq.n	7cc <Cy_SAR_Init+0x2ec>
+     7c8:	2240      	movs	r2, #64	@ 0x40
+     7ca:	e000      	b.n	7ce <Cy_SAR_Init+0x2ee>
+     7cc:	2200      	movs	r2, #0
+                                    (locChanCfg->satIntrEn ? SAR_INTR_INJ_SATURATE_INTR_Msk : 0UL);
+     7ce:	693b      	ldr	r3, [r7, #16]
+     7d0:	7a5b      	ldrb	r3, [r3, #9]
+     7d2:	2b00      	cmp	r3, #0
+     7d4:	d001      	beq.n	7da <Cy_SAR_Init+0x2fa>
+     7d6:	2320      	movs	r3, #32
+     7d8:	e000      	b.n	7dc <Cy_SAR_Init+0x2fc>
+     7da:	2300      	movs	r3, #0
+                uint32_t intrMsk = (locChanCfg->rangeIntrEn ? SAR_INTR_INJ_RANGE_INTR_Msk : 0UL) |
+     7dc:	4313      	orrs	r3, r2
+     7de:	60fb      	str	r3, [r7, #12]
+                Cy_SAR_ClearInterrupt(base, intrMsk);
+     7e0:	68fa      	ldr	r2, [r7, #12]
+     7e2:	687b      	ldr	r3, [r7, #4]
+     7e4:	0011      	movs	r1, r2
+     7e6:	0018      	movs	r0, r3
+     7e8:	f000 f93f 	bl	a6a <Cy_SAR_ClearInterrupt>
+                Cy_SAR_SetInterruptMask(base, intrMsk);
+     7ec:	68fa      	ldr	r2, [r7, #12]
+     7ee:	687b      	ldr	r3, [r7, #4]
+     7f0:	0011      	movs	r1, r2
+     7f2:	0018      	movs	r0, r3
+     7f4:	f000 f928 	bl	a48 <Cy_SAR_SetInterruptMask>
+    for (chan = 0u; chan < CY_SAR_NUM_CHANNELS; chan++)
+     7f8:	211f      	movs	r1, #31
+     7fa:	187b      	adds	r3, r7, r1
+     7fc:	781a      	ldrb	r2, [r3, #0]
+     7fe:	187b      	adds	r3, r7, r1
+     800:	3201      	adds	r2, #1
+     802:	701a      	strb	r2, [r3, #0]
+     804:	231f      	movs	r3, #31
+     806:	18fb      	adds	r3, r7, r3
+     808:	781b      	ldrb	r3, [r3, #0]
+     80a:	2b10      	cmp	r3, #16
+     80c:	d800      	bhi.n	810 <Cy_SAR_Init+0x330>
+     80e:	e733      	b.n	678 <Cy_SAR_Init+0x198>
+            }
+        }
+    }
+
+    Cy_SAR_ClearSatInterrupt(base, satIntrMsk);
+     810:	69ba      	ldr	r2, [r7, #24]
+     812:	687b      	ldr	r3, [r7, #4]
+     814:	0011      	movs	r1, r2
+     816:	0018      	movs	r0, r3
+     818:	f000 f840 	bl	89c <Cy_SAR_ClearSatInterrupt>
+    Cy_SAR_SetSatInterruptMask(base, satIntrMsk);
+     81c:	69ba      	ldr	r2, [r7, #24]
+     81e:	687b      	ldr	r3, [r7, #4]
+     820:	0011      	movs	r1, r2
+     822:	0018      	movs	r0, r3
+     824:	f000 f8dd 	bl	9e2 <Cy_SAR_SetSatInterruptMask>
+    Cy_SAR_ClearRangeInterrupt(base, rangeIntrMsk);
+     828:	697a      	ldr	r2, [r7, #20]
+     82a:	687b      	ldr	r3, [r7, #4]
+     82c:	0011      	movs	r1, r2
+     82e:	0018      	movs	r0, r3
+     830:	f000 f8f9 	bl	a26 <Cy_SAR_ClearRangeInterrupt>
+    Cy_SAR_SetRangeInterruptMask(base, rangeIntrMsk);
+     834:	697a      	ldr	r2, [r7, #20]
+     836:	687b      	ldr	r3, [r7, #4]
+     838:	0011      	movs	r1, r2
+     83a:	0018      	movs	r0, r3
+     83c:	f000 f8e2 	bl	a04 <Cy_SAR_SetRangeInterruptMask>
+
+
+
+    SAR0->MUX_SWITCH_HW_CTRL = SAR_MUX_SWITCH_HW_CTRL_MUX_HW_CTRL_P1_Msk;
+     840:	4a15      	ldr	r2, [pc, #84]	@ (898 <Cy_SAR_Init+0x3b8>)
+     842:	23d0      	movs	r3, #208	@ 0xd0
+     844:	009b      	lsls	r3, r3, #2
+     846:	2102      	movs	r1, #2
+     848:	50d1      	str	r1, [r2, r3]
+    SAR0->MUX_SWITCH0 = SAR_MUX_SWITCH0_MUX_FW_P1_VPLUS_Msk;
+     84a:	4a13      	ldr	r2, [pc, #76]	@ (898 <Cy_SAR_Init+0x3b8>)
+     84c:	23c0      	movs	r3, #192	@ 0xc0
+     84e:	009b      	lsls	r3, r3, #2
+     850:	2102      	movs	r1, #2
+     852:	50d1      	str	r1, [r2, r3]
+    SAR0->CTRL |= SAR_CTRL_ENABLED_Msk;
+     854:	4b10      	ldr	r3, [pc, #64]	@ (898 <Cy_SAR_Init+0x3b8>)
+     856:	681a      	ldr	r2, [r3, #0]
+     858:	4b0f      	ldr	r3, [pc, #60]	@ (898 <Cy_SAR_Init+0x3b8>)
+     85a:	2180      	movs	r1, #128	@ 0x80
+     85c:	0609      	lsls	r1, r1, #24
+     85e:	430a      	orrs	r2, r1
+     860:	601a      	str	r2, [r3, #0]
+
+    SAR_MUX_SWITCH0(SAR0) = 0x10000UL; //CY_SAR_MUX_FW_VSSA_VMINUS Close switch between vssa_kelvin and vminus signal. Write with '1' to set bit.
+     862:	490d      	ldr	r1, [pc, #52]	@ (898 <Cy_SAR_Init+0x3b8>)
+     864:	23c0      	movs	r3, #192	@ 0xc0
+     866:	009b      	lsls	r3, r3, #2
+     868:	2280      	movs	r2, #128	@ 0x80
+     86a:	0252      	lsls	r2, r2, #9
+     86c:	50ca      	str	r2, [r1, r3]
+    SAR_MUX_SWITCH_HW_CTRL(SAR0) |= 0x10000UL ; //CY_SAR_MUX_HW_CTRL_VSSA Hardware control masked by firmware setting for vssa switch.
+     86e:	4a0a      	ldr	r2, [pc, #40]	@ (898 <Cy_SAR_Init+0x3b8>)
+     870:	23d0      	movs	r3, #208	@ 0xd0
+     872:	009b      	lsls	r3, r3, #2
+     874:	58d3      	ldr	r3, [r2, r3]
+     876:	4908      	ldr	r1, [pc, #32]	@ (898 <Cy_SAR_Init+0x3b8>)
+     878:	2280      	movs	r2, #128	@ 0x80
+     87a:	0252      	lsls	r2, r2, #9
+     87c:	431a      	orrs	r2, r3
+     87e:	23d0      	movs	r3, #208	@ 0xd0
+     880:	009b      	lsls	r3, r3, #2
+     882:	50ca      	str	r2, [r1, r3]
+    //HSIOM->AMUX_SPLIT_CTL[1] = HSIOM_AMUX_SPLIT_CTL_SWITCH_BB_SL_Msk | HSIOM_AMUX_SPLIT_CTL_SWITCH_BB_SR_Msk;
+    
+    
+
+
+}
+     884:	46c0      	nop			@ (mov r8, r8)
+     886:	46bd      	mov	sp, r7
+     888:	b008      	add	sp, #32
+     88a:	bd80      	pop	{r7, pc}
+     88c:	03ff0000 	.word	0x03ff0000
+     890:	20000034 	.word	0x20000034
+     894:	fffff800 	.word	0xfffff800
+     898:	403a0000 	.word	0x403a0000
+
+0000089c <Cy_SAR_ClearSatInterrupt>:
+
+void Cy_SAR_ClearSatInterrupt(SAR_Type * base, uint32_t chanMask)
+{
+     89c:	b580      	push	{r7, lr}
+     89e:	b082      	sub	sp, #8
+     8a0:	af00      	add	r7, sp, #0
+     8a2:	6078      	str	r0, [r7, #4]
+     8a4:	6039      	str	r1, [r7, #0]
+    SAR_SATURATE_INTR(base) = chanMask & CY_SAR_CHANNELS_MASK;
+     8a6:	683b      	ldr	r3, [r7, #0]
+     8a8:	22ff      	movs	r2, #255	@ 0xff
+     8aa:	4013      	ands	r3, r2
+     8ac:	0019      	movs	r1, r3
+     8ae:	687a      	ldr	r2, [r7, #4]
+     8b0:	2388      	movs	r3, #136	@ 0x88
+     8b2:	009b      	lsls	r3, r3, #2
+     8b4:	50d1      	str	r1, [r2, r3]
+}
+     8b6:	46c0      	nop			@ (mov r8, r8)
+     8b8:	46bd      	mov	sp, r7
+     8ba:	b002      	add	sp, #8
+     8bc:	bd80      	pop	{r7, pc}
+	...
+
+000008c0 <Cy_SAR_Enable>:
+
+
+void Cy_SAR_Enable(SAR_Type * base)
+{
+     8c0:	b580      	push	{r7, lr}
+     8c2:	b084      	sub	sp, #16
+     8c4:	af00      	add	r7, sp, #0
+     8c6:	6078      	str	r0, [r7, #4]
+    SAR_CTRL(base) |= 0x80000000UL ; // SAR_CTRL_ENABLED_Msk;
+     8c8:	687b      	ldr	r3, [r7, #4]
+     8ca:	681b      	ldr	r3, [r3, #0]
+     8cc:	2280      	movs	r2, #128	@ 0x80
+     8ce:	0612      	lsls	r2, r2, #24
+     8d0:	431a      	orrs	r2, r3
+     8d2:	687b      	ldr	r3, [r7, #4]
+     8d4:	601a      	str	r2, [r3, #0]
+    /* The block is ready to use 2 us after the enable signal is set high. */
+    
+    for(int i=0;i<50000;i++); //delay
+     8d6:	2300      	movs	r3, #0
+     8d8:	60fb      	str	r3, [r7, #12]
+     8da:	e002      	b.n	8e2 <Cy_SAR_Enable+0x22>
+     8dc:	68fb      	ldr	r3, [r7, #12]
+     8de:	3301      	adds	r3, #1
+     8e0:	60fb      	str	r3, [r7, #12]
+     8e2:	68fb      	ldr	r3, [r7, #12]
+     8e4:	4a03      	ldr	r2, [pc, #12]	@ (8f4 <Cy_SAR_Enable+0x34>)
+     8e6:	4293      	cmp	r3, r2
+     8e8:	ddf8      	ble.n	8dc <Cy_SAR_Enable+0x1c>
+}
+     8ea:	46c0      	nop			@ (mov r8, r8)
+     8ec:	46c0      	nop			@ (mov r8, r8)
+     8ee:	46bd      	mov	sp, r7
+     8f0:	b004      	add	sp, #16
+     8f2:	bd80      	pop	{r7, pc}
+     8f4:	0000c34f 	.word	0x0000c34f
+
+000008f8 <init_cycfg_peripherals>:
+
+void init_cycfg_peripherals(void)
+{
+     8f8:	b580      	push	{r7, lr}
+     8fa:	af00      	add	r7, sp, #0
+    SAR0->MUX_SWITCH_HW_CTRL = SAR_MUX_SWITCH_HW_CTRL_MUX_HW_CTRL_P1_Msk;
+     8fc:	4a12      	ldr	r2, [pc, #72]	@ (948 <init_cycfg_peripherals+0x50>)
+     8fe:	23d0      	movs	r3, #208	@ 0xd0
+     900:	009b      	lsls	r3, r3, #2
+     902:	2102      	movs	r1, #2
+     904:	50d1      	str	r1, [r2, r3]
+    SAR0->MUX_SWITCH0 = SAR_MUX_SWITCH0_MUX_FW_P1_VPLUS_Msk;
+     906:	4a10      	ldr	r2, [pc, #64]	@ (948 <init_cycfg_peripherals+0x50>)
+     908:	23c0      	movs	r3, #192	@ 0xc0
+     90a:	009b      	lsls	r3, r3, #2
+     90c:	2102      	movs	r1, #2
+     90e:	50d1      	str	r1, [r2, r3]
+    SAR0->CTRL |= SAR_CTRL_ENABLED_Msk;
+     910:	4b0d      	ldr	r3, [pc, #52]	@ (948 <init_cycfg_peripherals+0x50>)
+     912:	681a      	ldr	r2, [r3, #0]
+     914:	4b0c      	ldr	r3, [pc, #48]	@ (948 <init_cycfg_peripherals+0x50>)
+     916:	2180      	movs	r1, #128	@ 0x80
+     918:	0609      	lsls	r1, r1, #24
+     91a:	430a      	orrs	r2, r1
+     91c:	601a      	str	r2, [r3, #0]
+
+    SAR_MUX_SWITCH0(SAR0) = 0x10000UL; //CY_SAR_MUX_FW_VSSA_VMINUS Close switch between vssa_kelvin and vminus signal. Write with '1' to set bit.
+     91e:	490a      	ldr	r1, [pc, #40]	@ (948 <init_cycfg_peripherals+0x50>)
+     920:	23c0      	movs	r3, #192	@ 0xc0
+     922:	009b      	lsls	r3, r3, #2
+     924:	2280      	movs	r2, #128	@ 0x80
+     926:	0252      	lsls	r2, r2, #9
+     928:	50ca      	str	r2, [r1, r3]
+    SAR_MUX_SWITCH_HW_CTRL(SAR0) |= 0x10000UL ; //CY_SAR_MUX_HW_CTRL_VSSA Hardware control masked by firmware setting for vssa switch.
+     92a:	4a07      	ldr	r2, [pc, #28]	@ (948 <init_cycfg_peripherals+0x50>)
+     92c:	23d0      	movs	r3, #208	@ 0xd0
+     92e:	009b      	lsls	r3, r3, #2
+     930:	58d3      	ldr	r3, [r2, r3]
+     932:	4905      	ldr	r1, [pc, #20]	@ (948 <init_cycfg_peripherals+0x50>)
+     934:	2280      	movs	r2, #128	@ 0x80
+     936:	0252      	lsls	r2, r2, #9
+     938:	431a      	orrs	r2, r3
+     93a:	23d0      	movs	r3, #208	@ 0xd0
+     93c:	009b      	lsls	r3, r3, #2
+     93e:	50ca      	str	r2, [r1, r3]
+    //HSIOM->AMUX_SPLIT_CTL[1] = HSIOM_AMUX_SPLIT_CTL_SWITCH_BB_SL_Msk | HSIOM_AMUX_SPLIT_CTL_SWITCH_BB_SR_Msk;
+}
+     940:	46c0      	nop			@ (mov r8, r8)
+     942:	46bd      	mov	sp, r7
+     944:	bd80      	pop	{r7, pc}
+     946:	46c0      	nop			@ (mov r8, r8)
+     948:	403a0000 	.word	0x403a0000
+
+0000094c <Cy_SAR_StartConvert>:
+
+void Cy_SAR_StartConvert(SAR_Type * base, uint8_t startSelect)
+{
+     94c:	b580      	push	{r7, lr}
+     94e:	b082      	sub	sp, #8
+     950:	af00      	add	r7, sp, #0
+     952:	6078      	str	r0, [r7, #4]
+     954:	000a      	movs	r2, r1
+     956:	1cfb      	adds	r3, r7, #3
+     958:	701a      	strb	r2, [r3, #0]
+    switch(startSelect)
+     95a:	1cfb      	adds	r3, r7, #3
+     95c:	781b      	ldrb	r3, [r3, #0]
+     95e:	2b00      	cmp	r3, #0
+     960:	d002      	beq.n	968 <Cy_SAR_StartConvert+0x1c>
+     962:	2b01      	cmp	r3, #1
+     964:	d008      	beq.n	978 <Cy_SAR_StartConvert+0x2c>
+    case 1: 
+        SAR_START_CTRL(base) = 0x1UL ; // CY_SAR_START_CONVERT_SINGLE_SHOT - Trigger
+        break;
+    default:
+        /* do nothing */
+        break;
+     966:	e00b      	b.n	980 <Cy_SAR_StartConvert+0x34>
+        SAR_SAMPLE_CTRL(base) |= 0x10000UL; // //CY_SAR_START_CONVERT_CONTINUOUS
+     968:	687b      	ldr	r3, [r7, #4]
+     96a:	685b      	ldr	r3, [r3, #4]
+     96c:	2280      	movs	r2, #128	@ 0x80
+     96e:	0252      	lsls	r2, r2, #9
+     970:	431a      	orrs	r2, r3
+     972:	687b      	ldr	r3, [r7, #4]
+     974:	605a      	str	r2, [r3, #4]
+        break;
+     976:	e003      	b.n	980 <Cy_SAR_StartConvert+0x34>
+        SAR_START_CTRL(base) = 0x1UL ; // CY_SAR_START_CONVERT_SINGLE_SHOT - Trigger
+     978:	687b      	ldr	r3, [r7, #4]
+     97a:	2201      	movs	r2, #1
+     97c:	625a      	str	r2, [r3, #36]	@ 0x24
+        break;
+     97e:	46c0      	nop			@ (mov r8, r8)
+    }
+}
+     980:	46c0      	nop			@ (mov r8, r8)
+     982:	46bd      	mov	sp, r7
+     984:	b002      	add	sp, #8
+     986:	bd80      	pop	{r7, pc}
+
+00000988 <Cy_SAR_GetResult16>:
+
+int16_t Cy_SAR_GetResult16(const SAR_Type * base, uint32_t chan)
+{
+     988:	b580      	push	{r7, lr}
+     98a:	b084      	sub	sp, #16
+     98c:	af00      	add	r7, sp, #0
+     98e:	6078      	str	r0, [r7, #4]
+     990:	6039      	str	r1, [r7, #0]
+    uint32_t adcResult = 0UL;
+     992:	2300      	movs	r3, #0
+     994:	60bb      	str	r3, [r7, #8]
+    uint32_t intr = 0;
+     996:	2300      	movs	r3, #0
+     998:	60fb      	str	r3, [r7, #12]
+    //wait till conversion is complete
+    while (0UL == intr)
+     99a:	e006      	b.n	9aa <Cy_SAR_GetResult16+0x22>
+    {
+        intr = SAR_INTR(base) & 0x1u;
+     99c:	687a      	ldr	r2, [r7, #4]
+     99e:	2384      	movs	r3, #132	@ 0x84
+     9a0:	009b      	lsls	r3, r3, #2
+     9a2:	58d3      	ldr	r3, [r2, r3]
+     9a4:	2201      	movs	r2, #1
+     9a6:	4013      	ands	r3, r2
+     9a8:	60fb      	str	r3, [r7, #12]
+    while (0UL == intr)
+     9aa:	68fb      	ldr	r3, [r7, #12]
+     9ac:	2b00      	cmp	r3, #0
+     9ae:	d0f5      	beq.n	99c <Cy_SAR_GetResult16+0x14>
+        
+    }
+    SAR_INTR(base) |= 0x1u;
+     9b0:	687a      	ldr	r2, [r7, #4]
+     9b2:	2384      	movs	r3, #132	@ 0x84
+     9b4:	009b      	lsls	r3, r3, #2
+     9b6:	58d3      	ldr	r3, [r2, r3]
+     9b8:	2201      	movs	r2, #1
+     9ba:	431a      	orrs	r2, r3
+     9bc:	0011      	movs	r1, r2
+     9be:	687a      	ldr	r2, [r7, #4]
+     9c0:	2384      	movs	r3, #132	@ 0x84
+     9c2:	009b      	lsls	r3, r3, #2
+     9c4:	50d1      	str	r1, [r2, r3]
+    
+    //read results
+    adcResult = _FLD2VAL(SAR_CHAN_RESULT_RESULT, SAR_CHAN_RESULT(base, chan));
+     9c6:	687b      	ldr	r3, [r7, #4]
+     9c8:	683a      	ldr	r2, [r7, #0]
+     9ca:	3260      	adds	r2, #96	@ 0x60
+     9cc:	0092      	lsls	r2, r2, #2
+     9ce:	58d3      	ldr	r3, [r2, r3]
+     9d0:	041b      	lsls	r3, r3, #16
+     9d2:	0c1b      	lsrs	r3, r3, #16
+     9d4:	60bb      	str	r3, [r7, #8]
+
+    return (int16_t) adcResult;
+     9d6:	68bb      	ldr	r3, [r7, #8]
+     9d8:	b21b      	sxth	r3, r3
+}
+     9da:	0018      	movs	r0, r3
+     9dc:	46bd      	mov	sp, r7
+     9de:	b004      	add	sp, #16
+     9e0:	bd80      	pop	{r7, pc}
+
+000009e2 <Cy_SAR_SetSatInterruptMask>:
+
+void Cy_SAR_SetSatInterruptMask(SAR_Type * base, uint32_t chanMask)
+{
+     9e2:	b580      	push	{r7, lr}
+     9e4:	b082      	sub	sp, #8
+     9e6:	af00      	add	r7, sp, #0
+     9e8:	6078      	str	r0, [r7, #4]
+     9ea:	6039      	str	r1, [r7, #0]
+    SAR_SATURATE_INTR_MASK(base) = chanMask & CY_SAR_CHANNELS_MASK;
+     9ec:	683b      	ldr	r3, [r7, #0]
+     9ee:	22ff      	movs	r2, #255	@ 0xff
+     9f0:	4013      	ands	r3, r2
+     9f2:	0019      	movs	r1, r3
+     9f4:	687a      	ldr	r2, [r7, #4]
+     9f6:	238a      	movs	r3, #138	@ 0x8a
+     9f8:	009b      	lsls	r3, r3, #2
+     9fa:	50d1      	str	r1, [r2, r3]
+}
+     9fc:	46c0      	nop			@ (mov r8, r8)
+     9fe:	46bd      	mov	sp, r7
+     a00:	b002      	add	sp, #8
+     a02:	bd80      	pop	{r7, pc}
+
+00000a04 <Cy_SAR_SetRangeInterruptMask>:
+
+void Cy_SAR_SetRangeInterruptMask(SAR_Type * base, uint32_t chanMask)
+{
+     a04:	b580      	push	{r7, lr}
+     a06:	b082      	sub	sp, #8
+     a08:	af00      	add	r7, sp, #0
+     a0a:	6078      	str	r0, [r7, #4]
+     a0c:	6039      	str	r1, [r7, #0]
+    SAR_RANGE_INTR_MASK(base) = chanMask & CY_SAR_CHANNELS_MASK;
+     a0e:	683b      	ldr	r3, [r7, #0]
+     a10:	22ff      	movs	r2, #255	@ 0xff
+     a12:	4013      	ands	r3, r2
+     a14:	0019      	movs	r1, r3
+     a16:	687a      	ldr	r2, [r7, #4]
+     a18:	238e      	movs	r3, #142	@ 0x8e
+     a1a:	009b      	lsls	r3, r3, #2
+     a1c:	50d1      	str	r1, [r2, r3]
+}
+     a1e:	46c0      	nop			@ (mov r8, r8)
+     a20:	46bd      	mov	sp, r7
+     a22:	b002      	add	sp, #8
+     a24:	bd80      	pop	{r7, pc}
+
+00000a26 <Cy_SAR_ClearRangeInterrupt>:
+
+void Cy_SAR_ClearRangeInterrupt(SAR_Type * base, uint32_t chanMask)
+{
+     a26:	b580      	push	{r7, lr}
+     a28:	b082      	sub	sp, #8
+     a2a:	af00      	add	r7, sp, #0
+     a2c:	6078      	str	r0, [r7, #4]
+     a2e:	6039      	str	r1, [r7, #0]
+    SAR_RANGE_INTR(base) = chanMask & CY_SAR_CHANNELS_MASK;
+     a30:	683b      	ldr	r3, [r7, #0]
+     a32:	22ff      	movs	r2, #255	@ 0xff
+     a34:	4013      	ands	r3, r2
+     a36:	0019      	movs	r1, r3
+     a38:	687a      	ldr	r2, [r7, #4]
+     a3a:	238c      	movs	r3, #140	@ 0x8c
+     a3c:	009b      	lsls	r3, r3, #2
+     a3e:	50d1      	str	r1, [r2, r3]
+}
+     a40:	46c0      	nop			@ (mov r8, r8)
+     a42:	46bd      	mov	sp, r7
+     a44:	b002      	add	sp, #8
+     a46:	bd80      	pop	{r7, pc}
+
+00000a48 <Cy_SAR_SetInterruptMask>:
+void Cy_SAR_SetInterruptMask(SAR_Type * base, uint32_t intrMask)
+{
+     a48:	b580      	push	{r7, lr}
+     a4a:	b082      	sub	sp, #8
+     a4c:	af00      	add	r7, sp, #0
+     a4e:	6078      	str	r0, [r7, #4]
+     a50:	6039      	str	r1, [r7, #0]
+    SAR_INTR_MASK(base) = intrMask & CY_SAR_INTR;
+     a52:	683b      	ldr	r3, [r7, #0]
+     a54:	22f7      	movs	r2, #247	@ 0xf7
+     a56:	4013      	ands	r3, r2
+     a58:	0019      	movs	r1, r3
+     a5a:	687a      	ldr	r2, [r7, #4]
+     a5c:	2386      	movs	r3, #134	@ 0x86
+     a5e:	009b      	lsls	r3, r3, #2
+     a60:	50d1      	str	r1, [r2, r3]
+}
+     a62:	46c0      	nop			@ (mov r8, r8)
+     a64:	46bd      	mov	sp, r7
+     a66:	b002      	add	sp, #8
+     a68:	bd80      	pop	{r7, pc}
+
+00000a6a <Cy_SAR_ClearInterrupt>:
+void Cy_SAR_ClearInterrupt(SAR_Type * base, uint32_t intrMask)
+{
+     a6a:	b580      	push	{r7, lr}
+     a6c:	b082      	sub	sp, #8
+     a6e:	af00      	add	r7, sp, #0
+     a70:	6078      	str	r0, [r7, #4]
+     a72:	6039      	str	r1, [r7, #0]
+    SAR_INTR(base) = intrMask & CY_SAR_INTR;
+     a74:	683b      	ldr	r3, [r7, #0]
+     a76:	22f7      	movs	r2, #247	@ 0xf7
+     a78:	4013      	ands	r3, r2
+     a7a:	0019      	movs	r1, r3
+     a7c:	687a      	ldr	r2, [r7, #4]
+     a7e:	2384      	movs	r3, #132	@ 0x84
+     a80:	009b      	lsls	r3, r3, #2
+     a82:	50d1      	str	r1, [r2, r3]
+}
+     a84:	46c0      	nop			@ (mov r8, r8)
+     a86:	46bd      	mov	sp, r7
+     a88:	b002      	add	sp, #8
+     a8a:	bd80      	pop	{r7, pc}
+
+00000a8c <SysClk_PeriphDisableDivider>:
+{
+     a8c:	b580      	push	{r7, lr}
+     a8e:	b082      	sub	sp, #8
+     a90:	af00      	add	r7, sp, #0
+     a92:	0002      	movs	r2, r0
+     a94:	6039      	str	r1, [r7, #0]
+     a96:	1dfb      	adds	r3, r7, #7
+     a98:	701a      	strb	r2, [r3, #0]
+              (((uint32_t)(dividerType) << PERI_DIV_CMD_SEL_TYPE_Pos) & PERI_DIV_CMD_SEL_TYPE_Msk) |
+     a9a:	1dfb      	adds	r3, r7, #7
+     a9c:	781b      	ldrb	r3, [r3, #0]
+     a9e:	019b      	lsls	r3, r3, #6
+     aa0:	22ff      	movs	r2, #255	@ 0xff
+     aa2:	401a      	ands	r2, r3
+              (((uint32_t)(dividerNum) << PERI_DIV_CMD_SEL_DIV_Pos) & PERI_DIV_CMD_SEL_DIV_Msk);
+     aa4:	683b      	ldr	r3, [r7, #0]
+     aa6:	213f      	movs	r1, #63	@ 0x3f
+     aa8:	400b      	ands	r3, r1
+              (((uint32_t)(dividerType) << PERI_DIV_CMD_SEL_TYPE_Pos) & PERI_DIV_CMD_SEL_TYPE_Msk) |
+     aaa:	431a      	orrs	r2, r3
+        PERI_DIV_CMD = PERI_DIV_CMD_DISABLE_Msk            |
+     aac:	4b04      	ldr	r3, [pc, #16]	@ (ac0 <SysClk_PeriphDisableDivider+0x34>)
+              (((uint32_t)(dividerType) << PERI_DIV_CMD_SEL_TYPE_Pos) & PERI_DIV_CMD_SEL_TYPE_Msk) |
+     aae:	2180      	movs	r1, #128	@ 0x80
+     ab0:	05c9      	lsls	r1, r1, #23
+     ab2:	430a      	orrs	r2, r1
+        PERI_DIV_CMD = PERI_DIV_CMD_DISABLE_Msk            |
+     ab4:	601a      	str	r2, [r3, #0]
+}
+     ab6:	46c0      	nop			@ (mov r8, r8)
+     ab8:	46bd      	mov	sp, r7
+     aba:	b002      	add	sp, #8
+     abc:	bd80      	pop	{r7, pc}
+     abe:	46c0      	nop			@ (mov r8, r8)
+     ac0:	40010000 	.word	0x40010000
+
+00000ac4 <SysClk_PeriphSetDivider>:
+{
+     ac4:	b580      	push	{r7, lr}
+     ac6:	b084      	sub	sp, #16
+     ac8:	af00      	add	r7, sp, #0
+     aca:	60b9      	str	r1, [r7, #8]
+     acc:	607a      	str	r2, [r7, #4]
+     ace:	210f      	movs	r1, #15
+     ad0:	187b      	adds	r3, r7, r1
+     ad2:	1c02      	adds	r2, r0, #0
+     ad4:	701a      	strb	r2, [r3, #0]
+        dividerType = dividerType;
+     ad6:	187b      	adds	r3, r7, r1
+     ad8:	187a      	adds	r2, r7, r1
+     ada:	7812      	ldrb	r2, [r2, #0]
+     adc:	701a      	strb	r2, [r3, #0]
+        PERI_DIV_16_CTL[dividerNum] =  ((((PERI_DIV_16_CTL[dividerNum])) & 
+     ade:	4a0a      	ldr	r2, [pc, #40]	@ (b08 <SysClk_PeriphSetDivider+0x44>)
+     ae0:	68bb      	ldr	r3, [r7, #8]
+     ae2:	33c0      	adds	r3, #192	@ 0xc0
+     ae4:	009b      	lsls	r3, r3, #2
+     ae6:	589b      	ldr	r3, [r3, r2]
+     ae8:	4a08      	ldr	r2, [pc, #32]	@ (b0c <SysClk_PeriphSetDivider+0x48>)
+     aea:	401a      	ands	r2, r3
+                                        ((((uint32_t)(dividerValue) << PERI_DIV_16_CTL_INT16_DIV_Pos) & 
+     aec:	687b      	ldr	r3, [r7, #4]
+     aee:	021b      	lsls	r3, r3, #8
+     af0:	4907      	ldr	r1, [pc, #28]	@ (b10 <SysClk_PeriphSetDivider+0x4c>)
+     af2:	400b      	ands	r3, r1
+        PERI_DIV_16_CTL[dividerNum] =  ((((PERI_DIV_16_CTL[dividerNum])) & 
+     af4:	4904      	ldr	r1, [pc, #16]	@ (b08 <SysClk_PeriphSetDivider+0x44>)
+                                        ((uint32_t)(~(PERI_DIV_16_CTL_INT16_DIV_Msk)))) | 
+     af6:	431a      	orrs	r2, r3
+        PERI_DIV_16_CTL[dividerNum] =  ((((PERI_DIV_16_CTL[dividerNum])) & 
+     af8:	68bb      	ldr	r3, [r7, #8]
+     afa:	33c0      	adds	r3, #192	@ 0xc0
+     afc:	009b      	lsls	r3, r3, #2
+     afe:	505a      	str	r2, [r3, r1]
+}
+     b00:	46c0      	nop			@ (mov r8, r8)
+     b02:	46bd      	mov	sp, r7
+     b04:	b004      	add	sp, #16
+     b06:	bd80      	pop	{r7, pc}
+     b08:	40010000 	.word	0x40010000
+     b0c:	ff0000ff 	.word	0xff0000ff
+     b10:	00ffff00 	.word	0x00ffff00
+
+00000b14 <SysClk_PeriphEnableDivider>:
+{
+     b14:	b580      	push	{r7, lr}
+     b16:	b082      	sub	sp, #8
+     b18:	af00      	add	r7, sp, #0
+     b1a:	0002      	movs	r2, r0
+     b1c:	6039      	str	r1, [r7, #0]
+     b1e:	1dfb      	adds	r3, r7, #7
+     b20:	701a      	strb	r2, [r3, #0]
+              (((uint32_t)(dividerType) << PERI_DIV_CMD_SEL_TYPE_Pos) & PERI_DIV_CMD_SEL_TYPE_Msk) |
+     b22:	1dfb      	adds	r3, r7, #7
+     b24:	781b      	ldrb	r3, [r3, #0]
+     b26:	019b      	lsls	r3, r3, #6
+     b28:	22ff      	movs	r2, #255	@ 0xff
+     b2a:	401a      	ands	r2, r3
+              (((uint32_t)(dividerNum) << PERI_DIV_CMD_SEL_DIV_Pos) & PERI_DIV_CMD_SEL_DIV_Msk);
+     b2c:	683b      	ldr	r3, [r7, #0]
+     b2e:	213f      	movs	r1, #63	@ 0x3f
+     b30:	400b      	ands	r3, r1
+              (((uint32_t)(dividerType) << PERI_DIV_CMD_SEL_TYPE_Pos) & PERI_DIV_CMD_SEL_TYPE_Msk) |
+     b32:	431a      	orrs	r2, r3
+        PERI_DIV_CMD = PERI_DIV_CMD_ENABLE_Msk             |
+     b34:	4b04      	ldr	r3, [pc, #16]	@ (b48 <SysClk_PeriphEnableDivider+0x34>)
+              (((uint32_t)(dividerType) << PERI_DIV_CMD_SEL_TYPE_Pos) & PERI_DIV_CMD_SEL_TYPE_Msk) |
+     b36:	4905      	ldr	r1, [pc, #20]	@ (b4c <SysClk_PeriphEnableDivider+0x38>)
+     b38:	430a      	orrs	r2, r1
+        PERI_DIV_CMD = PERI_DIV_CMD_ENABLE_Msk             |
+     b3a:	601a      	str	r2, [r3, #0]
+        (void)PERI_DIV_CMD; /* dummy read to handle buffered writes */
+     b3c:	4b02      	ldr	r3, [pc, #8]	@ (b48 <SysClk_PeriphEnableDivider+0x34>)
+     b3e:	681b      	ldr	r3, [r3, #0]
+}
+     b40:	46c0      	nop			@ (mov r8, r8)
+     b42:	46bd      	mov	sp, r7
+     b44:	b002      	add	sp, #8
+     b46:	bd80      	pop	{r7, pc}
+     b48:	40010000 	.word	0x40010000
+     b4c:	8000ff00 	.word	0x8000ff00
+
+00000b50 <SysClk_PeriphAssignDivider>:
+{
+     b50:	b580      	push	{r7, lr}
+     b52:	b082      	sub	sp, #8
+     b54:	af00      	add	r7, sp, #0
+     b56:	603a      	str	r2, [r7, #0]
+     b58:	1dfb      	adds	r3, r7, #7
+     b5a:	1c02      	adds	r2, r0, #0
+     b5c:	701a      	strb	r2, [r3, #0]
+     b5e:	1dbb      	adds	r3, r7, #6
+     b60:	1c0a      	adds	r2, r1, #0
+     b62:	701a      	strb	r2, [r3, #0]
+        PERI_PCLK_CTL[periphNum] = (((uint32_t)(dividerType) << PERI_PCLK_CTL_SEL_TYPE_Pos) & PERI_PCLK_CTL_SEL_TYPE_Msk) | (((uint32_t)(dividerNum) << PERI_PCLK_CTL_SEL_DIV_Pos) & PERI_PCLK_CTL_SEL_DIV_Msk);
+     b64:	1dbb      	adds	r3, r7, #6
+     b66:	781b      	ldrb	r3, [r3, #0]
+     b68:	019b      	lsls	r3, r3, #6
+     b6a:	22ff      	movs	r2, #255	@ 0xff
+     b6c:	4013      	ands	r3, r2
+     b6e:	0019      	movs	r1, r3
+     b70:	683b      	ldr	r3, [r7, #0]
+     b72:	223f      	movs	r2, #63	@ 0x3f
+     b74:	401a      	ands	r2, r3
+     b76:	4805      	ldr	r0, [pc, #20]	@ (b8c <SysClk_PeriphAssignDivider+0x3c>)
+     b78:	1dfb      	adds	r3, r7, #7
+     b7a:	781b      	ldrb	r3, [r3, #0]
+     b7c:	430a      	orrs	r2, r1
+     b7e:	3340      	adds	r3, #64	@ 0x40
+     b80:	009b      	lsls	r3, r3, #2
+     b82:	501a      	str	r2, [r3, r0]
+}
+     b84:	46c0      	nop			@ (mov r8, r8)
+     b86:	46bd      	mov	sp, r7
+     b88:	b002      	add	sp, #8
+     b8a:	bd80      	pop	{r7, pc}
+     b8c:	40010000 	.word	0x40010000
+
+00000b90 <Cy_SysClk_ClkHfSetDivider>:
+{
+     b90:	b580      	push	{r7, lr}
+     b92:	b082      	sub	sp, #8
+     b94:	af00      	add	r7, sp, #0
+     b96:	0002      	movs	r2, r0
+     b98:	1dfb      	adds	r3, r7, #7
+     b9a:	701a      	strb	r2, [r3, #0]
+        CY_REG32_CLR_SET(SRSSLT_CLK_SELECT, SRSSLT_CLK_SELECT_HFCLK_DIV, divider);
+     b9c:	4b08      	ldr	r3, [pc, #32]	@ (bc0 <Cy_SysClk_ClkHfSetDivider+0x30>)
+     b9e:	6a9b      	ldr	r3, [r3, #40]	@ 0x28
+     ba0:	220c      	movs	r2, #12
+     ba2:	4393      	bics	r3, r2
+     ba4:	0019      	movs	r1, r3
+     ba6:	1dfb      	adds	r3, r7, #7
+     ba8:	781b      	ldrb	r3, [r3, #0]
+     baa:	009b      	lsls	r3, r3, #2
+     bac:	220c      	movs	r2, #12
+     bae:	401a      	ands	r2, r3
+     bb0:	4b03      	ldr	r3, [pc, #12]	@ (bc0 <Cy_SysClk_ClkHfSetDivider+0x30>)
+     bb2:	430a      	orrs	r2, r1
+     bb4:	629a      	str	r2, [r3, #40]	@ 0x28
+}
+     bb6:	46c0      	nop			@ (mov r8, r8)
+     bb8:	46bd      	mov	sp, r7
+     bba:	b002      	add	sp, #8
+     bbc:	bd80      	pop	{r7, pc}
+     bbe:	46c0      	nop			@ (mov r8, r8)
+     bc0:	40030000 	.word	0x40030000
+
+00000bc4 <Cy_SCB_UART_Init>:
+#include "uart.h"
+#include "i2c.h"
+
+void Cy_SCB_UART_Init(CySCB_Type *base, cy_stc_scb_uart_config_t const *config, cy_stc_scb_uart_context_t *context)
+{
+     bc4:	b580      	push	{r7, lr}
+     bc6:	b086      	sub	sp, #24
+     bc8:	af00      	add	r7, sp, #0
+     bca:	60f8      	str	r0, [r7, #12]
+     bcc:	60b9      	str	r1, [r7, #8]
+     bce:	607a      	str	r2, [r7, #4]
+
+    uint32_t ovs = (config->oversample - 1UL);
+     bd0:	68bb      	ldr	r3, [r7, #8]
+     bd2:	685b      	ldr	r3, [r3, #4]
+     bd4:	3b01      	subs	r3, #1
+     bd6:	617b      	str	r3, [r7, #20]
+
+    /* Configure the UART interface */
+    SCB_CTRL(base) = (((uint32_t)(ovs) << SCB_CTRL_OVS_Pos) & SCB_CTRL_OVS_Msk)  |
+     bd8:	697b      	ldr	r3, [r7, #20]
+     bda:	220f      	movs	r2, #15
+     bdc:	4013      	ands	r3, r2
+     bde:	2280      	movs	r2, #128	@ 0x80
+     be0:	0492      	lsls	r2, r2, #18
+     be2:	431a      	orrs	r2, r3
+     be4:	68fb      	ldr	r3, [r7, #12]
+     be6:	601a      	str	r2, [r3, #0]
+                        (((uint32_t)(CY_SCB_CTRL_MODE_UART) << SCB_CTRL_MODE_Pos) & SCB_CTRL_MODE_Msk);
+
+    SCB_CTRL(base) |= ((((config->dataWidth <= CY_SCB_BYTE_WIDTH)) != false) ? (SCB_CTRL_BYTE_MODE_Msk) : 0UL);
+     be8:	68fb      	ldr	r3, [r7, #12]
+     bea:	681a      	ldr	r2, [r3, #0]
+     bec:	68bb      	ldr	r3, [r7, #8]
+     bee:	689b      	ldr	r3, [r3, #8]
+     bf0:	2b08      	cmp	r3, #8
+     bf2:	d802      	bhi.n	bfa <Cy_SCB_UART_Init+0x36>
+     bf4:	2380      	movs	r3, #128	@ 0x80
+     bf6:	011b      	lsls	r3, r3, #4
+     bf8:	e000      	b.n	bfc <Cy_SCB_UART_Init+0x38>
+     bfa:	2300      	movs	r3, #0
+     bfc:	431a      	orrs	r2, r3
+     bfe:	68fb      	ldr	r3, [r7, #12]
+     c00:	601a      	str	r2, [r3, #0]
+
+    SCB_UART_CTRL(base) = (((uint32_t) config->uartMode << SCB_UART_CTRL_MODE_Pos) & SCB_UART_CTRL_MODE_Msk);
+     c02:	68bb      	ldr	r3, [r7, #8]
+     c04:	781b      	ldrb	r3, [r3, #0]
+     c06:	061a      	lsls	r2, r3, #24
+     c08:	23c0      	movs	r3, #192	@ 0xc0
+     c0a:	049b      	lsls	r3, r3, #18
+     c0c:	401a      	ands	r2, r3
+     c0e:	68fb      	ldr	r3, [r7, #12]
+     c10:	641a      	str	r2, [r3, #64]	@ 0x40
+
+    /* Configure the RX direction */
+    SCB_UART_RX_CTRL(base) = ((((uint32_t)(config->stopBits)-1) << SCB_UART_RX_CTRL_STOP_BITS_Pos) & SCB_UART_RX_CTRL_STOP_BITS_Msk) |
+     c12:	68bb      	ldr	r3, [r7, #8]
+     c14:	7b5b      	ldrb	r3, [r3, #13]
+     c16:	3b01      	subs	r3, #1
+     c18:	2207      	movs	r2, #7
+     c1a:	401a      	ands	r2, r3
+                                (((uint32_t)(config->parity) << CY_SCB_UART_RX_CTRL_SET_PARITY_Pos) & CY_SCB_UART_RX_CTRL_SET_PARITY_Msk);
+     c1c:	68bb      	ldr	r3, [r7, #8]
+     c1e:	7b9b      	ldrb	r3, [r3, #14]
+     c20:	011b      	lsls	r3, r3, #4
+     c22:	2130      	movs	r1, #48	@ 0x30
+     c24:	400b      	ands	r3, r1
+    SCB_UART_RX_CTRL(base) = ((((uint32_t)(config->stopBits)-1) << SCB_UART_RX_CTRL_STOP_BITS_Pos) & SCB_UART_RX_CTRL_STOP_BITS_Msk) |
+     c26:	431a      	orrs	r2, r3
+     c28:	68fb      	ldr	r3, [r7, #12]
+     c2a:	649a      	str	r2, [r3, #72]	@ 0x48
+
+    SCB_RX_CTRL(base) = _BOOL2FLD(SCB_RX_CTRL_MSB_FIRST, config->enableMsbFirst) |
+     c2c:	68bb      	ldr	r3, [r7, #8]
+     c2e:	7b1b      	ldrb	r3, [r3, #12]
+     c30:	2b00      	cmp	r3, #0
+     c32:	d002      	beq.n	c3a <Cy_SCB_UART_Init+0x76>
+     c34:	2380      	movs	r3, #128	@ 0x80
+     c36:	005a      	lsls	r2, r3, #1
+     c38:	e000      	b.n	c3c <Cy_SCB_UART_Init+0x78>
+     c3a:	2200      	movs	r2, #0
+                        _VAL2FLD(SCB_RX_CTRL_DATA_WIDTH, (config->dataWidth - 1UL));
+     c3c:	68bb      	ldr	r3, [r7, #8]
+     c3e:	689b      	ldr	r3, [r3, #8]
+     c40:	3b01      	subs	r3, #1
+     c42:	210f      	movs	r1, #15
+     c44:	400b      	ands	r3, r1
+    SCB_RX_CTRL(base) = _BOOL2FLD(SCB_RX_CTRL_MSB_FIRST, config->enableMsbFirst) |
+     c46:	431a      	orrs	r2, r3
+     c48:	0011      	movs	r1, r2
+     c4a:	68fa      	ldr	r2, [r7, #12]
+     c4c:	23c0      	movs	r3, #192	@ 0xc0
+     c4e:	009b      	lsls	r3, r3, #2
+     c50:	50d1      	str	r1, [r2, r3]
+
+    /* Configure the TX direction */
+    SCB_UART_TX_CTRL(base) = _VAL2FLD(SCB_UART_TX_CTRL_STOP_BITS, ((uint32_t) config->stopBits) - 1UL)    |
+     c52:	68bb      	ldr	r3, [r7, #8]
+     c54:	7b5b      	ldrb	r3, [r3, #13]
+     c56:	3b01      	subs	r3, #1
+     c58:	2207      	movs	r2, #7
+     c5a:	401a      	ands	r2, r3
+                                _VAL2FLD(CY_SCB_UART_TX_CTRL_SET_PARITY, (uint32_t) config->parity);
+     c5c:	68bb      	ldr	r3, [r7, #8]
+     c5e:	7b9b      	ldrb	r3, [r3, #14]
+     c60:	011b      	lsls	r3, r3, #4
+     c62:	2130      	movs	r1, #48	@ 0x30
+     c64:	400b      	ands	r3, r1
+    SCB_UART_TX_CTRL(base) = _VAL2FLD(SCB_UART_TX_CTRL_STOP_BITS, ((uint32_t) config->stopBits) - 1UL)    |
+     c66:	431a      	orrs	r2, r3
+     c68:	68fb      	ldr	r3, [r7, #12]
+     c6a:	645a      	str	r2, [r3, #68]	@ 0x44
+
+    SCB_TX_CTRL(base)  = _BOOL2FLD(SCB_TX_CTRL_MSB_FIRST,  config->enableMsbFirst)    |
+     c6c:	68bb      	ldr	r3, [r7, #8]
+     c6e:	7b1b      	ldrb	r3, [r3, #12]
+     c70:	2b00      	cmp	r3, #0
+     c72:	d002      	beq.n	c7a <Cy_SCB_UART_Init+0xb6>
+     c74:	2380      	movs	r3, #128	@ 0x80
+     c76:	005a      	lsls	r2, r3, #1
+     c78:	e000      	b.n	c7c <Cy_SCB_UART_Init+0xb8>
+     c7a:	2200      	movs	r2, #0
+                            _VAL2FLD(SCB_TX_CTRL_DATA_WIDTH,  (config->dataWidth - 1UL));
+     c7c:	68bb      	ldr	r3, [r7, #8]
+     c7e:	689b      	ldr	r3, [r3, #8]
+     c80:	3b01      	subs	r3, #1
+     c82:	210f      	movs	r1, #15
+     c84:	400b      	ands	r3, r1
+    SCB_TX_CTRL(base)  = _BOOL2FLD(SCB_TX_CTRL_MSB_FIRST,  config->enableMsbFirst)    |
+     c86:	431a      	orrs	r2, r3
+     c88:	0011      	movs	r1, r2
+     c8a:	68fa      	ldr	r2, [r7, #12]
+     c8c:	2380      	movs	r3, #128	@ 0x80
+     c8e:	009b      	lsls	r3, r3, #2
+     c90:	50d1      	str	r1, [r2, r3]
+
+
+    SCB_RX_FIFO_CTRL(base) = _VAL2FLD(SCB_RX_FIFO_CTRL_TRIGGER_LEVEL, config->rxFifoTriggerLevel);
+     c92:	68bb      	ldr	r3, [r7, #8]
+     c94:	69db      	ldr	r3, [r3, #28]
+     c96:	22ff      	movs	r2, #255	@ 0xff
+     c98:	4013      	ands	r3, r2
+     c9a:	0019      	movs	r1, r3
+     c9c:	68fa      	ldr	r2, [r7, #12]
+     c9e:	23c1      	movs	r3, #193	@ 0xc1
+     ca0:	009b      	lsls	r3, r3, #2
+     ca2:	50d1      	str	r1, [r2, r3]
+
+    /* Configure the flow control */
+    SCB_UART_FLOW_CTRL(base) = _BOOL2FLD(SCB_UART_FLOW_CTRL_CTS_ENABLED, config->enableCts)                                 |
+     ca4:	68bb      	ldr	r3, [r7, #8]
+     ca6:	7bdb      	ldrb	r3, [r3, #15]
+     ca8:	2b00      	cmp	r3, #0
+     caa:	d002      	beq.n	cb2 <Cy_SCB_UART_Init+0xee>
+     cac:	2380      	movs	r3, #128	@ 0x80
+     cae:	049a      	lsls	r2, r3, #18
+     cb0:	e000      	b.n	cb4 <Cy_SCB_UART_Init+0xf0>
+     cb2:	2200      	movs	r2, #0
+                                _BOOL2FLD(SCB_UART_FLOW_CTRL_CTS_POLARITY, (CY_SCB_UART_ACTIVE_HIGH == config->ctsPolarity)) |
+     cb4:	68bb      	ldr	r3, [r7, #8]
+     cb6:	7c1b      	ldrb	r3, [r3, #16]
+     cb8:	2b01      	cmp	r3, #1
+     cba:	d102      	bne.n	cc2 <Cy_SCB_UART_Init+0xfe>
+     cbc:	2380      	movs	r3, #128	@ 0x80
+     cbe:	045b      	lsls	r3, r3, #17
+     cc0:	e000      	b.n	cc4 <Cy_SCB_UART_Init+0x100>
+     cc2:	2300      	movs	r3, #0
+    SCB_UART_FLOW_CTRL(base) = _BOOL2FLD(SCB_UART_FLOW_CTRL_CTS_ENABLED, config->enableCts)                                 |
+     cc4:	431a      	orrs	r2, r3
+                                _BOOL2FLD(SCB_UART_FLOW_CTRL_RTS_POLARITY, (CY_SCB_UART_ACTIVE_HIGH == config->rtsPolarity)) |
+     cc6:	68bb      	ldr	r3, [r7, #8]
+     cc8:	7e1b      	ldrb	r3, [r3, #24]
+     cca:	2b01      	cmp	r3, #1
+     ccc:	d102      	bne.n	cd4 <Cy_SCB_UART_Init+0x110>
+     cce:	2380      	movs	r3, #128	@ 0x80
+     cd0:	025b      	lsls	r3, r3, #9
+     cd2:	e000      	b.n	cd6 <Cy_SCB_UART_Init+0x112>
+     cd4:	2300      	movs	r3, #0
+                                _BOOL2FLD(SCB_UART_FLOW_CTRL_CTS_POLARITY, (CY_SCB_UART_ACTIVE_HIGH == config->ctsPolarity)) |
+     cd6:	431a      	orrs	r2, r3
+                                _VAL2FLD(SCB_UART_FLOW_CTRL_TRIGGER_LEVEL, config->rtsRxFifoLevel);
+     cd8:	68bb      	ldr	r3, [r7, #8]
+     cda:	695b      	ldr	r3, [r3, #20]
+     cdc:	21ff      	movs	r1, #255	@ 0xff
+     cde:	400b      	ands	r3, r1
+                                _BOOL2FLD(SCB_UART_FLOW_CTRL_RTS_POLARITY, (CY_SCB_UART_ACTIVE_HIGH == config->rtsPolarity)) |
+     ce0:	431a      	orrs	r2, r3
+    SCB_UART_FLOW_CTRL(base) = _BOOL2FLD(SCB_UART_FLOW_CTRL_CTS_ENABLED, config->enableCts)                                 |
+     ce2:	68fb      	ldr	r3, [r7, #12]
+     ce4:	651a      	str	r2, [r3, #80]	@ 0x50
+
+    SCB_TX_FIFO_CTRL(base) = _VAL2FLD(SCB_TX_FIFO_CTRL_TRIGGER_LEVEL, config->txFifoTriggerLevel);
+     ce6:	68bb      	ldr	r3, [r7, #8]
+     ce8:	6a5b      	ldr	r3, [r3, #36]	@ 0x24
+     cea:	22ff      	movs	r2, #255	@ 0xff
+     cec:	4013      	ands	r3, r2
+     cee:	0019      	movs	r1, r3
+     cf0:	68fa      	ldr	r2, [r7, #12]
+     cf2:	2381      	movs	r3, #129	@ 0x81
+     cf4:	009b      	lsls	r3, r3, #2
+     cf6:	50d1      	str	r1, [r2, r3]
+
+    /* Set up interrupt sources */
+    SCB_INTR_RX_MASK(base) = (config->rxFifoIntEnableMask & CY_SCB_UART_RX_INTR_MASK);
+     cf8:	68bb      	ldr	r3, [r7, #8]
+     cfa:	6a1b      	ldr	r3, [r3, #32]
+     cfc:	4a12      	ldr	r2, [pc, #72]	@ (d48 <Cy_SCB_UART_Init+0x184>)
+     cfe:	401a      	ands	r2, r3
+     d00:	68fb      	ldr	r3, [r7, #12]
+     d02:	4912      	ldr	r1, [pc, #72]	@ (d4c <Cy_SCB_UART_Init+0x188>)
+     d04:	505a      	str	r2, [r3, r1]
+    SCB_INTR_TX_MASK(base) = (config->txFifoIntEnableMask & CY_SCB_UART_TX_INTR_MASK);
+     d06:	68bb      	ldr	r3, [r7, #8]
+     d08:	6a9b      	ldr	r3, [r3, #40]	@ 0x28
+     d0a:	4a11      	ldr	r2, [pc, #68]	@ (d50 <Cy_SCB_UART_Init+0x18c>)
+     d0c:	401a      	ands	r2, r3
+     d0e:	68fb      	ldr	r3, [r7, #12]
+     d10:	4910      	ldr	r1, [pc, #64]	@ (d54 <Cy_SCB_UART_Init+0x190>)
+     d12:	505a      	str	r2, [r3, r1]
+
+    /* Initialize context */
+    if (NULL != context)
+     d14:	687b      	ldr	r3, [r7, #4]
+     d16:	2b00      	cmp	r3, #0
+     d18:	d011      	beq.n	d3e <Cy_SCB_UART_Init+0x17a>
+    {
+        context->rxStatus  = 0UL;
+     d1a:	687b      	ldr	r3, [r7, #4]
+     d1c:	2200      	movs	r2, #0
+     d1e:	605a      	str	r2, [r3, #4]
+        context->txStatus  = 0UL;
+     d20:	687b      	ldr	r3, [r7, #4]
+     d22:	2200      	movs	r2, #0
+     d24:	601a      	str	r2, [r3, #0]
+
+        context->rxRingBuf = NULL;
+     d26:	687b      	ldr	r3, [r7, #4]
+     d28:	2200      	movs	r2, #0
+     d2a:	609a      	str	r2, [r3, #8]
+        context->rxRingBufSize = 0UL;
+     d2c:	687b      	ldr	r3, [r7, #4]
+     d2e:	2200      	movs	r2, #0
+     d30:	60da      	str	r2, [r3, #12]
+
+        context->rxBufIdx  = 0UL;
+     d32:	687b      	ldr	r3, [r7, #4]
+     d34:	2200      	movs	r2, #0
+     d36:	621a      	str	r2, [r3, #32]
+        context->txLeftToTransmit = 0UL;
+     d38:	687b      	ldr	r3, [r7, #4]
+     d3a:	2200      	movs	r2, #0
+     d3c:	62da      	str	r2, [r3, #44]	@ 0x2c
+    }
+}
+     d3e:	46c0      	nop			@ (mov r8, r8)
+     d40:	46bd      	mov	sp, r7
+     d42:	b006      	add	sp, #24
+     d44:	bd80      	pop	{r7, pc}
+     d46:	46c0      	nop			@ (mov r8, r8)
+     d48:	00000b6d 	.word	0x00000b6d
+     d4c:	00000fc8 	.word	0x00000fc8
+     d50:	00000773 	.word	0x00000773
+     d54:	00000f88 	.word	0x00000f88
+
+00000d58 <Cy_SCB_UART_Enable>:
+
+void Cy_SCB_UART_Enable(CySCB_Type *base)
+{
+     d58:	b580      	push	{r7, lr}
+     d5a:	b082      	sub	sp, #8
+     d5c:	af00      	add	r7, sp, #0
+     d5e:	6078      	str	r0, [r7, #4]
+    SCB_CTRL(base) |= SCB_CTRL_ENABLED_Msk;
+     d60:	687b      	ldr	r3, [r7, #4]
+     d62:	681b      	ldr	r3, [r3, #0]
+     d64:	2280      	movs	r2, #128	@ 0x80
+     d66:	0612      	lsls	r2, r2, #24
+     d68:	431a      	orrs	r2, r3
+     d6a:	687b      	ldr	r3, [r7, #4]
+     d6c:	601a      	str	r2, [r3, #0]
+}
+     d6e:	46c0      	nop			@ (mov r8, r8)
+     d70:	46bd      	mov	sp, r7
+     d72:	b002      	add	sp, #8
+     d74:	bd80      	pop	{r7, pc}
+
+00000d76 <Cy_SCB_UART_PutString>:
+
+void Cy_SCB_UART_PutString(CySCB_Type *base, char const string[])
+{
+     d76:	b580      	push	{r7, lr}
+     d78:	b082      	sub	sp, #8
+     d7a:	af00      	add	r7, sp, #0
+     d7c:	6078      	str	r0, [r7, #4]
+     d7e:	6039      	str	r1, [r7, #0]
+    Cy_SCB_WriteString(base, string);
+     d80:	683a      	ldr	r2, [r7, #0]
+     d82:	687b      	ldr	r3, [r7, #4]
+     d84:	0011      	movs	r1, r2
+     d86:	0018      	movs	r0, r3
+     d88:	f000 f804 	bl	d94 <Cy_SCB_WriteString>
+}
+     d8c:	46c0      	nop			@ (mov r8, r8)
+     d8e:	46bd      	mov	sp, r7
+     d90:	b002      	add	sp, #8
+     d92:	bd80      	pop	{r7, pc}
+
+00000d94 <Cy_SCB_WriteString>:
+
+void Cy_SCB_WriteString(CySCB_Type *base, char const string[])
+{
+     d94:	b580      	push	{r7, lr}
+     d96:	b084      	sub	sp, #16
+     d98:	af00      	add	r7, sp, #0
+     d9a:	6078      	str	r0, [r7, #4]
+     d9c:	6039      	str	r1, [r7, #0]
+    uint32_t idx = 0UL;
+     d9e:	2300      	movs	r3, #0
+     da0:	60fb      	str	r3, [r7, #12]
+    uint32_t fifoSize = Cy_SCB_GetFifoSize(base);
+     da2:	687b      	ldr	r3, [r7, #4]
+     da4:	0018      	movs	r0, r3
+     da6:	f000 f824 	bl	df2 <Cy_SCB_GetFifoSize>
+     daa:	0003      	movs	r3, r0
+     dac:	60bb      	str	r3, [r7, #8]
+
+    /* Put data from TX FIFO. Stop when string is terminated */
+    while (((char) 0) != string[idx])
+     dae:	e015      	b.n	ddc <Cy_SCB_WriteString+0x48>
+    {
+        /* Wait for free space to be available */
+        while (fifoSize == Cy_SCB_GetNumInTxFifo(base))
+     db0:	46c0      	nop			@ (mov r8, r8)
+     db2:	687b      	ldr	r3, [r7, #4]
+     db4:	0018      	movs	r0, r3
+     db6:	f000 f82d 	bl	e14 <Cy_SCB_GetNumInTxFifo>
+     dba:	0002      	movs	r2, r0
+     dbc:	68bb      	ldr	r3, [r7, #8]
+     dbe:	4293      	cmp	r3, r2
+     dc0:	d0f7      	beq.n	db2 <Cy_SCB_WriteString+0x1e>
+        {
+        }
+
+        Cy_SCB_WriteTxFifo(base, (uint32_t) string[idx]);
+     dc2:	683a      	ldr	r2, [r7, #0]
+     dc4:	68fb      	ldr	r3, [r7, #12]
+     dc6:	18d3      	adds	r3, r2, r3
+     dc8:	781b      	ldrb	r3, [r3, #0]
+     dca:	001a      	movs	r2, r3
+     dcc:	687b      	ldr	r3, [r7, #4]
+     dce:	0011      	movs	r1, r2
+     dd0:	0018      	movs	r0, r3
+     dd2:	f000 f82d 	bl	e30 <Cy_SCB_WriteTxFifo>
+        ++idx;
+     dd6:	68fb      	ldr	r3, [r7, #12]
+     dd8:	3301      	adds	r3, #1
+     dda:	60fb      	str	r3, [r7, #12]
+    while (((char) 0) != string[idx])
+     ddc:	683a      	ldr	r2, [r7, #0]
+     dde:	68fb      	ldr	r3, [r7, #12]
+     de0:	18d3      	adds	r3, r2, r3
+     de2:	781b      	ldrb	r3, [r3, #0]
+     de4:	2b00      	cmp	r3, #0
+     de6:	d1e3      	bne.n	db0 <Cy_SCB_WriteString+0x1c>
+    }
+}
+     de8:	46c0      	nop			@ (mov r8, r8)
+     dea:	46c0      	nop			@ (mov r8, r8)
+     dec:	46bd      	mov	sp, r7
+     dee:	b004      	add	sp, #16
+     df0:	bd80      	pop	{r7, pc}
+
+00000df2 <Cy_SCB_GetFifoSize>:
+
+uint32_t Cy_SCB_GetFifoSize(CySCB_Type const *base)
+{
+     df2:	b580      	push	{r7, lr}
+     df4:	b082      	sub	sp, #8
+     df6:	af00      	add	r7, sp, #0
+     df8:	6078      	str	r0, [r7, #4]
+    return (_FLD2BOOL(SCB_CTRL_BYTE_MODE, SCB_CTRL(base)) ? (CY_SCB_FIFO_SIZE) : (CY_SCB_FIFO_SIZE / 2UL));
+     dfa:	687b      	ldr	r3, [r7, #4]
+     dfc:	681a      	ldr	r2, [r3, #0]
+     dfe:	2380      	movs	r3, #128	@ 0x80
+     e00:	011b      	lsls	r3, r3, #4
+     e02:	4013      	ands	r3, r2
+     e04:	d001      	beq.n	e0a <Cy_SCB_GetFifoSize+0x18>
+     e06:	2310      	movs	r3, #16
+     e08:	e000      	b.n	e0c <Cy_SCB_GetFifoSize+0x1a>
+     e0a:	2308      	movs	r3, #8
+}
+     e0c:	0018      	movs	r0, r3
+     e0e:	46bd      	mov	sp, r7
+     e10:	b002      	add	sp, #8
+     e12:	bd80      	pop	{r7, pc}
+
+00000e14 <Cy_SCB_GetNumInTxFifo>:
+
+uint32_t Cy_SCB_GetNumInTxFifo(CySCB_Type const *base)
+{
+     e14:	b580      	push	{r7, lr}
+     e16:	b082      	sub	sp, #8
+     e18:	af00      	add	r7, sp, #0
+     e1a:	6078      	str	r0, [r7, #4]
+    return _FLD2VAL(SCB_TX_FIFO_STATUS_USED, SCB_TX_FIFO_STATUS(base));
+     e1c:	687a      	ldr	r2, [r7, #4]
+     e1e:	2382      	movs	r3, #130	@ 0x82
+     e20:	009b      	lsls	r3, r3, #2
+     e22:	58d3      	ldr	r3, [r2, r3]
+     e24:	05db      	lsls	r3, r3, #23
+     e26:	0ddb      	lsrs	r3, r3, #23
+}
+     e28:	0018      	movs	r0, r3
+     e2a:	46bd      	mov	sp, r7
+     e2c:	b002      	add	sp, #8
+     e2e:	bd80      	pop	{r7, pc}
+
+00000e30 <Cy_SCB_WriteTxFifo>:
+
+void Cy_SCB_WriteTxFifo(CySCB_Type* base, uint32_t data)
+{
+     e30:	b580      	push	{r7, lr}
+     e32:	b082      	sub	sp, #8
+     e34:	af00      	add	r7, sp, #0
+     e36:	6078      	str	r0, [r7, #4]
+     e38:	6039      	str	r1, [r7, #0]
+    SCB_TX_FIFO_WR(base) = data;
+     e3a:	687a      	ldr	r2, [r7, #4]
+     e3c:	2390      	movs	r3, #144	@ 0x90
+     e3e:	009b      	lsls	r3, r3, #2
+     e40:	6839      	ldr	r1, [r7, #0]
+     e42:	50d1      	str	r1, [r2, r3]
+}
+     e44:	46c0      	nop			@ (mov r8, r8)
+     e46:	46bd      	mov	sp, r7
+     e48:	b002      	add	sp, #8
+     e4a:	bd80      	pop	{r7, pc}
+
+00000e4c <enable_irq>:
+#include "cmsis_gcc.h"
+#include <stdint.h>
+
+void enable_irq(void)
+{
+     e4c:	b580      	push	{r7, lr}
+     e4e:	af00      	add	r7, sp, #0
+  __asm volatile ("cpsie i" : : : "memory");
+     e50:	b662      	cpsie	i
+}
+     e52:	46c0      	nop			@ (mov r8, r8)
+     e54:	46bd      	mov	sp, r7
+     e56:	bd80      	pop	{r7, pc}
+
+00000e58 <NVIC_SetPriority>:
+{
+  __asm volatile ("cpsid i" : : : "memory");
+}
+
+void NVIC_SetPriority(uint32_t IRQn, uint32_t priority)
+{
+     e58:	b580      	push	{r7, lr}
+     e5a:	b082      	sub	sp, #8
+     e5c:	af00      	add	r7, sp, #0
+     e5e:	6078      	str	r0, [r7, #4]
+     e60:	6039      	str	r1, [r7, #0]
+  if ((int32_t)(IRQn) >= 0)
+     e62:	687b      	ldr	r3, [r7, #4]
+     e64:	2b00      	cmp	r3, #0
+     e66:	db1f      	blt.n	ea8 <NVIC_SetPriority+0x50>
+  {
+    NVIC->IP[_IP_IDX(IRQn)]  = ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)]  & ~(0xFFUL << _BIT_SHIFT(IRQn))) |
+     e68:	4a11      	ldr	r2, [pc, #68]	@ (eb0 <NVIC_SetPriority+0x58>)
+     e6a:	687b      	ldr	r3, [r7, #4]
+     e6c:	089b      	lsrs	r3, r3, #2
+     e6e:	33c0      	adds	r3, #192	@ 0xc0
+     e70:	009b      	lsls	r3, r3, #2
+     e72:	589b      	ldr	r3, [r3, r2]
+     e74:	687a      	ldr	r2, [r7, #4]
+     e76:	2103      	movs	r1, #3
+     e78:	400a      	ands	r2, r1
+     e7a:	00d2      	lsls	r2, r2, #3
+     e7c:	21ff      	movs	r1, #255	@ 0xff
+     e7e:	4091      	lsls	r1, r2
+     e80:	000a      	movs	r2, r1
+     e82:	43d2      	mvns	r2, r2
+     e84:	401a      	ands	r2, r3
+     e86:	0011      	movs	r1, r2
+       (((priority << (8U - 2)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
+     e88:	683b      	ldr	r3, [r7, #0]
+     e8a:	019b      	lsls	r3, r3, #6
+     e8c:	22ff      	movs	r2, #255	@ 0xff
+     e8e:	401a      	ands	r2, r3
+     e90:	687b      	ldr	r3, [r7, #4]
+     e92:	2003      	movs	r0, #3
+     e94:	4003      	ands	r3, r0
+     e96:	00db      	lsls	r3, r3, #3
+     e98:	409a      	lsls	r2, r3
+    NVIC->IP[_IP_IDX(IRQn)]  = ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)]  & ~(0xFFUL << _BIT_SHIFT(IRQn))) |
+     e9a:	4805      	ldr	r0, [pc, #20]	@ (eb0 <NVIC_SetPriority+0x58>)
+     e9c:	687b      	ldr	r3, [r7, #4]
+     e9e:	089b      	lsrs	r3, r3, #2
+     ea0:	430a      	orrs	r2, r1
+     ea2:	33c0      	adds	r3, #192	@ 0xc0
+     ea4:	009b      	lsls	r3, r3, #2
+     ea6:	501a      	str	r2, [r3, r0]
+  }
+
+}
+     ea8:	46c0      	nop			@ (mov r8, r8)
+     eaa:	46bd      	mov	sp, r7
+     eac:	b002      	add	sp, #8
+     eae:	bd80      	pop	{r7, pc}
+     eb0:	e000e100 	.word	0xe000e100
+
+00000eb4 <NVIC_ClearPendingIRQ>:
+
+void NVIC_ClearPendingIRQ(uint32_t IRQn)
+{
+     eb4:	b580      	push	{r7, lr}
+     eb6:	b082      	sub	sp, #8
+     eb8:	af00      	add	r7, sp, #0
+     eba:	6078      	str	r0, [r7, #4]
+  if ((int32_t)(IRQn) >= 0)
+     ebc:	687b      	ldr	r3, [r7, #4]
+     ebe:	2b00      	cmp	r3, #0
+     ec0:	db08      	blt.n	ed4 <NVIC_ClearPendingIRQ+0x20>
+  {
+    NVIC->ICPR = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+     ec2:	687b      	ldr	r3, [r7, #4]
+     ec4:	221f      	movs	r2, #31
+     ec6:	4013      	ands	r3, r2
+     ec8:	4904      	ldr	r1, [pc, #16]	@ (edc <NVIC_ClearPendingIRQ+0x28>)
+     eca:	2201      	movs	r2, #1
+     ecc:	409a      	lsls	r2, r3
+     ece:	23c0      	movs	r3, #192	@ 0xc0
+     ed0:	005b      	lsls	r3, r3, #1
+     ed2:	50ca      	str	r2, [r1, r3]
+  }
+}
+     ed4:	46c0      	nop			@ (mov r8, r8)
+     ed6:	46bd      	mov	sp, r7
+     ed8:	b002      	add	sp, #8
+     eda:	bd80      	pop	{r7, pc}
+     edc:	e000e100 	.word	0xe000e100
+
+00000ee0 <NVIC_EnableIRQ>:
+
+void NVIC_EnableIRQ(uint32_t IRQn)
+{
+     ee0:	b580      	push	{r7, lr}
+     ee2:	b082      	sub	sp, #8
+     ee4:	af00      	add	r7, sp, #0
+     ee6:	6078      	str	r0, [r7, #4]
+  if ((int32_t)(IRQn) >= 0)
+     ee8:	687b      	ldr	r3, [r7, #4]
+     eea:	2b00      	cmp	r3, #0
+     eec:	db07      	blt.n	efe <NVIC_EnableIRQ+0x1e>
+  {
+    __asm volatile("":::"memory");
+    NVIC->ISER = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+     eee:	687b      	ldr	r3, [r7, #4]
+     ef0:	221f      	movs	r2, #31
+     ef2:	401a      	ands	r2, r3
+     ef4:	4b04      	ldr	r3, [pc, #16]	@ (f08 <NVIC_EnableIRQ+0x28>)
+     ef6:	2101      	movs	r1, #1
+     ef8:	4091      	lsls	r1, r2
+     efa:	000a      	movs	r2, r1
+     efc:	601a      	str	r2, [r3, #0]
+    __asm volatile("":::"memory");
+  }
+}
+     efe:	46c0      	nop			@ (mov r8, r8)
+     f00:	46bd      	mov	sp, r7
+     f02:	b002      	add	sp, #8
+     f04:	bd80      	pop	{r7, pc}
+     f06:	46c0      	nop			@ (mov r8, r8)
+     f08:	e000e100 	.word	0xe000e100
+
+00000f0c <_init>:
+extern uint32_t __bss_start__;
+extern uint32_t __bss_end__;
+
+extern uint32_t __STACK_START;
+extern uint32_t __STACK_END;
+extern void _init(void) {;}
+     f0c:	b580      	push	{r7, lr}
+     f0e:	af00      	add	r7, sp, #0
+     f10:	46c0      	nop			@ (mov r8, r8)
+     f12:	46bd      	mov	sp, r7
+     f14:	bd80      	pop	{r7, pc}
+	...
+
+00000f18 <Reset_handler>:
+    (uint32_t)can_interrupt_can_IRQHandler,             /*  26 CAN Interrupt */
+    (uint32_t)crypto_interrupt_IRQHandler               /*  27 Crypto Interrupt */
+};
+
+void Reset_handler(void)
+{
+     f18:	b580      	push	{r7, lr}
+     f1a:	b086      	sub	sp, #24
+     f1c:	af00      	add	r7, sp, #0
+    //disable watchdog
+    (*(uint32_t *) CYREG_WDT_DISABLE_KEY) = CY_SYS_WDT_KEY;
+     f1e:	4b1d      	ldr	r3, [pc, #116]	@ (f94 <Reset_handler+0x7c>)
+     f20:	4a1d      	ldr	r2, [pc, #116]	@ (f98 <Reset_handler+0x80>)
+     f22:	601a      	str	r2, [r3, #0]
+
+    //copy .data section to SRAM
+    uint32_t size = &__data_end - &__data_start;
+     f24:	4a1d      	ldr	r2, [pc, #116]	@ (f9c <Reset_handler+0x84>)
+     f26:	4b1e      	ldr	r3, [pc, #120]	@ (fa0 <Reset_handler+0x88>)
+     f28:	1ad3      	subs	r3, r2, r3
+     f2a:	109b      	asrs	r3, r3, #2
+     f2c:	607b      	str	r3, [r7, #4]
+    uint32_t *pDst = (uint32_t*)&__data_start;
+     f2e:	4b1c      	ldr	r3, [pc, #112]	@ (fa0 <Reset_handler+0x88>)
+     f30:	617b      	str	r3, [r7, #20]
+    uint32_t *pSrc = (uint32_t*)&_la_data;
+     f32:	4b1c      	ldr	r3, [pc, #112]	@ (fa4 <Reset_handler+0x8c>)
+     f34:	613b      	str	r3, [r7, #16]
+
+    for(uint32_t i = 0; i< size; i++)
+     f36:	2300      	movs	r3, #0
+     f38:	60fb      	str	r3, [r7, #12]
+     f3a:	e00a      	b.n	f52 <Reset_handler+0x3a>
+    {
+        *pDst++ = *pSrc++;
+     f3c:	693a      	ldr	r2, [r7, #16]
+     f3e:	1d13      	adds	r3, r2, #4
+     f40:	613b      	str	r3, [r7, #16]
+     f42:	697b      	ldr	r3, [r7, #20]
+     f44:	1d19      	adds	r1, r3, #4
+     f46:	6179      	str	r1, [r7, #20]
+     f48:	6812      	ldr	r2, [r2, #0]
+     f4a:	601a      	str	r2, [r3, #0]
+    for(uint32_t i = 0; i< size; i++)
+     f4c:	68fb      	ldr	r3, [r7, #12]
+     f4e:	3301      	adds	r3, #1
+     f50:	60fb      	str	r3, [r7, #12]
+     f52:	68fa      	ldr	r2, [r7, #12]
+     f54:	687b      	ldr	r3, [r7, #4]
+     f56:	429a      	cmp	r2, r3
+     f58:	d3f0      	bcc.n	f3c <Reset_handler+0x24>
+    }
+    //int the .bss section to zero in SRAM
+    size = &__bss_end__ - &__bss_start__;
+     f5a:	4a13      	ldr	r2, [pc, #76]	@ (fa8 <Reset_handler+0x90>)
+     f5c:	4b13      	ldr	r3, [pc, #76]	@ (fac <Reset_handler+0x94>)
+     f5e:	1ad3      	subs	r3, r2, r3
+     f60:	109b      	asrs	r3, r3, #2
+     f62:	607b      	str	r3, [r7, #4]
+    pDst = (uint32_t*)&__bss_start__;
+     f64:	4b11      	ldr	r3, [pc, #68]	@ (fac <Reset_handler+0x94>)
+     f66:	617b      	str	r3, [r7, #20]
+
+    for(uint32_t i = 0; i< size; i++)
+     f68:	2300      	movs	r3, #0
+     f6a:	60bb      	str	r3, [r7, #8]
+     f6c:	e007      	b.n	f7e <Reset_handler+0x66>
+    {
+        *pDst++ = 0;
+     f6e:	697b      	ldr	r3, [r7, #20]
+     f70:	1d1a      	adds	r2, r3, #4
+     f72:	617a      	str	r2, [r7, #20]
+     f74:	2200      	movs	r2, #0
+     f76:	601a      	str	r2, [r3, #0]
+    for(uint32_t i = 0; i< size; i++)
+     f78:	68bb      	ldr	r3, [r7, #8]
+     f7a:	3301      	adds	r3, #1
+     f7c:	60bb      	str	r3, [r7, #8]
+     f7e:	68ba      	ldr	r2, [r7, #8]
+     f80:	687b      	ldr	r3, [r7, #4]
+     f82:	429a      	cmp	r2, r3
+     f84:	d3f3      	bcc.n	f6e <Reset_handler+0x56>
+    }
+
+    // Init C std libs
+    __libc_init_array();
+     f86:	f000 f81b 	bl	fc0 <__libc_init_array>
+    
+
+    //call main()
+    main();
+     f8a:	f7ff f899 	bl	c0 <main>
+
+    while (1)
+     f8e:	46c0      	nop			@ (mov r8, r8)
+     f90:	e7fd      	b.n	f8e <Reset_handler+0x76>
+     f92:	46c0      	nop			@ (mov r8, r8)
+     f94:	40030038 	.word	0x40030038
+     f98:	aced8865 	.word	0xaced8865
+     f9c:	20000000 	.word	0x20000000
+     fa0:	20000000 	.word	0x20000000
+     fa4:	00001134 	.word	0x00001134
+     fa8:	20000058 	.word	0x20000058
+     fac:	20000000 	.word	0x20000000
+
+00000fb0 <Default_Handler>:
+
+/*----------------------------------------------------------------------------
+  Default Handler for Exceptions / Interrupts
+ *----------------------------------------------------------------------------*/
+void Default_Handler(void)
+{
+     fb0:	b580      	push	{r7, lr}
+     fb2:	af00      	add	r7, sp, #0
+    while(1);
+     fb4:	46c0      	nop			@ (mov r8, r8)
+     fb6:	e7fd      	b.n	fb4 <Default_Handler+0x4>
+
+00000fb8 <HRDFLT_Handler>:
+
+/*----------------------------------------------------------------------------
+  Default Handler for Hard Fault
+ *----------------------------------------------------------------------------*/
+void HRDFLT_Handler(void)
+{
+     fb8:	b580      	push	{r7, lr}
+     fba:	af00      	add	r7, sp, #0
+    while(1);
+     fbc:	46c0      	nop			@ (mov r8, r8)
+     fbe:	e7fd      	b.n	fbc <HRDFLT_Handler+0x4>
+
+00000fc0 <__libc_init_array>:
+     fc0:	b570      	push	{r4, r5, r6, lr}
+     fc2:	2600      	movs	r6, #0
+     fc4:	4c0c      	ldr	r4, [pc, #48]	@ (ff8 <__libc_init_array+0x38>)
+     fc6:	4d0d      	ldr	r5, [pc, #52]	@ (ffc <__libc_init_array+0x3c>)
+     fc8:	1b64      	subs	r4, r4, r5
+     fca:	10a4      	asrs	r4, r4, #2
+     fcc:	42a6      	cmp	r6, r4
+     fce:	d109      	bne.n	fe4 <__libc_init_array+0x24>
+     fd0:	2600      	movs	r6, #0
+     fd2:	f7ff ff9b 	bl	f0c <_init>
+     fd6:	4c0a      	ldr	r4, [pc, #40]	@ (1000 <__STACK_SIZE>)
+     fd8:	4d0a      	ldr	r5, [pc, #40]	@ (1004 <__STACK_SIZE+0x4>)
+     fda:	1b64      	subs	r4, r4, r5
+     fdc:	10a4      	asrs	r4, r4, #2
+     fde:	42a6      	cmp	r6, r4
+     fe0:	d105      	bne.n	fee <__libc_init_array+0x2e>
+     fe2:	bd70      	pop	{r4, r5, r6, pc}
+     fe4:	00b3      	lsls	r3, r6, #2
+     fe6:	58eb      	ldr	r3, [r5, r3]
+     fe8:	4798      	blx	r3
+     fea:	3601      	adds	r6, #1
+     fec:	e7ee      	b.n	fcc <__libc_init_array+0xc>
+     fee:	00b3      	lsls	r3, r6, #2
+     ff0:	58eb      	ldr	r3, [r5, r3]
+     ff2:	4798      	blx	r3
+     ff4:	3601      	adds	r6, #1
+     ff6:	e7f2      	b.n	fde <__libc_init_array+0x1e>
+	...
+    1008:	56203e3e 	.word	0x56203e3e
+    100c:	45554c41 	.word	0x45554c41
+    1010:	45524720 	.word	0x45524720
+    1014:	52455441 	.word	0x52455441
+    1018:	41485420 	.word	0x41485420
+    101c:	2e31204e 	.word	0x2e31204e
+    1020:	4f205635 	.word	0x4f205635
+    1024:	52455342 	.word	0x52455342
+    1028:	20444556 	.word	0x20444556
+    102c:	000a0a0d 	.word	0x000a0a0d
+
+00001030 <UART_RX_P7_0_config>:
+    1030:	00000001 00000001 00000000 00000000     ................
+    1040:	00000000                                ....
+
+00001044 <UART_TX_P7_1_config>:
+    1044:	00000001 0000000e 00000000 00000000     ................
+    1054:	00000000                                ....
+
+00001058 <USERLED_P3_4_config>:
+    1058:	00000001 00000006 00000000 00000000     ................
+    1068:	00000000                                ....
+
+0000106c <ADC_P2_1_config>:
+    106c:	00000001 00000009 00000000 00000000     ................
+    107c:	00000000                                ....
+
+00001080 <SCB_UART_config>:
+    1080:	00000000 00000008 00000008 00000200     ................
+	...
+    109c:	00000007 00000000 00000007 00000000     ................
+
+000010ac <pass_0_sar_0_channel_0_config>:
+    10ac:	00000001 00000000 00000000              ............
+
+000010b8 <pass_0_sar_0_config>:
+    10b8:	01000007 00000100 01000001 00000107     ................
+    10c8:	0000000d 00000002 00000002 00000002     ................
+	...
+    10e4:	00000001 000010ac 00000000 00000000     ................
+	...
+    1130:	00001388                                ....

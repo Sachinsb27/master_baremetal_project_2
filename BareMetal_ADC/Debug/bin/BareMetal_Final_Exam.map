@@ -1,0 +1,881 @@
+Archive member included to satisfy reference by file (symbol)
+
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+                              ./Device_Drivers/CLOCK/Sys_Clock.o (__aeabi_uidiv)
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
+                              D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+                              ./Application_Source/main.o (__aeabi_fmul)
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_clzsi2.o)
+                              D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o) (__clzsi2)
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+                              ./Libc_Device_Support/syscalls.o (__errno)
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+                              ./Startup/startup.o (__libc_init_array)
+D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+                              D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o) (_impure_ptr)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 ./Application_Source/main.o
+ .data          0x00000000        0x0 ./Application_Source/main.o
+ .bss           0x00000000        0x0 ./Application_Source/main.o
+ .heap          0x00000000      0x200 ./Application_Source/main.o
+ .stack         0x00000000      0x400 ./Application_Source/main.o
+ .bss.chanresult
+                0x00000000        0x2 ./Application_Source/main.o
+ .bss.adcResult_mV
+                0x00000000        0x2 ./Application_Source/main.o
+ .bss.adcCounter
+                0x00000000        0x4 ./Application_Source/main.o
+ .bss.ledStatus
+                0x00000000        0x4 ./Application_Source/main.o
+ .bss.SCB_UART_context
+                0x00000000       0x30 ./Application_Source/main.o
+ .text.Delay    0x00000000       0x62 ./Application_Source/main.o
+ .text          0x00000000        0x0 ./Application_Source/user_cfg.o
+ .data          0x00000000        0x0 ./Application_Source/user_cfg.o
+ .bss           0x00000000        0x0 ./Application_Source/user_cfg.o
+ .rodata.TRNG_config
+                0x00000000       0x14 ./Application_Source/user_cfg.o
+ .rodata.LED10_P2_2_config
+                0x00000000       0x14 ./Application_Source/user_cfg.o
+ .rodata.LED10_P2_0_config
+                0x00000000       0x14 ./Application_Source/user_cfg.o
+ .rodata.PWM_P1_2_config
+                0x00000000       0x14 ./Application_Source/user_cfg.o
+ .rodata.SCB_UART_config
+                0x00000000       0x2c ./Application_Source/user_cfg.o
+ .rodata.TIMER1_config
+                0x00000000       0x4c ./Application_Source/user_cfg.o
+ .rodata.TIMER3_PWM_config
+                0x00000000       0x64 ./Application_Source/user_cfg.o
+ .rodata.pass_0_sar_0_channel_0_config
+                0x00000000        0xc ./Application_Source/user_cfg.o
+ .rodata.pass_0_sar_0_config
+                0x00000000       0x7c ./Application_Source/user_cfg.o
+ .text          0x00000000        0x0 ./Device_Drivers/GPIO/gpio.o
+ .data          0x00000000        0x0 ./Device_Drivers/GPIO/gpio.o
+ .bss           0x00000000        0x0 ./Device_Drivers/GPIO/gpio.o
+ .text.GPIO_Read
+                0x00000000       0x20 ./Device_Drivers/GPIO/gpio.o
+ .text.GPIO_Set
+                0x00000000       0x1c ./Device_Drivers/GPIO/gpio.o
+ .text.GPIO_Clr
+                0x00000000       0x1c ./Device_Drivers/GPIO/gpio.o
+ .text.GPIO_Inv
+                0x00000000       0x1c ./Device_Drivers/GPIO/gpio.o
+ .text.gpio_init
+                0x00000000       0x54 ./Device_Drivers/GPIO/gpio.o
+ .text.GPIO_ClearInterrupt
+                0x00000000       0x24 ./Device_Drivers/GPIO/gpio.o
+ .text          0x00000000        0x0 ./Device_Drivers/TIMER/timer.o
+ .data          0x00000000        0x0 ./Device_Drivers/TIMER/timer.o
+ .bss           0x00000000        0x0 ./Device_Drivers/TIMER/timer.o
+ .text.TCPWM_PWM_Init
+                0x00000000      0x224 ./Device_Drivers/TIMER/timer.o
+ .text.TCPWM_TriggerReloadOrIndex
+                0x00000000       0x1a ./Device_Drivers/TIMER/timer.o
+ .text.TCPWM_ClearInterrupt
+                0x00000000       0x36 ./Device_Drivers/TIMER/timer.o
+ .text.TCPWM_PWM_SetCompare0
+                0x00000000       0x26 ./Device_Drivers/TIMER/timer.o
+ .text.TCPWM_PWM_SetCompare1
+                0x00000000       0x26 ./Device_Drivers/TIMER/timer.o
+ .text          0x00000000        0x0 ./Device_Drivers/ADC/ADC.o
+ .data          0x00000000        0x0 ./Device_Drivers/ADC/ADC.o
+ .bss           0x00000000        0x0 ./Device_Drivers/ADC/ADC.o
+ .bss.Cy_SAR_offset
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_Init
+                0x00000000      0x3bc ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_ClearSatInterrupt
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_Enable
+                0x00000000       0x38 ./Device_Drivers/ADC/ADC.o
+ .text.init_cycfg_peripherals
+                0x00000000       0x54 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_StartConvert
+                0x00000000       0x3c ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_GetResult16
+                0x00000000       0x5a ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_SetSatInterruptMask
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_SetRangeInterruptMask
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_ClearRangeInterrupt
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_SetInterruptMask
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_ClearInterrupt
+                0x00000000       0x22 ./Device_Drivers/ADC/ADC.o
+ .text.Cy_SAR_CountsTo_mVolts
+                0x00000000       0x38 ./Device_Drivers/ADC/ADC.o
+ .debug_info    0x00000000      0x990 ./Device_Drivers/ADC/ADC.o
+ .debug_abbrev  0x00000000      0x15f ./Device_Drivers/ADC/ADC.o
+ .debug_aranges
+                0x00000000       0x78 ./Device_Drivers/ADC/ADC.o
+ .debug_rnglists
+                0x00000000       0x56 ./Device_Drivers/ADC/ADC.o
+ .debug_line    0x00000000      0x4ba ./Device_Drivers/ADC/ADC.o
+ .debug_str     0x00000000      0x7a7 ./Device_Drivers/ADC/ADC.o
+ .comment       0x00000000       0x45 ./Device_Drivers/ADC/ADC.o
+ .debug_frame   0x00000000      0x18c ./Device_Drivers/ADC/ADC.o
+ .ARM.attributes
+                0x00000000       0x2c ./Device_Drivers/ADC/ADC.o
+ .text          0x00000000        0x0 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .data          0x00000000        0x0 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .bss           0x00000000        0x0 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .text.Cy_SysClk_ImoEnable
+                0x00000000       0x18 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .text.Cy_SysClk_ImoGetFrequency
+                0x00000000       0x3c ./Device_Drivers/CLOCK/Sys_Clock.o
+ .text.Cy_SysClk_ImoSetFrequency
+                0x00000000       0xfc ./Device_Drivers/CLOCK/Sys_Clock.o
+ .text          0x00000000        0x0 ./Device_Drivers/SYSTICK/systick.o
+ .data          0x00000000        0x0 ./Device_Drivers/SYSTICK/systick.o
+ .bss           0x00000000        0x0 ./Device_Drivers/SYSTICK/systick.o
+ .text.SysTick_Config
+                0x00000000       0x40 ./Device_Drivers/SYSTICK/systick.o
+ .text.SysTick_Acknowledge_Interrupt
+                0x00000000       0x28 ./Device_Drivers/SYSTICK/systick.o
+ .debug_info    0x00000000       0xda ./Device_Drivers/SYSTICK/systick.o
+ .debug_abbrev  0x00000000       0x90 ./Device_Drivers/SYSTICK/systick.o
+ .debug_aranges
+                0x00000000       0x28 ./Device_Drivers/SYSTICK/systick.o
+ .debug_rnglists
+                0x00000000       0x19 ./Device_Drivers/SYSTICK/systick.o
+ .debug_line    0x00000000      0x133 ./Device_Drivers/SYSTICK/systick.o
+ .debug_str     0x00000000      0x1b3 ./Device_Drivers/SYSTICK/systick.o
+ .comment       0x00000000       0x45 ./Device_Drivers/SYSTICK/systick.o
+ .debug_frame   0x00000000       0x50 ./Device_Drivers/SYSTICK/systick.o
+ .ARM.attributes
+                0x00000000       0x2c ./Device_Drivers/SYSTICK/systick.o
+ .text          0x00000000        0x0 ./Device_Drivers/SCB/scb.o
+ .data          0x00000000        0x0 ./Device_Drivers/SCB/scb.o
+ .bss           0x00000000        0x0 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ClearI2CInterrupt
+                0x00000000       0x24 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_GetNumInRxFifo
+                0x00000000       0x1c ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ClearRxFifo
+                0x00000000       0x4c ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_SetRxInterruptMask
+                0x00000000       0x20 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_GetTxSrValid
+                0x00000000       0x1e ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_SetTxInterruptMask
+                0x00000000       0x20 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ClearRxInterrupt
+                0x00000000       0x24 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ClearSlaveInterrupt
+                0x00000000       0x24 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_SetSlaveInterruptMask
+                0x00000000       0x20 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ClearTxFifo
+                0x00000000       0x4c ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_SetRxFifoLevel
+                0x00000000       0x32 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_GetSlaveInterruptStatusMasked
+                0x00000000       0x1c ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ClearTxInterrupt
+                0x00000000       0x24 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_FwBlockReset
+                0x00000000       0x3a ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_IsTxDataWidthByte
+                0x00000000       0x22 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ReadArrayNoCheck
+                0x00000000       0x7a ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_ReadArray
+                0x00000000       0x3c ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_WriteDefaultArrayNoCheck
+                0x00000000       0x32 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_WriteDefaultArray
+                0x00000000       0x46 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_WriteArrayNoCheck
+                0x00000000       0x7c ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_WriteArray
+                0x00000000       0x46 ./Device_Drivers/SCB/scb.o
+ .text.Cy_SCB_WriteArrayBlocking
+                0x00000000       0x72 ./Device_Drivers/SCB/scb.o
+ .debug_info    0x00000000      0xb00 ./Device_Drivers/SCB/scb.o
+ .debug_abbrev  0x00000000      0x1bd ./Device_Drivers/SCB/scb.o
+ .debug_aranges
+                0x00000000       0xc8 ./Device_Drivers/SCB/scb.o
+ .debug_rnglists
+                0x00000000       0x91 ./Device_Drivers/SCB/scb.o
+ .debug_line    0x00000000      0x435 ./Device_Drivers/SCB/scb.o
+ .debug_str     0x00000000      0x75e ./Device_Drivers/SCB/scb.o
+ .comment       0x00000000       0x45 ./Device_Drivers/SCB/scb.o
+ .debug_frame   0x00000000      0x2d0 ./Device_Drivers/SCB/scb.o
+ .ARM.attributes
+                0x00000000       0x2c ./Device_Drivers/SCB/scb.o
+ .text          0x00000000        0x0 ./Device_Drivers/SCB/uart.o
+ .data          0x00000000        0x0 ./Device_Drivers/SCB/uart.o
+ .bss           0x00000000        0x0 ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_UART_Init
+                0x00000000      0x194 ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_UART_Enable
+                0x00000000       0x1e ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_UART_PutString
+                0x00000000       0x1e ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_WriteString
+                0x00000000       0x5e ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_GetFifoSize
+                0x00000000       0x22 ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_GetNumInTxFifo
+                0x00000000       0x1c ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_WriteTxFifo
+                0x00000000       0x1c ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_UART_GetNumInRxFifo
+                0x00000000       0x1c ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_UART_Get
+                0x00000000       0x1a ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_ReadRxFifo
+                0x00000000       0x18 ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_UART_Put
+                0x00000000       0x20 ./Device_Drivers/SCB/uart.o
+ .text.Cy_SCB_Write
+                0x00000000       0x40 ./Device_Drivers/SCB/uart.o
+ .debug_info    0x00000000      0x9f3 ./Device_Drivers/SCB/uart.o
+ .debug_abbrev  0x00000000      0x189 ./Device_Drivers/SCB/uart.o
+ .debug_aranges
+                0x00000000       0x78 ./Device_Drivers/SCB/uart.o
+ .debug_rnglists
+                0x00000000       0x56 ./Device_Drivers/SCB/uart.o
+ .debug_line    0x00000000      0x350 ./Device_Drivers/SCB/uart.o
+ .debug_str     0x00000000      0x8ea ./Device_Drivers/SCB/uart.o
+ .comment       0x00000000       0x45 ./Device_Drivers/SCB/uart.o
+ .debug_frame   0x00000000      0x190 ./Device_Drivers/SCB/uart.o
+ .ARM.attributes
+                0x00000000       0x2c ./Device_Drivers/SCB/uart.o
+ .text          0x00000000        0x0 ./Device_Drivers/SCB/i2c.o
+ .data          0x00000000        0x0 ./Device_Drivers/SCB/i2c.o
+ .bss           0x00000000        0x0 ./Device_Drivers/SCB/i2c.o
+ .text.SlaveHandleDataReceive
+                0x00000000      0x12c ./Device_Drivers/SCB/i2c.o
+ .text.Cy_SCB_I2C_Init
+                0x00000000      0x144 ./Device_Drivers/SCB/i2c.o
+ .text.Cy_SCB_I2C_SlaveConfigReadBuf
+                0x00000000       0x2e ./Device_Drivers/SCB/i2c.o
+ .text.Cy_SCB_I2C_SlaveConfigWriteBuf
+                0x00000000       0x28 ./Device_Drivers/SCB/i2c.o
+ .text.Cy_SCB_I2C_SlaveClearWriteStatus
+                0x00000000       0x30 ./Device_Drivers/SCB/i2c.o
+ .text.Cy_SCB_I2C_Enable
+                0x00000000       0x1e ./Device_Drivers/SCB/i2c.o
+ .text.SlaveHandleStop
+                0x00000000      0x154 ./Device_Drivers/SCB/i2c.o
+ .text.SlaveHandleAck
+                0x00000000       0xf0 ./Device_Drivers/SCB/i2c.o
+ .text.SlaveHandleAddress
+                0x00000000       0x46 ./Device_Drivers/SCB/i2c.o
+ .text.SlaveHandleDataTransmit
+                0x00000000      0x150 ./Device_Drivers/SCB/i2c.o
+ .text.SCB_I2C_SlaveInterrupt
+                0x00000000      0x174 ./Device_Drivers/SCB/i2c.o
+ .text.Cy_SCB_I2C_SlaveGetStatus
+                0x00000000       0x16 ./Device_Drivers/SCB/i2c.o
+ .debug_info    0x00000000      0xcd7 ./Device_Drivers/SCB/i2c.o
+ .debug_abbrev  0x00000000      0x251 ./Device_Drivers/SCB/i2c.o
+ .debug_aranges
+                0x00000000       0x78 ./Device_Drivers/SCB/i2c.o
+ .debug_rnglists
+                0x00000000       0x5b ./Device_Drivers/SCB/i2c.o
+ .debug_line    0x00000000      0x644 ./Device_Drivers/SCB/i2c.o
+ .debug_str     0x00000000      0xa4c ./Device_Drivers/SCB/i2c.o
+ .comment       0x00000000       0x45 ./Device_Drivers/SCB/i2c.o
+ .debug_frame   0x00000000      0x190 ./Device_Drivers/SCB/i2c.o
+ .ARM.attributes
+                0x00000000       0x2c ./Device_Drivers/SCB/i2c.o
+ .text          0x00000000        0x0 ./Libc_Device_Support/malloc_support.o
+ .data          0x00000000        0x0 ./Libc_Device_Support/malloc_support.o
+ .bss           0x00000000        0x0 ./Libc_Device_Support/malloc_support.o
+ .text.malloc_dummy
+                0x00000000        0xa ./Libc_Device_Support/malloc_support.o
+ .debug_info    0x00000000       0x39 ./Libc_Device_Support/malloc_support.o
+ .debug_abbrev  0x00000000       0x2d ./Libc_Device_Support/malloc_support.o
+ .debug_aranges
+                0x00000000       0x20 ./Libc_Device_Support/malloc_support.o
+ .debug_rnglists
+                0x00000000       0x13 ./Libc_Device_Support/malloc_support.o
+ .debug_line    0x00000000       0x5a ./Libc_Device_Support/malloc_support.o
+ .debug_str     0x00000000       0xec ./Libc_Device_Support/malloc_support.o
+ .comment       0x00000000       0x45 ./Libc_Device_Support/malloc_support.o
+ .debug_frame   0x00000000       0x2c ./Libc_Device_Support/malloc_support.o
+ .ARM.attributes
+                0x00000000       0x2c ./Libc_Device_Support/malloc_support.o
+ .text          0x00000000        0x0 ./Libc_Device_Support/printf_support.o
+ .data          0x00000000        0x0 ./Libc_Device_Support/printf_support.o
+ .bss           0x00000000        0x0 ./Libc_Device_Support/printf_support.o
+ .text.printf_dummy
+                0x00000000        0xa ./Libc_Device_Support/printf_support.o
+ .debug_info    0x00000000       0x39 ./Libc_Device_Support/printf_support.o
+ .debug_abbrev  0x00000000       0x2d ./Libc_Device_Support/printf_support.o
+ .debug_aranges
+                0x00000000       0x20 ./Libc_Device_Support/printf_support.o
+ .debug_rnglists
+                0x00000000       0x13 ./Libc_Device_Support/printf_support.o
+ .debug_line    0x00000000       0x5a ./Libc_Device_Support/printf_support.o
+ .debug_str     0x00000000       0xec ./Libc_Device_Support/printf_support.o
+ .comment       0x00000000       0x45 ./Libc_Device_Support/printf_support.o
+ .debug_frame   0x00000000       0x2c ./Libc_Device_Support/printf_support.o
+ .ARM.attributes
+                0x00000000       0x2c ./Libc_Device_Support/printf_support.o
+ .text          0x00000000        0x0 ./Libc_Device_Support/syscalls.o
+ .data          0x00000000        0x0 ./Libc_Device_Support/syscalls.o
+ .bss           0x00000000        0x0 ./Libc_Device_Support/syscalls.o
+ .bss.__env     0x00000000        0x4 ./Libc_Device_Support/syscalls.o
+ .data.environ  0x00000000        0x4 ./Libc_Device_Support/syscalls.o
+ .text.initialise_monitor_handles
+                0x00000000        0xa ./Libc_Device_Support/syscalls.o
+ .text._getpid  0x00000000        0xc ./Libc_Device_Support/syscalls.o
+ .text._kill    0x00000000       0x20 ./Libc_Device_Support/syscalls.o
+ .text._exit    0x00000000       0x1a ./Libc_Device_Support/syscalls.o
+ .text._read    0x00000000       0x3a ./Libc_Device_Support/syscalls.o
+ .text._write   0x00000000       0x38 ./Libc_Device_Support/syscalls.o
+ .text._close   0x00000000       0x14 ./Libc_Device_Support/syscalls.o
+ .text._fstat   0x00000000       0x1c ./Libc_Device_Support/syscalls.o
+ .text._isatty  0x00000000       0x12 ./Libc_Device_Support/syscalls.o
+ .text._lseek   0x00000000       0x16 ./Libc_Device_Support/syscalls.o
+ .text._open    0x00000000       0x22 ./Libc_Device_Support/syscalls.o
+ .text._wait    0x00000000       0x26 ./Libc_Device_Support/syscalls.o
+ .text._unlink  0x00000000       0x24 ./Libc_Device_Support/syscalls.o
+ .text._times   0x00000000       0x1a ./Libc_Device_Support/syscalls.o
+ .text._stat    0x00000000       0x22 ./Libc_Device_Support/syscalls.o
+ .text._link    0x00000000       0x2e ./Libc_Device_Support/syscalls.o
+ .text._fork    0x00000000       0x18 ./Libc_Device_Support/syscalls.o
+ .text._execve  0x00000000       0x34 ./Libc_Device_Support/syscalls.o
+ .text._sbrk    0x00000000       0x58 ./Libc_Device_Support/syscalls.o
+ .bss.heap_end.0
+                0x00000000        0x4 ./Libc_Device_Support/syscalls.o
+ .debug_info    0x00000000      0x711 ./Libc_Device_Support/syscalls.o
+ .debug_abbrev  0x00000000      0x1c8 ./Libc_Device_Support/syscalls.o
+ .debug_aranges
+                0x00000000       0xb0 ./Libc_Device_Support/syscalls.o
+ .debug_rnglists
+                0x00000000       0x7f ./Libc_Device_Support/syscalls.o
+ .debug_line    0x00000000      0x3b0 ./Libc_Device_Support/syscalls.o
+ .debug_str     0x00000000      0x407 ./Libc_Device_Support/syscalls.o
+ .comment       0x00000000       0x45 ./Libc_Device_Support/syscalls.o
+ .debug_frame   0x00000000      0x264 ./Libc_Device_Support/syscalls.o
+ .ARM.attributes
+                0x00000000       0x2c ./Libc_Device_Support/syscalls.o
+ .text          0x00000000        0x0 ./Special_Libraries/dsplib.o
+ .data          0x00000000        0x0 ./Special_Libraries/dsplib.o
+ .bss           0x00000000        0x0 ./Special_Libraries/dsplib.o
+ .text.ifx_sin  0x00000000        0xa ./Special_Libraries/dsplib.o
+ .text.ifx_cos  0x00000000        0xa ./Special_Libraries/dsplib.o
+ .debug_info    0x00000000       0x47 ./Special_Libraries/dsplib.o
+ .debug_abbrev  0x00000000       0x2f ./Special_Libraries/dsplib.o
+ .debug_aranges
+                0x00000000       0x28 ./Special_Libraries/dsplib.o
+ .debug_rnglists
+                0x00000000       0x19 ./Special_Libraries/dsplib.o
+ .debug_line    0x00000000       0x62 ./Special_Libraries/dsplib.o
+ .debug_str     0x00000000       0xe5 ./Special_Libraries/dsplib.o
+ .comment       0x00000000       0x45 ./Special_Libraries/dsplib.o
+ .debug_frame   0x00000000       0x48 ./Special_Libraries/dsplib.o
+ .ARM.attributes
+                0x00000000       0x2c ./Special_Libraries/dsplib.o
+ .text          0x00000000        0x0 ./Special_Libraries/reset.o
+ .data          0x00000000        0x0 ./Special_Libraries/reset.o
+ .bss           0x00000000        0x0 ./Special_Libraries/reset.o
+ .text.CySoftwareReset
+                0x00000000       0x24 ./Special_Libraries/reset.o
+ .text.CySysGetResetReason
+                0x00000000       0x30 ./Special_Libraries/reset.o
+ .debug_info    0x00000000       0xd0 ./Special_Libraries/reset.o
+ .debug_abbrev  0x00000000       0x91 ./Special_Libraries/reset.o
+ .debug_aranges
+                0x00000000       0x28 ./Special_Libraries/reset.o
+ .debug_rnglists
+                0x00000000       0x19 ./Special_Libraries/reset.o
+ .debug_line    0x00000000      0x125 ./Special_Libraries/reset.o
+ .debug_str     0x00000000      0x1a4 ./Special_Libraries/reset.o
+ .comment       0x00000000       0x45 ./Special_Libraries/reset.o
+ .debug_frame   0x00000000       0x4c ./Special_Libraries/reset.o
+ .ARM.attributes
+                0x00000000       0x2c ./Special_Libraries/reset.o
+ .text          0x00000000        0x0 ./Special_Libraries/cmsis_gcc.o
+ .data          0x00000000        0x0 ./Special_Libraries/cmsis_gcc.o
+ .bss           0x00000000        0x0 ./Special_Libraries/cmsis_gcc.o
+ .text.disable_irq
+                0x00000000        0xc ./Special_Libraries/cmsis_gcc.o
+ .text.NVIC_DisableIRQ
+                0x00000000       0x34 ./Special_Libraries/cmsis_gcc.o
+ .text          0x00000000        0x0 ./Startup/startup.o
+ .data          0x00000000        0x0 ./Startup/startup.o
+ .bss           0x00000000        0x0 ./Startup/startup.o
+ .text          0x00000000        0x0 ./Device_Drivers/TRNG/trng.o
+ .data          0x00000000        0x0 ./Device_Drivers/TRNG/trng.o
+ .bss           0x00000000        0x0 ./Device_Drivers/TRNG/trng.o
+ .text.Crypto_TRNG_Enable
+                0x00000000       0x1e ./Device_Drivers/TRNG/trng.o
+ .text.Cy_Crypto_IsEnabled
+                0x00000000       0x26 ./Device_Drivers/TRNG/trng.o
+ .text.Cy_Crypto_GetInterruptStatus
+                0x00000000       0x18 ./Device_Drivers/TRNG/trng.o
+ .text.Cy_Crypto_Trng_WaitForComplete
+                0x00000000       0x2a ./Device_Drivers/TRNG/trng.o
+ .text.Crypto_Trng_Get_Random
+                0x00000000       0xdc ./Device_Drivers/TRNG/trng.o
+ .debug_info    0x00000000      0x389 ./Device_Drivers/TRNG/trng.o
+ .debug_abbrev  0x00000000      0x138 ./Device_Drivers/TRNG/trng.o
+ .debug_aranges
+                0x00000000       0x40 ./Device_Drivers/TRNG/trng.o
+ .debug_rnglists
+                0x00000000       0x2c ./Device_Drivers/TRNG/trng.o
+ .debug_line    0x00000000      0x1ce ./Device_Drivers/TRNG/trng.o
+ .debug_str     0x00000000      0x34d ./Device_Drivers/TRNG/trng.o
+ .comment       0x00000000       0x45 ./Device_Drivers/TRNG/trng.o
+ .debug_frame   0x00000000       0xb0 ./Device_Drivers/TRNG/trng.o
+ .ARM.attributes
+                0x00000000       0x2c ./Device_Drivers/TRNG/trng.o
+ .text          0x00000000      0x114 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+ .debug_frame   0x00000000       0x20 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+ .debug_line_str
+                0x00000000       0xc9 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x00000000       0x1e D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_udivsi3.o)
+ .text          0x00000000        0x4 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
+ .debug_line_str
+                0x00000000       0xc9 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000000       0x1e D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
+ .text          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_clzsi2.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_clzsi2.o)
+ .text          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .text.__errno  0x00000000        0xc D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .debug_frame   0x00000000       0x20 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .ARM.attributes
+                0x00000000       0x2c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-errno.o)
+ .text          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+ .text          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ .data          0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ .bss           0x00000000        0x0 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ .data._impure_ptr
+                0x00000000        0x4 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ .data._impure_data
+                0x00000000       0x4c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+ .ARM.attributes
+                0x00000000       0x2c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-impure.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00000000         0x00020000         xr
+RAM              0x20000000         0x00004000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./Application_Source/main.o
+LOAD ./Application_Source/user_cfg.o
+LOAD ./Device_Drivers/GPIO/gpio.o
+LOAD ./Device_Drivers/TIMER/timer.o
+LOAD ./Device_Drivers/ADC/ADC.o
+LOAD ./Device_Drivers/CLOCK/Sys_Clock.o
+LOAD ./Device_Drivers/SYSTICK/systick.o
+LOAD ./Device_Drivers/SCB/scb.o
+LOAD ./Device_Drivers/SCB/uart.o
+LOAD ./Device_Drivers/SCB/i2c.o
+LOAD ./Libc_Device_Support/malloc_support.o
+LOAD ./Libc_Device_Support/printf_support.o
+LOAD ./Libc_Device_Support/syscalls.o
+LOAD ./Special_Libraries/dsplib.o
+LOAD ./Special_Libraries/reset.o
+LOAD ./Special_Libraries/cmsis_gcc.o
+LOAD ./Startup/startup.o
+LOAD ./Device_Drivers/TRNG/trng.o
+START GROUP
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a
+END GROUP
+START GROUP
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libnosys.a
+END GROUP
+START GROUP
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a
+LOAD D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libnosys.a
+END GROUP
+                0x00000000                        __FLASH_START = 0x0
+                0x00020000                        __FLASH_SIZE = 0x20000
+                0x20000000                        __RAM_START = 0x20000000
+                0x00004000                        __RAM_SIZE = 0x4000
+                0x00001000                        __STACK_SIZE = 0x1000
+                0x00000200                        __HEAP_SIZE = 0x200
+                0x20004000                        __STACK_START = (__RAM_START + __RAM_SIZE)
+                0x20003000                        __STACK_END = (__STACK_START - __STACK_SIZE)
+                0x20002e00                        __HEAP_START = (__STACK_END - __HEAP_SIZE)
+                0x20003000                        __HEAP_END = __STACK_END
+
+.text           0x00000000      0xee8
+ *(.isr_vector)
+ .isr_vector    0x00000000       0xc0 ./Startup/startup.o
+                0x00000000                vector
+ *(.user_irq_hdlr)
+ *(.text*)
+ .text.main     0x000000c0       0xf4 ./Application_Source/main.o
+                0x000000c0                main
+ .text.init_peri_Clock_Config
+                0x000001b4       0xf0 ./Application_Source/main.o
+                0x000001b4                init_peri_Clock_Config
+ .text.profileIntArray
+                0x000002a4       0x84 ./Application_Source/main.o
+                0x000002a4                profileIntArray
+ .text.profileFloatArray
+                0x00000328       0x8c ./Application_Source/main.o
+                0x00000328                profileFloatArray
+ .text.GPIO_write
+                0x000003b4       0x30 ./Device_Drivers/GPIO/gpio.o
+                0x000003b4                GPIO_write
+ .text.GPIO_Pin_Init
+                0x000003e4       0x6e ./Device_Drivers/GPIO/gpio.o
+                0x000003e4                GPIO_Pin_Init
+ *fill*         0x00000452        0x2 
+ .text.GPIO_SetHSIOM
+                0x00000454       0x60 ./Device_Drivers/GPIO/gpio.o
+                0x00000454                GPIO_SetHSIOM
+ .text.GPIO_SetDrivemode
+                0x000004b4       0x68 ./Device_Drivers/GPIO/gpio.o
+                0x000004b4                GPIO_SetDrivemode
+ .text.GPIO_SetInterruptEdge
+                0x0000051c       0x3e ./Device_Drivers/GPIO/gpio.o
+                0x0000051c                GPIO_SetInterruptEdge
+ *fill*         0x0000055a        0x2 
+ .text.GPIO_SetVtrip
+                0x0000055c       0x34 ./Device_Drivers/GPIO/gpio.o
+                0x0000055c                GPIO_SetVtrip
+ .text.GPIO_SetSlewRate
+                0x00000590       0x34 ./Device_Drivers/GPIO/gpio.o
+                0x00000590                GPIO_SetSlewRate
+ .text.TCPWM_Counter_Init
+                0x000005c4      0x19e ./Device_Drivers/TIMER/timer.o
+                0x000005c4                TCPWM_Counter_Init
+ .text.TCPWM_Counter_Enable
+                0x00000762       0x24 ./Device_Drivers/TIMER/timer.o
+                0x00000762                TCPWM_Counter_Enable
+ .text.TCPWM_SetInterrupt
+                0x00000786       0x26 ./Device_Drivers/TIMER/timer.o
+                0x00000786                TCPWM_SetInterrupt
+ .text.TCPWM_Counter_SetPeriod
+                0x000007ac       0x26 ./Device_Drivers/TIMER/timer.o
+                0x000007ac                TCPWM_Counter_SetPeriod
+ .text.TCPWM_TriggerStart
+                0x000007d2       0x1a ./Device_Drivers/TIMER/timer.o
+                0x000007d2                TCPWM_TriggerStart
+ .text.TCPWM_Counter_SetCounter
+                0x000007ec       0x26 ./Device_Drivers/TIMER/timer.o
+                0x000007ec                TCPWM_Counter_SetCounter
+ .text.TCPWM_TriggerStopOrKill
+                0x00000812       0x1a ./Device_Drivers/TIMER/timer.o
+                0x00000812                TCPWM_TriggerStopOrKill
+ .text.TCPWM_Counter_GetCounter
+                0x0000082c       0x22 ./Device_Drivers/TIMER/timer.o
+                0x0000082c                TCPWM_Counter_GetCounter
+ *fill*         0x0000084e        0x2 
+ .text.SysClk_PeriphDisableDivider
+                0x00000850       0x38 ./Device_Drivers/CLOCK/Sys_Clock.o
+                0x00000850                SysClk_PeriphDisableDivider
+ .text.SysClk_PeriphSetDivider
+                0x00000888       0x50 ./Device_Drivers/CLOCK/Sys_Clock.o
+                0x00000888                SysClk_PeriphSetDivider
+ .text.SysClk_PeriphEnableDivider
+                0x000008d8       0x3c ./Device_Drivers/CLOCK/Sys_Clock.o
+                0x000008d8                SysClk_PeriphEnableDivider
+ .text.SysClk_PeriphAssignDivider
+                0x00000914       0x40 ./Device_Drivers/CLOCK/Sys_Clock.o
+                0x00000914                SysClk_PeriphAssignDivider
+ .text.Cy_SysClk_ClkHfSetDivider
+                0x00000954       0x34 ./Device_Drivers/CLOCK/Sys_Clock.o
+                0x00000954                Cy_SysClk_ClkHfSetDivider
+ .text.enable_irq
+                0x00000988        0xc ./Special_Libraries/cmsis_gcc.o
+                0x00000988                enable_irq
+ .text.NVIC_SetPriority
+                0x00000994       0x5c ./Special_Libraries/cmsis_gcc.o
+                0x00000994                NVIC_SetPriority
+ .text.NVIC_ClearPendingIRQ
+                0x000009f0       0x2c ./Special_Libraries/cmsis_gcc.o
+                0x000009f0                NVIC_ClearPendingIRQ
+ .text.NVIC_EnableIRQ
+                0x00000a1c       0x2c ./Special_Libraries/cmsis_gcc.o
+                0x00000a1c                NVIC_EnableIRQ
+ .text._init    0x00000a48        0xa ./Startup/startup.o
+                0x00000a48                _init
+ *fill*         0x00000a52        0x2 
+ .text.Reset_handler
+                0x00000a54       0x98 ./Startup/startup.o
+                0x00000a54                Reset_handler
+ .text.Default_Handler
+                0x00000aec        0x8 ./Startup/startup.o
+                0x00000aec                lpcomp_interrupt_IRQHandler
+                0x00000aec                tcpwm_interrupts_7_IRQHandler
+                0x00000aec                SysTick_Handler
+                0x00000aec                PendSV_Handler
+                0x00000aec                NMI_Handler
+                0x00000aec                ioss_interrupts_gpio_1_IRQHandler
+                0x00000aec                cpuss_interrupt_dma_IRQHandler
+                0x00000aec                scb_4_interrupt_IRQHandler
+                0x00000aec                ioss_interrupts_gpio_2_IRQHandler
+                0x00000aec                scb_2_interrupt_IRQHandler
+                0x00000aec                tcpwm_interrupts_4_IRQHandler
+                0x00000aec                cpuss_interrupt_spcif_IRQHandler
+                0x00000aec                scb_0_interrupt_IRQHandler
+                0x00000aec                tcpwm_interrupts_3_IRQHandler
+                0x00000aec                csd_interrupt_IRQHandler
+                0x00000aec                tcpwm_interrupts_1_IRQHandler
+                0x00000aec                crypto_interrupt_IRQHandler
+                0x00000aec                tcpwm_interrupts_6_IRQHandler
+                0x00000aec                ioss_interrupt_gpio_IRQHandler
+                0x00000aec                scb_1_interrupt_IRQHandler
+                0x00000aec                Default_Handler
+                0x00000aec                scb_3_interrupt_IRQHandler
+                0x00000aec                ioss_interrupts_gpio_3_IRQHandler
+                0x00000aec                ioss_interrupts_gpio_0_IRQHandler
+                0x00000aec                tcpwm_interrupts_0_IRQHandler
+                0x00000aec                SVC_Handler
+                0x00000aec                tcpwm_interrupts_2_IRQHandler
+                0x00000aec                tcpwm_interrupts_5_IRQHandler
+                0x00000aec                srss_interrupt_wdt_IRQHandler
+                0x00000aec                pass_0_interrupt_ctbs_IRQHandler
+                0x00000aec                pass_0_interrupt_sar_IRQHandler
+                0x00000aec                can_interrupt_can_IRQHandler
+                0x00000aec                wco_interrupt_IRQHandler
+ .text.HRDFLT_Handler
+                0x00000af4        0x8 ./Startup/startup.o
+                0x00000af4                HardFault_Handler
+                0x00000af4                HRDFLT_Handler
+ .text.__aeabi_fmul
+                0x00000afc      0x280 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+                0x00000afc                __aeabi_fmul
+ .text          0x00000d7c       0x3c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_clzsi2.o)
+                0x00000d7c                __clzsi2
+ .text.__libc_init_array
+                0x00000db8       0x48 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+                0x00000db8                __libc_init_array
+ *(.init*)
+ *(.fini*)
+                0x00000e00                        . = ALIGN (0x4)
+ *(.rodata .rodata.*)
+ .rodata.UART_RX_P7_0_config
+                0x00000e00       0x14 ./Application_Source/user_cfg.o
+                0x00000e00                UART_RX_P7_0_config
+ .rodata.UART_TX_P7_1_config
+                0x00000e14       0x14 ./Application_Source/user_cfg.o
+                0x00000e14                UART_TX_P7_1_config
+ .rodata.USERLED_P3_4_config
+                0x00000e28       0x14 ./Application_Source/user_cfg.o
+                0x00000e28                USERLED_P3_4_config
+ .rodata.ADC_P2_1_config
+                0x00000e3c       0x14 ./Application_Source/user_cfg.o
+                0x00000e3c                ADC_P2_1_config
+ .rodata.TIMER2_config
+                0x00000e50       0x4c ./Application_Source/user_cfg.o
+                0x00000e50                TIMER2_config
+ .rodata.TIMER0_config
+                0x00000e9c       0x4c ./Application_Source/user_cfg.o
+                0x00000e9c                TIMER0_config
+                0x00000ee8                        . = ALIGN (0x4)
+                0x00000ee8                        __etext = .
+                0x00000ee8                        _la_data = LOADADDR (.data)
+
+.glue_7         0x00000ee8        0x0
+ .glue_7        0x00000ee8        0x0 linker stubs
+
+.glue_7t        0x00000ee8        0x0
+ .glue_7t       0x00000ee8        0x0 linker stubs
+
+.vfp11_veneer   0x00000ee8        0x0
+ .vfp11_veneer  0x00000ee8        0x0 linker stubs
+
+.v4_bx          0x00000ee8        0x0
+ .v4_bx         0x00000ee8        0x0 linker stubs
+
+.iplt           0x00000ee8        0x0
+ .iplt          0x00000ee8        0x0 ./Application_Source/main.o
+
+.rel.dyn        0x00000ee8        0x0
+ .rel.iplt      0x00000ee8        0x0 ./Application_Source/main.o
+
+.data           0x20000000       0x50 load address 0x00000ee8
+                0x20000000                        __data_start = .
+ *(.data*)
+ .data.intArray
+                0x20000000       0x28 ./Application_Source/main.o
+                0x20000000                intArray
+ .data.floatArray
+                0x20000028       0x28 ./Application_Source/main.o
+                0x20000028                floatArray
+                0x20000050                        . = ALIGN (0x4)
+                0x20000050                        __data_end = .
+
+.igot.plt       0x20000050        0x0 load address 0x00000f38
+ .igot.plt      0x20000050        0x0 ./Application_Source/main.o
+
+.bss            0x20000050       0x58 load address 0x00000f38
+                0x20000050                        __bss_start__ = .
+ *(.bss)
+ *(.bss.*)
+ .bss.intResultArray
+                0x20000050       0x28 ./Application_Source/main.o
+                0x20000050                intResultArray
+ .bss.floatResultArray
+                0x20000078       0x28 ./Application_Source/main.o
+                0x20000078                floatResultArray
+ .bss.intTimeProfile
+                0x200000a0        0x4 ./Application_Source/main.o
+                0x200000a0                intTimeProfile
+ .bss.floatTimeProfile
+                0x200000a4        0x4 ./Application_Source/main.o
+                0x200000a4                floatTimeProfile
+ *(COMMON)
+                0x200000a8                        . = ALIGN (0x4)
+                0x200000a8                        __bss_end__ = .
+                0x200000a8                        . = ALIGN (0x4)
+                0x200000a8                        end = .
+                0x200000a8                        __end__ = .
+
+Heap            0x200000a8     0x2d58 load address 0x00000f38
+                0x20002e00                        . = ABSOLUTE (__HEAP_START)
+ *fill*         0x200000a8     0x2d58 
+ *(.heap)
+                0x20002e00                        . = ALIGN (0x4)
+
+Stack           0x20002e00      0x200 load address 0x00000f38
+                0x20003000                        . = ABSOLUTE (__STACK_END)
+ *fill*         0x20002e00      0x200 
+ *(.stack)
+OUTPUT(bin/BareMetal_Final_Exam.elf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000     0x2dbb
+ .debug_info    0x00000000      0xade ./Application_Source/main.o
+ .debug_info    0x00000ade      0x97a ./Application_Source/user_cfg.o
+ .debug_info    0x00001458      0x670 ./Device_Drivers/GPIO/gpio.o
+ .debug_info    0x00001ac8      0x74b ./Device_Drivers/TIMER/timer.o
+ .debug_info    0x00002213      0x7e3 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_info    0x000029f6      0x226 ./Special_Libraries/cmsis_gcc.o
+ .debug_info    0x00002c1c      0x19f ./Startup/startup.o
+
+.debug_abbrev   0x00000000      0x932
+ .debug_abbrev  0x00000000      0x21e ./Application_Source/main.o
+ .debug_abbrev  0x0000021e      0x117 ./Application_Source/user_cfg.o
+ .debug_abbrev  0x00000335      0x13e ./Device_Drivers/GPIO/gpio.o
+ .debug_abbrev  0x00000473      0x138 ./Device_Drivers/TIMER/timer.o
+ .debug_abbrev  0x000005ab      0x18e ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_abbrev  0x00000739       0xe0 ./Special_Libraries/cmsis_gcc.o
+ .debug_abbrev  0x00000819      0x119 ./Startup/startup.o
+
+.debug_aranges  0x00000000      0x230
+ .debug_aranges
+                0x00000000       0x40 ./Application_Source/main.o
+ .debug_aranges
+                0x00000040       0x18 ./Application_Source/user_cfg.o
+ .debug_aranges
+                0x00000058       0x80 ./Device_Drivers/GPIO/gpio.o
+ .debug_aranges
+                0x000000d8       0x80 ./Device_Drivers/TIMER/timer.o
+ .debug_aranges
+                0x00000158       0x58 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_aranges
+                0x000001b0       0x48 ./Special_Libraries/cmsis_gcc.o
+ .debug_aranges
+                0x000001f8       0x38 ./Startup/startup.o
+
+.debug_rnglists
+                0x00000000      0x17c
+ .debug_rnglists
+                0x00000000       0x2f ./Application_Source/main.o
+ .debug_rnglists
+                0x0000002f       0x5b ./Device_Drivers/GPIO/gpio.o
+ .debug_rnglists
+                0x0000008a       0x5d ./Device_Drivers/TIMER/timer.o
+ .debug_rnglists
+                0x000000e7       0x3e ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_rnglists
+                0x00000125       0x31 ./Special_Libraries/cmsis_gcc.o
+ .debug_rnglists
+                0x00000156       0x26 ./Startup/startup.o
+
+.debug_line     0x00000000     0x12c7
+ .debug_line    0x00000000      0x360 ./Application_Source/main.o
+ .debug_line    0x00000360      0x20a ./Application_Source/user_cfg.o
+ .debug_line    0x0000056a      0x307 ./Device_Drivers/GPIO/gpio.o
+ .debug_line    0x00000871      0x486 ./Device_Drivers/TIMER/timer.o
+ .debug_line    0x00000cf7      0x277 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_line    0x00000f6e      0x1de ./Special_Libraries/cmsis_gcc.o
+ .debug_line    0x0000114c      0x17b ./Startup/startup.o
+
+.debug_str      0x00000000     0x1889
+ .debug_str     0x00000000     0x1889 ./Application_Source/main.o
+                                0x9c1 (size before relaxing)
+ .debug_str     0x00001889      0xb98 ./Application_Source/user_cfg.o
+ .debug_str     0x00001889      0x376 ./Device_Drivers/GPIO/gpio.o
+ .debug_str     0x00001889      0x55d ./Device_Drivers/TIMER/timer.o
+ .debug_str     0x00001889      0x80e ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_str     0x00001889      0x23c ./Special_Libraries/cmsis_gcc.o
+ .debug_str     0x00001889      0x1ff ./Startup/startup.o
+
+.comment        0x00000000       0x44
+ .comment       0x00000000       0x44 ./Application_Source/main.o
+                                 0x45 (size before relaxing)
+ .comment       0x00000044       0x45 ./Application_Source/user_cfg.o
+ .comment       0x00000044       0x45 ./Device_Drivers/GPIO/gpio.o
+ .comment       0x00000044       0x45 ./Device_Drivers/TIMER/timer.o
+ .comment       0x00000044       0x45 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .comment       0x00000044       0x45 ./Special_Libraries/cmsis_gcc.o
+ .comment       0x00000044       0x45 ./Startup/startup.o
+
+.ARM.attributes
+                0x00000000       0x2c
+ .ARM.attributes
+                0x00000000       0x2c ./Application_Source/main.o
+ .ARM.attributes
+                0x0000002c       0x2c ./Application_Source/user_cfg.o
+ .ARM.attributes
+                0x00000058       0x2c ./Device_Drivers/GPIO/gpio.o
+ .ARM.attributes
+                0x00000084       0x2c ./Device_Drivers/TIMER/timer.o
+ .ARM.attributes
+                0x000000b0       0x2c ./Device_Drivers/CLOCK/Sys_Clock.o
+ .ARM.attributes
+                0x000000dc       0x2c ./Special_Libraries/cmsis_gcc.o
+ .ARM.attributes
+                0x00000108       0x2c ./Startup/startup.o
+ .ARM.attributes
+                0x00000134       0x2c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+ .ARM.attributes
+                0x00000160       0x1e D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_clzsi2.o)
+ .ARM.attributes
+                0x0000017e       0x2c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+
+.debug_frame    0x00000000      0x6c0
+ .debug_frame   0x00000000       0xa8 ./Application_Source/main.o
+ .debug_frame   0x000000a8      0x1b0 ./Device_Drivers/GPIO/gpio.o
+ .debug_frame   0x00000258      0x1b0 ./Device_Drivers/TIMER/timer.o
+ .debug_frame   0x00000408      0x108 ./Device_Drivers/CLOCK/Sys_Clock.o
+ .debug_frame   0x00000510       0xc8 ./Special_Libraries/cmsis_gcc.o
+ .debug_frame   0x000005d8       0x84 ./Startup/startup.o
+ .debug_frame   0x0000065c       0x38 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(mulsf3.o)
+ .debug_frame   0x00000694       0x2c D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libc_nano.a(libc_a-init.o)
+
+.debug_line_str
+                0x00000000       0xc9
+ .debug_line_str
+                0x00000000       0xc9 D:/infienion_esc/arm-gcc/13.2 Rel1/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp\libgcc.a(_clzsi2.o)
