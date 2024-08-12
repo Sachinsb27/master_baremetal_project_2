@@ -15,18 +15,18 @@ The task involves:
 
 -Implementing continuous ADC conversion using the polling method.
 
--The requirements are:
+The requirements are:
 
-Print the message "Value Greater than 1.5V observed" on the UART channel if the ADC value corresponds to a voltage greater than 1.5V.
+-Print the message "Value Greater than 1.5V observed" on the UART channel if the ADC value corresponds to a voltage greater than 1.5V.
 
-Do nothing if the ADC value is less than or equal to 1.5V.
+-Do nothing if the ADC value is less than or equal to 1.5V.
 
 This implementation considers the following:
 
-0V produces an ADC result of 0.
+-0V produces an ADC result of 0.
 
-5V produces an ADC result of 4095.
+-5V produces an ADC result of 4095.
 
-The actual voltage (V) is calculated as:
+-The actual voltage (V) is calculated as:
 
-V = ADC_Result * (5 / 4096).
+-V = ADC_Result * (5 / 4096).
